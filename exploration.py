@@ -64,7 +64,7 @@ variables = {
 }
 
 for ax, (col, label) in zip(axes, variables.items()):
-    sns.histplot(df[col], bins=45, kde=True, ax=ax, col="steelblue")
+    sns.histplot(df[col], bins=45, kde=True, ax=ax, color="steelblue")
     ax.set_title(label)
     ax.set_xlabel("")
 
