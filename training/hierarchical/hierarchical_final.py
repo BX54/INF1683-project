@@ -41,6 +41,7 @@ labels = model_final.fit_predict(X)
 
 df_scaled["Cluster"] = labels
 df_original["Cluster"] = labels
+np.save("./training/hierarchical/labels_hierarchical.npy", labels) #Sauvegarde des labels pour la comparaison avec K-Means
 
 print(f"\nNombre de clients par cluster (K={K_final}) :")
 print(df_original["Cluster"].value_counts().sort_index())
@@ -75,7 +76,7 @@ for ax, (x, y) in zip(axes, pairs):
     ax.legend(fontsize=8)
 
 plt.tight_layout()
-plt.savefig("./training/clusters_hierarchique.png", dpi=150)
+plt.savefig("./training/hierarchical/clusters_hierarchique.png", dpi=300)
 plt.close()
 
 #--------------------------------------------------------------------------------------------------

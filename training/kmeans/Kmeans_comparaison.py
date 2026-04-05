@@ -12,9 +12,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
 
-from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score, davies_bouldin_score
-from scipy.cluster.hierarchy import dendrogram, linkage
 
 sns.set_theme(style="whitegrid")
 
@@ -26,47 +25,26 @@ df_original = pd.read_csv("./docs/Mall_Customers.csv").drop(columns=["CustomerID
 X = df_scaled.values
 
 #--------------------------------------------------------------------------------------------------
-# Figure 10 — Dendrogramme (clustering hiérarchique — pour comparaison)
+# Chargement des labels pour chaque modèle
 #--------------------------------------------------------------------------------------------------
-Z = linkage(X, method="ward")
+# K-Means — modèle final entraîné
+kmeans_model = joblib.load("./training/kmeans_final.pkl")
+labels_km    = kmeans_model.predict(X)
+K_km         = kmeans_model.n_clusters
 
-fig, ax = plt.subplots(figsize=(14, 7))
-dendrogram(
-    Z,
-    ax=ax,
-    truncate_mode="level",
-    p=10,
-    leaf_rotation=90,
-    leaf_font_size=10,
-    color_threshold=7
-)
-ax.set_title("Dendrogramme — Clustering Hiérarchique (Ward)\n"
-             "(Produit par le code du binôme — affiché ici pour comparaison)",
-             fontsize=13, fontweight="bold")
-ax.set_xlabel("Clients (regroupés)")
-ax.set_ylabel("Distance de fusion (Ward)")
-ax.axhline(y=7, color="red", linestyle="--", linewidth=1.8,
-           label="Coupe → K = 5")
-ax.legend(fontsize=10)
-plt.tight_layout()
-plt.savefig("./figures/fig10_dendrogramme.png", dpi=150, bbox_inches="tight")
-plt.close()
-print("✅ Figure 10 sauvegardée : fig10_dendrogramme.png")
+# Hiérarchique — labels produits par le script hierarchical_final.py (K=6)
+labels_hc = np.load("./training/hierarchical/labels_hierarchical.npy")
+K_hc      = len(np.unique(labels_hc))
+
+print(f"K-Means      : K={K_km} clusters")
+print(f"Hiérarchique : K={K_hc} clusters")
 
 #--------------------------------------------------------------------------------------------------
-# Calcul des métriques pour les deux modèles (K=5)
+# Calcul des métriques pour les deux modèles
 #--------------------------------------------------------------------------------------------------
-K = 5
-
-# K-Means
-km = KMeans(n_clusters=K, init="k-means++", n_init=10, random_state=42)
-labels_km = km.fit_predict(X)
 sil_km = silhouette_score(X, labels_km)
 db_km  = davies_bouldin_score(X, labels_km)
 
-# Clustering Hiérarchique (Ward) — même paramètres que le binôme
-hc = AgglomerativeClustering(n_clusters=K, linkage="ward")
-labels_hc = hc.fit_predict(X)
 sil_hc = silhouette_score(X, labels_hc)
 db_hc  = davies_bouldin_score(X, labels_hc)
 
@@ -74,19 +52,24 @@ print(f"\nK-Means        — Silhouette: {sil_km:.4f} | DB: {db_km:.4f}")
 print(f"Hiérarchique   — Silhouette: {sil_hc:.4f} | DB: {db_hc:.4f}")
 
 #--------------------------------------------------------------------------------------------------
-# Figure 11 — Comparaison visuelle des deux méthodes (Revenu vs Score)
+#Comparaison visuelle des deux méthodes (Revenu vs Score)
 #--------------------------------------------------------------------------------------------------
+palette_km = sns.color_palette("tab10", K_km)
+palette_hc = sns.color_palette("tab10", K_hc)
+
 fig, axes = plt.subplots(1, 2, figsize=(16, 6))
-fig.suptitle("Comparaison K-Means vs Clustering Hiérarchique (K=5)\n"
-             "Projection : Revenu annuel vs Score de dépenses",
-             fontsize=13, fontweight="bold")
+fig.suptitle("Comparaison K-Means vs Clustering Hiérarchique\n"
+            "Projection : Revenu annuel vs Score de dépenses",
+            fontsize=13, fontweight="bold")
 
-palette = sns.color_palette("tab10", K)
+configs = [
+    (labels_km, K_km, palette_km,
+    f"K-Means (K={K_km}, init=K-Means++)\nSilhouette={sil_km:.4f} | DB={db_km:.4f}"),
+    (labels_hc, K_hc, palette_hc,
+    f"Clustering Hiérarchique (K={K_hc}, Ward)\nSilhouette={sil_hc:.4f} | DB={db_hc:.4f}"),
+]
 
-for ax, (labels_plot, titre) in zip(axes, [
-    (labels_km, f"K-Means (init=K-Means++)\nSilhouette={sil_km:.4f} | DB={db_km:.4f}"),
-    (labels_hc, f"Clustering Hiérarchique (Ward)\nSilhouette={sil_hc:.4f} | DB={db_hc:.4f}"),
-]):
+for ax, (labels_plot, K, palette, titre) in zip(axes, configs):
     for cid in range(K):
         mask = labels_plot == cid
         ax.scatter(
@@ -105,61 +88,66 @@ for ax, (labels_plot, titre) in zip(axes, [
     ax.legend(fontsize=8)
 
 plt.tight_layout()
-plt.savefig("./figures/fig11_comparaison.png", dpi=150, bbox_inches="tight")
+plt.savefig("./training/fig11_comparaison.png", dpi=150, bbox_inches="tight")
 plt.close()
 print("✅ Figure 11 sauvegardée : fig11_comparaison.png")
 
 #--------------------------------------------------------------------------------------------------
 # Figure 12 — Tableau de comparaison des métriques (barplot)
 #--------------------------------------------------------------------------------------------------
-metriques = {
-    "Score de silhouette\n(↑ meilleur)": [sil_km, sil_hc],
-    "Indice de Davies-Bouldin\n(↓ meilleur)": [db_km, db_hc],
-}
-
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-fig.suptitle("Comparaison des métriques : K-Means vs Hiérarchique (K=5)",
-             fontsize=13, fontweight="bold")
+fig.suptitle(f"Comparaison des métriques : K-Means (K={K_km}) vs Hiérarchique (K={K_hc})",
+            fontsize=13, fontweight="bold")
 
-modeles = ["K-Means\n(K-Means++)", "Hiérarchique\n(Ward)"]
+modeles = [f"K-Means\n(K={K_km})", f"Hiérarchique\n(K={K_hc})"]
 colors  = ["steelblue", "tomato"]
 
-for ax, (metrique, vals) in zip(axes, metriques.items()):
+metriques = [
+    ("Score de silhouette\n(↑ meilleur)", [sil_km, sil_hc], "max"),
+    ("Indice de Davies-Bouldin\n(↓ meilleur)", [db_km, db_hc], "min"),
+]
+
+for ax, (titre, vals, better) in zip(axes, metriques):
     bars = ax.bar(modeles, vals, color=colors, alpha=0.85,
-                  edgecolor="white", linewidth=0.8, width=0.5)
-    ax.set_title(metrique, fontweight="bold")
-    ax.set_ylim(0, max(vals) * 1.3)
+                edgecolor="white", linewidth=0.8, width=0.5)
+    ax.set_title(titre, fontweight="bold")
+    ax.set_ylim(0, max(vals) * 1.35)
+
     for bar, val in zip(bars, vals):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + max(vals)*0.02,
+        ax.text(bar.get_x() + bar.get_width() / 2,
+                bar.get_height() + max(vals) * 0.02,
                 f"{val:.4f}", ha="center", va="bottom",
                 fontsize=11, fontweight="bold")
-    # Mettre en évidence le meilleur
-    best_idx = vals.index(max(vals)) if "silhouette" in metrique.lower() else vals.index(min(vals))
+
+    best_idx = vals.index(max(vals)) if better == "max" else vals.index(min(vals))
     bars[best_idx].set_edgecolor("gold")
     bars[best_idx].set_linewidth(3)
-    ax.text(bars[best_idx].get_x() + bars[best_idx].get_width()/2,
-            bars[best_idx].get_height() + max(vals)*0.10,
-            "★ meilleur", ha="center", color="goldenrod", fontsize=9, fontweight="bold")
+    ax.text(bars[best_idx].get_x() + bars[best_idx].get_width() / 2,
+            bars[best_idx].get_height() + max(vals) * 0.12,
+            "★ meilleur", ha="center", color="goldenrod",
+            fontsize=9, fontweight="bold")
 
 plt.tight_layout()
-plt.savefig("./figures/fig12_comparaison_metriques.png", dpi=150, bbox_inches="tight")
+plt.savefig("./training/fig12_comparaison_metriques.png", dpi=150, bbox_inches="tight")
 plt.close()
 print("✅ Figure 12 sauvegardée : fig12_comparaison_metriques.png")
 
 #--------------------------------------------------------------------------------------------------
 # Résumé comparatif
 #--------------------------------------------------------------------------------------------------
-print("\n" + "=" * 60)
+print("\n" + "=" * 65)
 print("RÉSUMÉ COMPARATIF")
-print("=" * 60)
+print("=" * 65)
 print(f"{'':30} {'K-Means':>12} {'Hiérarchique':>14}")
-print("-" * 60)
+print(f"{'':30} {f'(K={K_km})':>12} {f'(K={K_hc})':>14}")
+print("-" * 65)
 print(f"{'Score de silhouette':30} {sil_km:>12.4f} {sil_hc:>14.4f}")
 print(f"{'Davies-Bouldin Index':30} {db_km:>12.4f} {db_hc:>14.4f}")
-print(f"{'Taille données':30} {'200':>12} {'200':>14}")
-print(f"{'Nombre de clusters K':30} {'5':>12} {'5':>14}")
-print("-" * 60)
-winner_sil = "K-Means" if sil_km > sil_hc else "Hiérarchique"
-winner_db  = "K-Means" if db_km  < db_hc  else "Hiérarchique"
+print("-" * 65)
+
+winner_sil = f"K-Means (K={K_km})"    if sil_km > sil_hc else f"Hiérarchique (K={K_hc})"
+winner_db  = f"K-Means (K={K_km})"    if db_km  < db_hc  else f"Hiérarchique (K={K_hc})"
 print(f"\nMeilleure silhouette : {winner_sil}")
 print(f"Meilleur DB index    : {winner_db}")
+print("\n→ Note : les deux modèles ont été évalués à leur K optimal respectif.")
+print("  La différence de K (5 vs 6) est elle-même une observation pertinente.")

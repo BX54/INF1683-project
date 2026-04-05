@@ -50,7 +50,7 @@ ax.set_ylabel("Distance de fusion (Ward)")
 ax.axhline(y=8, color="red", linestyle="--", linewidth=1.5, label="Coupe suggérée")
 ax.legend()
 plt.tight_layout()
-plt.savefig("./training/dendrogramme.png", dpi=300)
+plt.savefig("./training/hierarchical/dendrogramme.png", dpi=300)
 plt.close()
 
 #--------------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ axes[1].set_ylabel("Davies-Bouldin Score")
 axes[1].set_xticks(list(K_range))
 
 plt.tight_layout()
-plt.savefig("./training/selection_k_hierarchique.png", dpi=300)
+plt.savefig("./training/hierarchical/selection_k_hierarchique.png", dpi=300)
 plt.close()
 
 # Affichage du meilleur K selon chaque métrique

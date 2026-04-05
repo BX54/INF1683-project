@@ -81,10 +81,10 @@ ax.plot(list(K_range), wcss_scores, marker="o", color="steelblue",
 # Mise en évidence du coude optimal
 k_optimal = 5
 ax.axvline(x=k_optimal, color="crimson", linestyle="--", linewidth=1.8,
-           label=f"K = {k_optimal} (coude optimal)")
+            label=f"K = {k_optimal} (coude optimal)")
 
 ax.set_title("Méthode du coude — Inertie WCSS en fonction de K",
-             fontsize=13, fontweight="bold")
+            fontsize=13, fontweight="bold")
 ax.set_xlabel("Nombre de clusters K", fontsize=11)
 ax.set_ylabel("Inertie WCSS", fontsize=11)
 ax.set_xticks(list(K_range))
@@ -96,7 +96,7 @@ for k, w in zip(K_range, wcss_scores):
                 xytext=(0, 10), ha="center", fontsize=8, color="gray")
 
 plt.tight_layout()
-plt.savefig("./figures/fig5_elbow.png", dpi=150, bbox_inches="tight")
+plt.savefig("./training/kmeans/fig5_elbow.png", dpi=300, bbox_inches="tight")
 plt.close()
 print("\n✅ Figure 5 sauvegardée : fig5_elbow.png")
 
@@ -105,7 +105,7 @@ print("\n✅ Figure 5 sauvegardée : fig5_elbow.png")
 #--------------------------------------------------------------------------------------------------
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 fig.suptitle("Métriques de validation pour la sélection de K",
-             fontsize=14, fontweight="bold")
+            fontsize=14, fontweight="bold")
 
 # Silhouette (plus haut = meilleur)
 best_sil_k = list(K_range)[silhouette_scores.index(max(silhouette_scores))]
@@ -113,7 +113,7 @@ colors_sil = ["crimson" if k == best_sil_k else "steelblue" for k in K_range]
 axes[0].bar(list(K_range), silhouette_scores, color=colors_sil, alpha=0.85,
             edgecolor="white", linewidth=0.8)
 axes[0].plot(list(K_range), silhouette_scores, marker="o", color="navy",
-             linewidth=1.5, markersize=5)
+            linewidth=1.5, markersize=5)
 axes[0].set_title("Score de silhouette (↑ meilleur)", fontweight="bold")
 axes[0].set_xlabel("Nombre de clusters K")
 axes[0].set_ylabel("Score de silhouette")
@@ -122,7 +122,7 @@ axes[0].axhline(0.5, color="gray", linestyle=":", linewidth=1, label="Seuil 0.5"
 axes[0].legend(fontsize=9)
 for k, s in zip(K_range, silhouette_scores):
     axes[0].text(k, s + 0.005, f"{s:.3f}", ha="center", fontsize=8,
-                 fontweight="bold" if k == best_sil_k else "normal")
+                fontweight="bold" if k == best_sil_k else "normal")
 
 # Davies-Bouldin (plus bas = meilleur)
 best_db_k = list(K_range)[db_scores.index(min(db_scores))]
@@ -130,17 +130,17 @@ colors_db = ["crimson" if k == best_db_k else "tomato" for k in K_range]
 axes[1].bar(list(K_range), db_scores, color=colors_db, alpha=0.85,
             edgecolor="white", linewidth=0.8)
 axes[1].plot(list(K_range), db_scores, marker="o", color="darkred",
-             linewidth=1.5, markersize=5)
+            linewidth=1.5, markersize=5)
 axes[1].set_title("Indice de Davies-Bouldin (↓ meilleur)", fontweight="bold")
 axes[1].set_xlabel("Nombre de clusters K")
 axes[1].set_ylabel("Davies-Bouldin Score")
 axes[1].set_xticks(list(K_range))
 for k, d in zip(K_range, db_scores):
     axes[1].text(k, d + 0.01, f"{d:.3f}", ha="center", fontsize=8,
-                 fontweight="bold" if k == best_db_k else "normal")
+                fontweight="bold" if k == best_db_k else "normal")
 
 plt.tight_layout()
-plt.savefig("./figures/fig6_selection_k.png", dpi=150, bbox_inches="tight")
+plt.savefig("./training/kmeans/fig6_selection_k.png", dpi=300, bbox_inches="tight")
 plt.close()
 print("✅ Figure 6 sauvegardée : fig6_selection_k.png")
 
@@ -157,4 +157,4 @@ print(f"Meilleur K selon silhouette    : K={best_k_sil}  "
       f"(score : {max(silhouette_scores):.4f})")
 print(f"Meilleur K selon Davies-Bouldin: K={best_k_db}  "
       f"(score : {min(db_scores):.4f})")
-print(f"\n→ K = 5 retenu (coude de l'inertie + métriques convergentes)")
+print(f"\n→ K = 6 retenu (coude de l'inertie + métriques convergentes)")

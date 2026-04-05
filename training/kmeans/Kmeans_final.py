@@ -36,7 +36,7 @@ X = df_scaled.values
 #--------------------------------------------------------------------------------------------------
 # Entraînement du modèle K-Means final
 #--------------------------------------------------------------------------------------------------
-K_FINAL = 5
+K_FINAL = 6
 
 # K-Means++ : initialisation intelligente des centroïdes
 # n_init=10  : 10 lancements différents, on garde le résultat avec la meilleure inertie
@@ -69,7 +69,7 @@ noms_clusters = {
 
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 fig.suptitle(f"Clusters K-Means (K={K_FINAL}, init=K-Means++)",
-             fontsize=14, fontweight="bold")
+            fontsize=14, fontweight="bold")
 
 pairs = [
     ("Annual Income (k$)", "Spending Score (1-100)"),
@@ -100,14 +100,14 @@ for ax, (x_col, y_col) in zip(axes, pairs):
     cx = centroids_orig[:, col_idx[x_col]]
     cy = centroids_orig[:, col_idx[y_col]]
     ax.scatter(cx, cy, s=220, c="black", marker="X", zorder=5,
-               edgecolors="white", linewidths=1, label="Centroïdes")
+                edgecolors="white", linewidths=1, label="Centroïdes")
     ax.set_xlabel(x_col,  fontweight="bold")
     ax.set_ylabel(y_col, fontweight="bold")
     ax.set_title(f"{x_col} vs {y_col}", fontweight="bold")
     ax.legend(fontsize=8)
 
 plt.tight_layout()
-plt.savefig("./figures/fig7_clusters_kmeans.png", dpi=150, bbox_inches="tight")
+plt.savefig("./training/kmeans/fig7_clusters_kmeans.png", dpi=300, bbox_inches="tight")
 plt.close()
 print("\n✅ Figure 7 sauvegardée : fig7_clusters_kmeans.png")
 
@@ -123,22 +123,22 @@ for cid in range(K_FINAL):
     n_c    = c_sil.shape[0]
     y_upper = y_lower + n_c
     ax.fill_betweenx(np.arange(y_lower, y_upper), 0, c_sil,
-                     facecolor=palette[cid], edgecolor="none", alpha=0.85)
+                    facecolor=palette[cid], edgecolor="none", alpha=0.85)
     ax.text(-0.05, y_lower + 0.5 * n_c, f"C{cid} (n={n_c})",
             ha="right", va="center", fontsize=9)
     y_lower = y_upper + 10
 
 sil_moy = silhouette_score(X, labels)
 ax.axvline(sil_moy, color="red", linestyle="--", linewidth=1.8,
-           label=f"Silhouette moyenne = {sil_moy:.4f}")
+            label=f"Silhouette moyenne = {sil_moy:.4f}")
 ax.set_title(f"Diagramme de silhouette — K-Means (K={K_FINAL})",
-             fontsize=13, fontweight="bold")
+            fontsize=13, fontweight="bold")
 ax.set_xlabel("Coefficient de silhouette")
 ax.set_ylabel("Clients regroupés par cluster")
 ax.set_xlim(-0.25, 1.0)
 ax.legend(fontsize=10)
 plt.tight_layout()
-plt.savefig("./figures/fig8_silhouette.png", dpi=150, bbox_inches="tight")
+plt.savefig("./training/kmeans/fig8_silhouette.png", dpi=300, bbox_inches="tight")
 plt.close()
 print("✅ Figure 8 sauvegardée : fig8_silhouette.png")
 
@@ -152,11 +152,11 @@ fig, ax = plt.subplots(figsize=(9, 4))
 sns.heatmap(profil_num, annot=True, fmt=".1f", cmap="YlOrRd",
             linewidths=0.5, ax=ax, annot_kws={"size": 11, "weight": "bold"})
 ax.set_title("Heatmap des profils moyens par cluster (valeurs originales)",
-             fontsize=12, fontweight="bold")
+            fontsize=12, fontweight="bold")
 ax.set_yticklabels([f"Cluster {i}" for i in range(K_FINAL)], rotation=0)
 ax.set_xticklabels(["Âge", "Revenu (k$)", "Score dépenses"], rotation=0)
 plt.tight_layout()
-plt.savefig("./figures/fig9_heatmap_profils.png", dpi=150, bbox_inches="tight")
+plt.savefig("./training/kmeans/fig9_heatmap_profils.png", dpi=300, bbox_inches="tight")
 plt.close()
 print("✅ Figure 9 sauvegardée : fig9_heatmap_profils.png")
 
@@ -214,4 +214,4 @@ resultats = {
 }
 with open("./training/resultats_kmeans.json", "w") as f:
     json.dump(resultats, f, indent=2, ensure_ascii=False)
-print("Résultats exportés : ./training/resultats_kmeans.json ✅")
+print("Résultats exportés : ./training/kmeans/resultats_kmeans.json ✅")
