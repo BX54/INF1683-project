@@ -20,8 +20,9 @@ sns.set_theme(style="whitegrid")
 df_scaled = pd.read_csv("./docs/Mall_Customers_post_traitement.csv")
 scaler = joblib.load("scaler.pkl")
 
-#On garde le dataset originel pour l'interprétation final
+#On garde le dataset originel pour l'interprétation finale
 df_original = pd.read_csv("./docs/Mall_Customers.csv").drop(columns=["CustomerID"])
+df_original["Genre"] = df_original["Genre"].map({"Female": 0, "Male": 1})
 
 print("Dataset prétraité chargé :")
 print(df_scaled.head())
@@ -31,7 +32,9 @@ X = df_scaled.values
 #--------------------------------------------------------------------------------------------------
 #Entraînement du modèle final
 #--------------------------------------------------------------------------------------------------
-K_final = 5
+K_final = 6 #Résultat obtenu à travers les figures générées par hierarchical_selection_k.py. Le score
+            #de silhouette est de 6 et l'index de DB est de 9, mais la différence entre 6 et 9 sur
+            #l'index est très minime, d'où le choix de garder K final à 6.
 
 model_final = AgglomerativeClustering(n_clusters=K_final, linkage="ward")
 labels = model_final.fit_predict(X)
@@ -89,7 +92,6 @@ print("\n" + "=" * 60)
 print("PROFIL MOYEN PAR CLUSTER")
 print("=" * 60)
 print(profils.to_string())
-print("\n→ Utilise ces chiffres pour nommer chaque cluster dans ton rapport !")
 
 #--------------------------------------------------------------------------------------------------
 #Métriques finales
@@ -102,4 +104,3 @@ print(f"MÉTRIQUES FINALES (K={K_final})")
 print("=" * 60)
 print(f"Score de silhouette : {sil_final:.4f}  (entre -1 et 1, plus haut = meilleur)")
 print(f"Davies-Bouldin Index: {db_final:.4f}  (plus bas = meilleur)")
-print("\n→ Ces scores permettront de comparer ton modèle avec le K-Means de ta collègue !")
