@@ -83,7 +83,7 @@ axes[1].set_ylabel("Davies-Bouldin Score")
 axes[1].set_xticks(list(K_range))
 
 plt.tight_layout()
-plt.savefig("selection_k_hierarchique.png", dpi=300)
+plt.savefig("./training/selection_k_hierarchique.png", dpi=300)
 plt.close()
 
 # Affichage du meilleur K selon chaque métrique
