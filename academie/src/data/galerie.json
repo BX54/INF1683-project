@@ -1,0 +1,13 @@
+{
+  "_aide": "Liste des photos de la galerie, dans l'ordre d'affichage. « format » : portrait, paysage ou carre. Les fichiers sont dans /public/images/plats.",
+  "photos": [
+    { "image": "/images/plats/filet-mignon.webp", "legende": "Filet mignon, sauce au poivre", "format": "portrait" },
+    { "image": "/images/plats/moules-marinieres.webp", "legende": "Moules marinières", "format": "paysage" },
+    { "image": "/images/plats/burrata.webp", "legende": "Burrata crémeuse", "format": "carre" },
+    { "image": "/images/plats/linguine-fruits-de-mer.webp", "legende": "Linguine aux fruits de mer", "format": "portrait" },
+    { "image": "/images/plats/osso-buco.webp", "legende": "Osso buco à la milanaise", "format": "paysage" },
+    { "image": "/images/plats/petoncles-poeles.webp", "legende": "Pétoncles poêlés", "format": "carre" },
+    { "image": "/images/plats/tiramisu.webp", "legende": "Tiramisu", "format": "portrait" },
+    { "image": "/images/plats/creme-brulee.webp", "legende": "Crème brûlée à la vanille", "format": "paysage" }
+  ]
+}

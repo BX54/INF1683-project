@@ -1,0 +1,34 @@
+{
+  "_aide": "Remplacez les noms, rôles et citations. Les photos vont dans /public/images/equipe (format portrait 4:5 conseillé, ex. 800 × 1000 px).",
+  "membres": [
+    {
+      "id": "chef",
+      "nom": "Nom du chef",
+      "role": "Chef propriétaire",
+      "citation": "Une bonne assiette se construit autour de la bouteille de nos clients.",
+      "image": "/images/equipe/chef.webp",
+      "vedette": true
+    },
+    {
+      "id": "sous-chef",
+      "nom": "Nom du sous-chef",
+      "role": "Sous-chef",
+      "citation": "Les pâtes fraîches, chaque matin, sans exception.",
+      "image": "/images/equipe/sous-chef.webp"
+    },
+    {
+      "id": "maitre-d",
+      "nom": "Nom du maître d'hôtel",
+      "role": "Maître d'hôtel",
+      "citation": "Ma mission : que vous vous sentiez attendus.",
+      "image": "/images/equipe/maitre-d.webp"
+    },
+    {
+      "id": "patissiere",
+      "nom": "Nom du pâtissier",
+      "role": "Pâtisserie",
+      "citation": "Le dessert, c'est la dernière impression : elle doit être douce.",
+      "image": "/images/equipe/patissier.webp"
+    }
+  ]
+}

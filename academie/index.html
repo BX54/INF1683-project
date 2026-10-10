@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="fr-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>L'Académie — Apportez votre vin · Cuisine française et italienne · Gatineau</title>
+    <meta
+      name="description"
+      content="L'Académie, restaurant « Apportez votre vin » du boulevard Maloney à Gatineau. Cuisine française et italienne, moules, pâtes fraîches et grillades. Trouvez l'accord parfait avec votre bouteille et réservez votre table."
+    />
+    <meta name="theme-color" content="#0B0B0B" />
+    <meta property="og:title" content="L'Académie — Apportez votre vin" />
+    <meta property="og:description" content="Vous apportez le vin. Nous signons l'accord. Cuisine française et italienne à Gatineau." />
+    <meta property="og:type" content="restaurant" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body class="is-loading">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <!-- Grain et vignette -->
+    <div class="grain" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <!-- Curseur doré -->
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__ring"><span class="cursor__label"></span></div>
+      <div class="cursor__dot"></div>
+    </div>
+
+    <!-- ============ 1. INTRO ============ -->
+    <div class="intro" aria-hidden="true">
+      <div class="intro__panel intro__panel--top"></div>
+      <div class="intro__panel intro__panel--bottom"></div>
+      <div class="intro__inner">
+        <svg class="intro__logo" viewBox="0 0 600 260" role="presentation">
+          <defs>
+            <linearGradient id="introGold" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#9c7a35" />
+              <stop offset="0.45" stop-color="#E6C77A" />
+              <stop offset="0.55" stop-color="#FFF1C1" />
+              <stop offset="1" stop-color="#9c7a35" />
+            </linearGradient>
+          </defs>
+          <g class="intro__ornament" fill="none" stroke="url(#introGold)" stroke-width="1">
+            <path class="draw" d="M300 18 L312 30 L300 42 L288 30 Z" />
+            <path class="draw" d="M120 30 H276 M324 30 H480" />
+            <path class="draw" d="M150 214 H450" />
+            <circle class="draw" cx="300" cy="214" r="3" />
+          </g>
+          <text class="intro__word" x="300" y="150" text-anchor="middle">L'Académie</text>
+          <text class="intro__sub" x="300" y="196" text-anchor="middle">APPORTEZ VOTRE VIN · GATINEAU</text>
+        </svg>
+        <div class="intro__count"><span class="intro__num">0</span><span class="intro__pct">%</span></div>
+      </div>
+    </div>
+
+    <!-- ============ EN-TÊTE ============ -->
+    <header class="header" id="haut">
+      <a class="brand" href="#accueil" aria-label="L'Académie — retour à l'accueil" data-cursor>
+        <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="1" />
+          <text x="24" y="31" text-anchor="middle">A</text>
+        </svg>
+        <span class="brand__name">L'Académie</span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <ul class="nav__list">
+          <li><a href="#concept" class="nav__link">Le concept</a></li>
+          <li><a href="#accord" class="nav__link">L'accord</a></li>
+          <li><a href="#menu" class="nav__link">La carte</a></li>
+          <li><a href="#galerie" class="nav__link">Galerie</a></li>
+          <li><a href="#equipe" class="nav__link">L'équipe</a></li>
+          <li><a href="#infos" class="nav__link">Nous trouver</a></li>
+        </ul>
+      </nav>
+      <a href="#reservation" class="btn btn--ghost header__cta" data-magnetic>
+        <span class="btn__label">Réserver</span>
+      </a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu">
+        <span></span><span></span>
+      </button>
+    </header>
+
+    <div class="mobile-menu" id="menu-mobile" hidden>
+      <ul class="mobile-menu__list">
+        <li><a href="#concept"><span>01</span>Le concept</a></li>
+        <li><a href="#accord"><span>02</span>L'accord parfait</a></li>
+        <li><a href="#menu"><span>03</span>La carte</a></li>
+        <li><a href="#galerie"><span>04</span>Galerie</a></li>
+        <li><a href="#equipe"><span>05</span>L'équipe</a></li>
+        <li><a href="#reservation"><span>06</span>Réserver</a></li>
+        <li><a href="#infos"><span>07</span>Nous trouver</a></li>
+      </ul>
+      <p class="mobile-menu__foot" data-phone-text></p>
+    </div>
+
+    <!-- Bouton Réserver fixe (mobile) -->
+    <a href="#reservation" class="sticky-cta" aria-label="Réserver une table">
+      <span>Réserver une table</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </a>
+
+    <main id="contenu">
+      <!-- ============ 2. HERO ============ -->
+      <section class="hero" id="accueil" aria-labelledby="hero-title">
+        <canvas class="hero__canvas" aria-hidden="true"></canvas>
+        <div class="hero__glow" aria-hidden="true"></div>
+        <div class="hero__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+        <div class="hero__content">
+          <p class="eyebrow hero__eyebrow"><span class="eyebrow__line"></span>Boulevard Maloney · Gatineau</p>
+          <h1 class="hero__title" id="hero-title" data-split="hero">
+            <span class="hero__line">Vous apportez <br class="br-sm" />le vin.</span>
+            <span class="hero__line"><em class="gold-text">Nous signons l'accord.</em></span>
+          </h1>
+          <p class="hero__lead" data-reveal>
+            Cuisine française et italienne, servie à la lueur des bougies.<br class="hide-sm" />
+            Votre bouteille, notre table, une soirée qui vous ressemble.
+          </p>
+          <div class="hero__actions" data-reveal>
+            <a href="#reservation" class="btn btn--gold" data-magnetic>
+              <span class="btn__label">Réserver une table</span>
+              <span class="btn__shine" aria-hidden="true"></span>
+            </a>
+            <a href="#accord" class="btn btn--link" data-cursor>
+              <span class="btn__label">Trouver l'accord parfait</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero__badge" aria-hidden="true">
+          <span>Apportez</span>
+          <strong>votre vin</strong>
+          <span>& votre boisson</span>
+        </div>
+
+        <a href="#concept" class="hero__scroll" aria-label="Défiler vers le concept" data-cursor>
+          <span>Défiler</span><i></i>
+        </a>
+      </section>
+
+      <!-- ============ 3. CONCEPT ============ -->
+      <section class="concept section" id="concept" aria-labelledby="concept-title">
+        <div class="concept__aside" aria-hidden="true">
+          <div class="concept__bottle">
+            <svg viewBox="0 0 160 460">
+              <defs>
+                <linearGradient id="bottleGold" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#E6C77A" />
+                  <stop offset="1" stop-color="#8a6a28" />
+                </linearGradient>
+              </defs>
+              <g fill="none" stroke="url(#bottleGold)" stroke-width="1.2" stroke-linecap="round">
+                <path class="bottle-draw" d="M66 20 H94 V36 H66 Z" />
+                <path
+                  class="bottle-draw"
+                  d="M68 36 V118 C68 150 30 162 30 208 V430 C30 440 38 446 48 446 H112 C122 446 130 440 130 430 V208 C130 162 92 150 92 118 V36"
+                />
+                <path class="bottle-draw" d="M42 250 H118 V350 H42 Z" />
+                <path class="bottle-draw" d="M52 272 H108 M60 330 H100" />
+                <path class="bottle-draw" d="M80 288 L86 300 L80 312 L74 300 Z" />
+                <path class="bottle-draw bottle-shine" d="M44 220 V420" />
+              </g>
+            </svg>
+          </div>
+          <div class="concept__seal">
+            <svg viewBox="0 0 200 200">
+              <defs>
+                <path id="sealCircle" d="M100 100 m-78 0 a78 78 0 1 1 156 0 a78 78 0 1 1 -156 0" />
+              </defs>
+              <text>
+                <textPath href="#sealCircle">APPORTEZ VOTRE VIN · APPORTEZ VOTRE BOISSON · </textPath>
+              </text>
+              <circle cx="100" cy="100" r="58" fill="none" stroke="currentColor" stroke-width="0.6" />
+            </svg>
+            <span class="concept__seal-mark">A</span>
+          </div>
+        </div>
+
+        <div class="concept__body">
+          <p class="eyebrow"><span class="eyebrow__line"></span>Le concept</p>
+          <h2 class="section-title" id="concept-title" data-split>
+            Votre cave, <em class="gold-text">notre cuisine.</em>
+          </h2>
+          <p class="concept__manifesto" data-scrub-text>
+            À L'Académie, la carte des vins, c'est la vôtre. Apportez la bouteille que vous gardiez pour une belle occasion, la
+            bière d'une microbrasserie que vous aimez ou un cidre de nos vergers. Nous l'ouvrons et la servons avec soin, puis la
+            cuisine s'occupe du reste.
+          </p>
+
+          <ol class="ritual">
+            <li class="ritual__step" data-reveal>
+              <span class="ritual__num">I</span>
+              <div>
+                <h3>Choisissez</h3>
+                <p>Un grand cru ou un coup de cœur de la SAQ, une bière d'ici, un cidre ou une boisson sans alcool. Tout est bienvenu.</p>
+              </div>
+            </li>
+            <li class="ritual__step" data-reveal>
+              <span class="ritual__num">II</span>
+              <div>
+                <h3>Confiez-la-nous</h3>
+                <p>On l'ouvre devant vous, on la sert dans le bon verre et à la bonne température, puis on remplit les verres pendant toute la soirée.</p>
+              </div>
+            </li>
+            <li class="ritual__step" data-reveal>
+              <span class="ritual__num">III</span>
+              <div>
+                <h3>Savourez l'accord</h3>
+                <p>Nous vous suggérons les plats qui mettront votre bouteille en valeur, de l'entrée au dessert.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ 4. L'ACCORD PARFAIT ============ -->
+      <section class="accord section" id="accord" aria-labelledby="accord-title">
+        <div class="accord__ambient" aria-hidden="true"></div>
+        <header class="accord__head">
+          <p class="eyebrow eyebrow--center"><span class="eyebrow__line"></span>Fonction signature<span class="eyebrow__line"></span></p>
+          <h2 class="section-title section-title--center" id="accord-title" data-split>
+            L'accord <em class="gold-text">parfait</em>
+          </h2>
+          <p class="accord__lead" data-reveal>Quelle bouteille apportez-vous ce soir ? Le chef vous dit quoi commander.</p>
+        </header>
+
+        <div class="accord__stage">
+          <div class="glass" aria-hidden="true">
+            <svg class="glass__svg" viewBox="0 0 200 320">
+              <defs>
+                <clipPath id="glassClip"><path class="glass__clip" d="" /></clipPath>
+                <linearGradient id="liquidGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop class="liquid-stop-a" offset="0" stop-color="#A3243B" />
+                  <stop class="liquid-stop-b" offset="1" stop-color="#5E0B1A" />
+                </linearGradient>
+                <linearGradient id="glassStroke" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#E6C77A" />
+                  <stop offset="0.5" stop-color="#C9A24B" />
+                  <stop offset="1" stop-color="#6d5220" />
+                </linearGradient>
+              </defs>
+              <g clip-path="url(#glassClip)">
+                <g class="glass__liquid">
+                  <path class="glass__wave" fill="url(#liquidGrad)" d="" />
+                  <rect class="glass__foam" x="0" y="0" width="200" height="0" fill="#F6EBD0" opacity="0" />
+                </g>
+                <g class="glass__bubbles"></g>
+                <g class="glass__ice" opacity="0">
+                  <rect x="78" y="0" width="30" height="30" rx="5" transform="rotate(12)" />
+                  <rect x="104" y="0" width="26" height="26" rx="5" transform="rotate(-10)" />
+                </g>
+              </g>
+              <path class="glass__outline" d="" fill="none" stroke="url(#glassStroke)" stroke-width="1.6" />
+              <path class="glass__highlight" d="" fill="none" stroke="#FFF6DA" stroke-opacity="0.35" stroke-width="3" stroke-linecap="round" />
+              <path class="glass__stem" d="" fill="none" stroke="url(#glassStroke)" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+            <div class="glass__shadow"></div>
+            <p class="glass__caption"><span class="glass__caption-drink">Votre verre</span><span class="glass__caption-hint">attend sa boisson</span></p>
+          </div>
+
+          <div class="selector">
+            <fieldset class="selector__group">
+              <legend class="selector__legend">Je prévois apporter…</legend>
+              <div class="selector__drinks" role="radiogroup" aria-label="Boisson apportée"></div>
+            </fieldset>
+            <fieldset class="selector__group selector__group--profile" hidden>
+              <legend class="selector__legend selector__legend--profile"></legend>
+              <div class="selector__profiles" role="radiogroup" aria-label="Profil du vin rouge"></div>
+            </fieldset>
+            <p class="selector__intro" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="pairings" aria-live="polite">
+          <p class="pairings__empty">Choisissez une boisson : trois plats vous attendent.</p>
+          <div class="pairings__grid"></div>
+        </div>
+      </section>
+
+      <!-- ============ 5. LE MENU ============ -->
+      <section class="menu section" id="menu" aria-labelledby="menu-title">
+        <div class="menu__head">
+          <p class="eyebrow"><span class="eyebrow__line"></span>La carte</p>
+          <h2 class="section-title" id="menu-title" data-split>
+            Entre Paris <em class="gold-text">et Florence</em>
+          </h2>
+          <p class="menu__note" data-reveal>Une carte qui suit les saisons. Les prix sont indiqués à titre d'exemple et peuvent changer.</p>
+        </div>
+
+        <div class="menu__layout">
+          <div class="menu__tabs" role="tablist" aria-label="Catégories du menu"></div>
+          <div class="menu__panel">
+            <div class="menu__panel-head">
+              <h3 class="menu__cat-name"></h3>
+              <p class="menu__cat-hook"></p>
+            </div>
+            <div class="menu__grid" role="tabpanel"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 6. GALERIE ============ -->
+      <section class="gallery" id="galerie" aria-labelledby="gallery-title">
+        <div class="gallery__pin">
+          <div class="gallery__intro">
+            <p class="eyebrow"><span class="eyebrow__line"></span>Galerie</p>
+            <h2 class="section-title" id="gallery-title" data-split>
+              L'assiette, <em class="gold-text">en lumière</em>
+            </h2>
+            <p class="gallery__hint"><span class="hide-sm">Faites défiler</span><span class="show-sm">Glissez</span> pour parcourir la table.</p>
+          </div>
+          <div class="gallery__backword" aria-hidden="true">Savourer</div>
+          <div class="gallery__track"></div>
+          <div class="gallery__progress" aria-hidden="true"><i></i></div>
+        </div>
+      </section>
+
+      <!-- ============ 7. L'ÉQUIPE ============ -->
+      <section class="team section" id="equipe" aria-labelledby="team-title">
+        <div class="team__head">
+          <p class="eyebrow"><span class="eyebrow__line"></span>L'équipe</p>
+          <h2 class="section-title" id="team-title" data-split>
+            Les mains <em class="gold-text">derrière l'assiette</em>
+          </h2>
+        </div>
+        <div class="team__grid"></div>
+      </section>
+
+      <!-- ============ 8. RÉSERVATION ============ -->
+      <section class="reserve section" id="reservation" aria-labelledby="reserve-title">
+        <div class="reserve__aside">
+          <p class="eyebrow"><span class="eyebrow__line"></span>Réservation</p>
+          <h2 class="section-title" id="reserve-title" data-split>
+            Votre table <em class="gold-text">vous attend</em>
+          </h2>
+          <p class="reserve__lead" data-reveal>
+            Remplissez le carnet ci-contre. Nous vous confirmons la réservation par téléphone ou par courriel. Pour ce soir, appelez-nous plutôt :
+          </p>
+          <a class="reserve__phone" data-phone-link data-cursor href="#"></a>
+
+          <div class="ticket" aria-hidden="true">
+            <div class="ticket__top">
+              <span class="ticket__brand">L'Académie</span>
+              <span class="ticket__no">N° <span data-ticket-no>—</span></span>
+            </div>
+            <dl class="ticket__rows">
+              <div><dt>Au nom de</dt><dd data-t="nom">—</dd></div>
+              <div><dt>Date</dt><dd data-t="date">—</dd></div>
+              <div><dt>Heure</dt><dd data-t="heure">—</dd></div>
+              <div><dt>Couverts</dt><dd data-t="personnes">2</dd></div>
+              <div><dt>Bouteille</dt><dd data-t="boisson">—</dd></div>
+            </dl>
+            <div class="ticket__perf"></div>
+            <p class="ticket__foot">Apportez votre vin</p>
+          </div>
+        </div>
+
+        <form class="rform" novalidate>
+          <div class="rform__row rform__row--2">
+            <div class="field">
+              <input class="field__input" id="r-nom" name="nom" type="text" autocomplete="name" placeholder=" " required />
+              <label class="field__label" for="r-nom">Nom complet</label>
+              <span class="field__line"></span>
+              <p class="field__error" id="r-nom-err"></p>
+            </div>
+            <div class="field">
+              <input class="field__input" id="r-tel" name="telephone" type="tel" autocomplete="tel" inputmode="tel" placeholder=" " required />
+              <label class="field__label" for="r-tel">Téléphone</label>
+              <span class="field__line"></span>
+              <p class="field__error" id="r-tel-err"></p>
+            </div>
+          </div>
+          <div class="field">
+            <input class="field__input" id="r-courriel" name="courriel" type="email" autocomplete="email" placeholder=" " required />
+            <label class="field__label" for="r-courriel">Courriel</label>
+            <span class="field__line"></span>
+            <p class="field__error" id="r-courriel-err"></p>
+          </div>
+
+          <div class="rform__block" data-field="date">
+            <p class="rform__label" id="cal-label">Date</p>
+            <div class="calendar" aria-labelledby="cal-label">
+              <div class="calendar__head">
+                <button type="button" class="calendar__nav" data-cal="prev" aria-label="Mois précédent">
+                  <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+                </button>
+                <p class="calendar__month" aria-live="polite"></p>
+                <button type="button" class="calendar__nav" data-cal="next" aria-label="Mois suivant">
+                  <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+                </button>
+              </div>
+              <div class="calendar__dow" aria-hidden="true">
+                <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+              </div>
+              <div class="calendar__grid"></div>
+            </div>
+            <input type="hidden" name="date" />
+            <p class="field__error" data-error="date"></p>
+          </div>
+
+          <div class="rform__block" data-field="heure">
+            <p class="rform__label" id="slots-label">Heure</p>
+            <div class="slots" role="radiogroup" aria-labelledby="slots-label"></div>
+            <input type="hidden" name="heure" />
+            <p class="field__error" data-error="heure"></p>
+          </div>
+
+          <div class="rform__row rform__row--2 rform__row--align">
+            <div class="rform__block">
+              <p class="rform__label" id="guests-label">Nombre de personnes</p>
+              <div class="stepper" role="group" aria-labelledby="guests-label">
+                <button type="button" class="stepper__btn" data-step="-1" aria-label="Retirer une personne">−</button>
+                <output class="stepper__value" name="personnes-affiche" aria-live="polite">2</output>
+                <button type="button" class="stepper__btn" data-step="1" aria-label="Ajouter une personne">+</button>
+              </div>
+              <input type="hidden" name="personnes" value="2" />
+            </div>
+            <div class="rform__block">
+              <p class="rform__label" id="drink-label">Boisson prévue <span class="rform__opt">(pour vous suggérer des plats)</span></p>
+              <div class="drink-chips" role="radiogroup" aria-labelledby="drink-label"></div>
+              <input type="hidden" name="boisson" />
+            </div>
+          </div>
+
+          <div class="field field--area">
+            <textarea class="field__input" id="r-demandes" name="demandes" rows="3" placeholder=" "></textarea>
+            <label class="field__label" for="r-demandes">Demandes spéciales (allergies, anniversaire, chaise haute…)</label>
+            <span class="field__line"></span>
+          </div>
+
+          <div class="rform__submit">
+            <button type="submit" class="btn btn--gold btn--wide" data-magnetic>
+              <span class="btn__label">Demander ma table</span>
+              <span class="btn__spinner" aria-hidden="true"></span>
+              <span class="btn__shine" aria-hidden="true"></span>
+            </button>
+            <p class="rform__status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <div class="confirm" hidden role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+          <div class="confirm__card">
+            <svg class="confirm__seal" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="confirm__ring" cx="60" cy="60" r="54" />
+              <circle class="confirm__ring confirm__ring--inner" cx="60" cy="60" r="46" />
+              <path class="confirm__check" d="M40 61 L54 75 L82 46" />
+            </svg>
+            <h3 class="confirm__title" id="confirm-title">Merci !</h3>
+            <p class="confirm__text"></p>
+            <div class="confirm__suggest" hidden>
+              <p class="confirm__suggest-title"></p>
+              <ul class="confirm__suggest-list"></ul>
+            </div>
+            <button type="button" class="btn btn--ghost confirm__close" data-magnetic><span class="btn__label">Parfait</span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ 9. INFOS & PIED DE PAGE ============ -->
+    <footer class="footer" id="infos">
+      <div class="footer__mark" aria-hidden="true"><span class="gold-text">L'Académie</span></div>
+
+      <div class="footer__grid">
+        <div class="footer__col">
+          <h3 class="footer__title">Adresse</h3>
+          <address class="footer__text" data-address></address>
+          <a class="footer__link" data-directions target="_blank" rel="noopener" data-cursor>Itinéraire →</a>
+        </div>
+        <div class="footer__col">
+          <h3 class="footer__title">Heures</h3>
+          <dl class="footer__hours" data-hours></dl>
+        </div>
+        <div class="footer__col">
+          <h3 class="footer__title">Réservations</h3>
+          <a class="footer__phone" data-phone-link data-cursor href="#"></a>
+          <p class="footer__text footer__text--muted">Apportez votre vin · Apportez votre boisson</p>
+        </div>
+        <div class="footer__col">
+          <h3 class="footer__title">Suivez-nous</h3>
+          <ul class="footer__social">
+            <li>
+              <a data-social="instagram" target="_blank" rel="noopener" aria-label="Instagram" data-cursor>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.6" /></svg>
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a data-social="facebook" target="_blank" rel="noopener" aria-label="Facebook" data-cursor>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z" /></svg>
+                Facebook
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__map">
+        <iframe
+          title="Carte : L'Académie, boulevard Maloney, Gatineau"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          data-map
+        ></iframe>
+        <a class="footer__map-link" data-directions target="_blank" rel="noopener" data-cursor>Ouvrir dans Google Maps</a>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© <span data-year></span> L'Académie · Gatineau, Québec</p>
+        <a href="#accueil" class="footer__top" data-cursor>Retour en haut ↑</a>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

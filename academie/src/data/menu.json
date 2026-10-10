@@ -1,0 +1,263 @@
+{
+  "_aide": "Chaque plat a un « id » unique (utilisé aussi par accords.json et galerie.json) et une photo dans /public/images/plats. Les prix sont des exemples : ajustez-les.",
+  "categories": [
+    {
+      "id": "entrees",
+      "nom": "Entrées",
+      "accroche": "Pour ouvrir la bouteille en douceur",
+      "plats": [
+        {
+          "id": "soupe-oignon",
+          "nom": "Soupe à l'oignon gratinée",
+          "description": "Bouillon de bœuf longuement mijoté, croûton doré, gruyère fondant.",
+          "prix": "12",
+          "image": "/images/plats/soupe-oignon.webp",
+          "tags": ["Classique"]
+        },
+        {
+          "id": "burrata",
+          "nom": "Burrata crémeuse",
+          "description": "Tomates anciennes, basilic frais, huile d'olive vierge et fleur de sel.",
+          "prix": "17",
+          "image": "/images/plats/burrata.webp",
+          "tags": ["Végétarien"]
+        },
+        {
+          "id": "escargots",
+          "nom": "Escargots de Bourgogne",
+          "description": "Beurre à l'ail et au persil, pain grillé pour saucer.",
+          "prix": "14",
+          "image": "/images/plats/escargots.webp",
+          "tags": []
+        },
+        {
+          "id": "carpaccio-boeuf",
+          "nom": "Carpaccio de bœuf",
+          "description": "Roquette, copeaux de parmesan, câpres et réduction balsamique.",
+          "prix": "16",
+          "image": "/images/plats/carpaccio-boeuf.webp",
+          "tags": []
+        },
+        {
+          "id": "tartare-saumon",
+          "nom": "Tartare de saumon",
+          "description": "Agrumes, aneth, échalote et croustillant de pain.",
+          "prix": "16",
+          "image": "/images/plats/tartare-saumon.webp",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "moules",
+      "nom": "Moules",
+      "accroche": "Servies en marmite, avec frites maison",
+      "plats": [
+        {
+          "id": "moules-marinieres",
+          "nom": "Moules marinières",
+          "description": "Vin blanc, échalotes, beurre et persil plat.",
+          "prix": "24",
+          "image": "/images/plats/moules-marinieres.webp",
+          "tags": ["Signature"]
+        },
+        {
+          "id": "moules-provencale",
+          "nom": "Moules provençales",
+          "description": "Tomates, ail, olives noires et herbes de Provence.",
+          "prix": "24",
+          "image": "/images/plats/moules-provencale.webp",
+          "tags": []
+        },
+        {
+          "id": "moules-gorgonzola",
+          "nom": "Moules au gorgonzola",
+          "description": "Crème onctueuse au gorgonzola et poivre noir concassé.",
+          "prix": "26",
+          "image": "/images/plats/moules-gorgonzola.webp",
+          "tags": []
+        },
+        {
+          "id": "moules-biere",
+          "nom": "Moules à la bière blanche",
+          "description": "Bière blanche, lardons fumés, oignons et crème.",
+          "prix": "25",
+          "image": "/images/plats/moules-biere.webp",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "pates",
+      "nom": "Pâtes",
+      "accroche": "Fraîches, comme à la trattoria",
+      "plats": [
+        {
+          "id": "linguine-fruits-de-mer",
+          "nom": "Linguine aux fruits de mer",
+          "description": "Crevettes, pétoncles, moules, ail, vin blanc et tomates cerises.",
+          "prix": "29",
+          "image": "/images/plats/linguine-fruits-de-mer.webp",
+          "tags": []
+        },
+        {
+          "id": "tagliatelles-bolognaise",
+          "nom": "Tagliatelles bolognaise",
+          "description": "Ragoût de bœuf et de veau mijoté six heures, parmigiano.",
+          "prix": "24",
+          "image": "/images/plats/tagliatelles-bolognaise.webp",
+          "tags": ["Classique"]
+        },
+        {
+          "id": "raviolis-champignons",
+          "nom": "Raviolis aux champignons sauvages",
+          "description": "Crème légère à la truffe, parmesan et ciboulette.",
+          "prix": "27",
+          "image": "/images/plats/raviolis-champignons.webp",
+          "tags": ["Végétarien"]
+        },
+        {
+          "id": "penne-arrabbiata",
+          "nom": "Penne all'arrabbiata",
+          "description": "Sauce tomate relevée au piment, ail et basilic.",
+          "prix": "21",
+          "image": "/images/plats/penne-arrabbiata.webp",
+          "tags": ["Végétarien", "Épicé"]
+        },
+        {
+          "id": "lasagne-maison",
+          "nom": "Lasagne de la maison",
+          "description": "Couches de pâte fraîche, béchamel, ragù et mozzarella gratinée.",
+          "prix": "25",
+          "image": "/images/plats/lasagne-maison.webp",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "viandes",
+      "nom": "Viandes",
+      "accroche": "Le cœur de la soirée",
+      "plats": [
+        {
+          "id": "filet-mignon",
+          "nom": "Filet mignon, sauce au poivre",
+          "description": "Bœuf tendre saisi, sauce au cognac et poivre vert, gratin dauphinois.",
+          "prix": "46",
+          "image": "/images/plats/filet-mignon.webp",
+          "tags": ["Signature"]
+        },
+        {
+          "id": "osso-buco",
+          "nom": "Osso buco à la milanaise",
+          "description": "Jarret de veau braisé, gremolata et risotto au safran.",
+          "prix": "39",
+          "image": "/images/plats/osso-buco.webp",
+          "tags": []
+        },
+        {
+          "id": "magret-canard",
+          "nom": "Magret de canard aux cerises",
+          "description": "Cuisson rosée, jus aux cerises noires, purée de céleri-rave.",
+          "prix": "38",
+          "image": "/images/plats/magret-canard.webp",
+          "tags": []
+        },
+        {
+          "id": "carre-agneau",
+          "nom": "Carré d'agneau en croûte d'herbes",
+          "description": "Moutarde à l'ancienne, jus au romarin, légumes rôtis.",
+          "prix": "44",
+          "image": "/images/plats/carre-agneau.webp",
+          "tags": []
+        },
+        {
+          "id": "veau-marsala",
+          "nom": "Escalope de veau au marsala",
+          "description": "Champignons de Paris, sauce au marsala, linguine au beurre.",
+          "prix": "34",
+          "image": "/images/plats/veau-marsala.webp",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "poissons",
+      "nom": "Poissons",
+      "accroche": "De la mer à la table",
+      "plats": [
+        {
+          "id": "saumon-beurre-blanc",
+          "nom": "Saumon, beurre blanc",
+          "description": "Pavé de saumon rôti, beurre blanc citronné, asperges.",
+          "prix": "33",
+          "image": "/images/plats/saumon-beurre-blanc.webp",
+          "tags": []
+        },
+        {
+          "id": "petoncles-poeles",
+          "nom": "Pétoncles poêlés",
+          "description": "Purée de chou-fleur, beurre noisette et noisettes torréfiées.",
+          "prix": "38",
+          "image": "/images/plats/petoncles-poeles.webp",
+          "tags": []
+        },
+        {
+          "id": "bar-mediterraneen",
+          "nom": "Filet de bar méditerranéen",
+          "description": "Tomates confites, olives, câpres, fenouil braisé.",
+          "prix": "36",
+          "image": "/images/plats/bar-mediterraneen.webp",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "desserts",
+      "nom": "Desserts",
+      "accroche": "La dernière gorgée, en douceur",
+      "plats": [
+        {
+          "id": "creme-brulee",
+          "nom": "Crème brûlée à la vanille",
+          "description": "Gousse de vanille de Madagascar, caramel craquant.",
+          "prix": "11",
+          "image": "/images/plats/creme-brulee.webp",
+          "tags": ["Classique"]
+        },
+        {
+          "id": "tiramisu",
+          "nom": "Tiramisu",
+          "description": "Mascarpone, espresso, amaretto et cacao amer.",
+          "prix": "12",
+          "image": "/images/plats/tiramisu.webp",
+          "tags": []
+        },
+        {
+          "id": "moelleux-chocolat",
+          "nom": "Moelleux au chocolat",
+          "description": "Cœur coulant, glace vanille et fleur de sel.",
+          "prix": "13",
+          "image": "/images/plats/moelleux-chocolat.webp",
+          "tags": []
+        },
+        {
+          "id": "panna-cotta",
+          "nom": "Panna cotta aux fruits rouges",
+          "description": "Crème vanillée, coulis de framboises et fraises fraîches.",
+          "prix": "11",
+          "image": "/images/plats/panna-cotta.webp",
+          "tags": []
+        },
+        {
+          "id": "tarte-tatin",
+          "nom": "Tarte Tatin",
+          "description": "Pommes caramélisées du Québec, crème fraîche.",
+          "prix": "12",
+          "image": "/images/plats/tarte-tatin.webp",
+          "tags": []
+        }
+      ]
+    }
+  ]
+}
