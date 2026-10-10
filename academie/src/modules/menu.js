@@ -94,6 +94,9 @@ export function initMenu() {
   });
 
   show(menu.categories[0].id, false);
+  document.addEventListener('academie:menu-tab', (e) => {
+    if (e.detail?.id) show(e.detail.id);
+  });
 
   // Apparition initiale des cartes
   if (!reduced) {

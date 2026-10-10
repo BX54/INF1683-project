@@ -111,6 +111,58 @@ function portraitSvg(label, role, file, w, h) {
 </svg>`;
 }
 
+// Pseudo-aléatoire stable (mêmes images à chaque génération)
+function rng(seed) {
+  let x = seed || 1;
+  return () => ((x = (x * 16807) % 2147483647) / 2147483647);
+}
+
+function ambianceSvg(label, file, w, h) {
+  const r = rng(hash(file));
+  const tone = TONES[hash(file) % TONES.length];
+  // Bokeh de bougies
+  const bokeh = Array.from({ length: 34 }, () => {
+    const cx = r() * w;
+    const cy = r() * h * 0.75;
+    const rad = (0.012 + r() * 0.05) * w;
+    const op = 0.08 + r() * 0.3;
+    const c = r() > 0.5 ? '#E6C77A' : '#C9772F';
+    return `<circle cx="${cx.toFixed(0)}" cy="${cy.toFixed(0)}" r="${rad.toFixed(0)}" fill="${c}" opacity="${op.toFixed(2)}"/>`;
+  }).join('');
+  const landscape = w > h;
+  const px = landscape ? w * 0.66 : w * 0.5;
+  const py = landscape ? h * 0.6 : h * 0.66;
+  const pr = (landscape ? h : w) * 0.34;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+  <defs>
+    <radialGradient id="bg" cx="${landscape ? 65 : 50}%" cy="55%" r="80%">
+      <stop offset="0" stop-color="${tone}"/>
+      <stop offset="0.55" stop-color="#0e0c0a"/>
+      <stop offset="1" stop-color="#050505"/>
+    </radialGradient>
+    <radialGradient id="warm" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#E6C77A" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#C9A24B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8a6a28"/>
+      <stop offset="0.5" stop-color="#E6C77A"/>
+      <stop offset="1" stop-color="#8a6a28"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="${(w * 0.012).toFixed(0)}"/></filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <g filter="url(#blur)">${bokeh}</g>
+  <ellipse cx="${px}" cy="${py}" rx="${pr * 1.7}" ry="${pr * 1.1}" fill="url(#warm)"/>
+  <g fill="none" stroke="url(#gold)">
+    <ellipse cx="${px}" cy="${py}" rx="${pr}" ry="${pr * 0.42}" stroke-width="2" opacity="0.9"/>
+    <ellipse cx="${px}" cy="${py}" rx="${pr * 0.66}" ry="${pr * 0.27}" stroke-width="1" opacity="0.5"/>
+  </g>
+  <!-- Le nom du plat est affiché par le site : seule l'étiquette du fichier figure ici -->
+  <text x="${w * 0.5}" y="${h * 0.1}" fill="#C9A24B" opacity="0.6" font-family="Manrope, Arial, sans-serif" font-size="${Math.round(Math.min(w, h) * 0.016)}" letter-spacing="4" text-anchor="middle">PHOTO À VENIR · ${esc(file.toUpperCase())}</text>
+</svg>`;
+}
+
 async function write(svg, out) {
   if (!force && (await exists(out))) return false;
   await sharp(Buffer.from(svg)).webp({ quality: 74 }).toFile(out);
@@ -120,14 +172,19 @@ async function write(svg, out) {
 const menu = await readJson('src/data/menu.json');
 const equipe = await readJson('src/data/equipe.json');
 const galerie = await readJson('src/data/galerie.json');
+const accueil = await readJson('src/data/accueil.json');
 
 await mkdir(path.join(root, 'public/images/plats'), { recursive: true });
 await mkdir(path.join(root, 'public/images/equipe'), { recursive: true });
+await mkdir(path.join(root, 'public/images/ambiance'), { recursive: true });
 
 const jobs = new Map();
 for (const c of menu.categories) for (const p of c.plats) jobs.set(p.image, { type: 'plat', label: p.nom });
 for (const g of galerie.photos) if (!jobs.has(g.image)) jobs.set(g.image, { type: 'plat', label: g.legende });
 for (const m of equipe.membres) jobs.set(m.image, { type: 'portrait', label: m.nom, role: m.role });
+for (const d of accueil.hero.diapos) jobs.set(d.image, { type: 'ambiance', label: d.plat, w: 2400, h: 1500 });
+jobs.set(accueil.histoire.image, { type: 'ambiance', label: 'La salle', w: 1000, h: 1250 });
+jobs.set(accueil.reservation.image, { type: 'ambiance', label: 'Une table pour vous', w: 1400, h: 1000 });
 
 let created = 0;
 for (const [src, job] of jobs) {
@@ -136,7 +193,9 @@ for (const [src, job] of jobs) {
   const svg =
     job.type === 'plat'
       ? platSvg(job.label, file, 1200, 1200)
-      : portraitSvg(job.label, job.role, file, 800, 1000);
+      : job.type === 'ambiance'
+        ? ambianceSvg(job.label, file, job.w, job.h)
+        : portraitSvg(job.label, job.role, file, 800, 1000);
   if (await write(svg, out)) created++;
 }
 

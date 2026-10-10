@@ -69,11 +69,18 @@ export function initReveals() {
     ease: 'none',
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
   });
-  gsap.to('.hero__badge', {
-    rotate: 40,
-    y: -80,
+  gsap.to('.hero__media', {
+    yPercent: 12,
     ease: 'none',
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+  });
+
+  // Panneau ivoire « Nous trouver »
+  gsap.from('.locale', {
+    clipPath: 'inset(8% 6% 8% 6%)',
+    duration: 1.6,
+    ease: 'expo.out',
+    scrollTrigger: { trigger: '.locale', start: 'top 85%', once: true },
   });
 
   // Grand logo du pied de page
@@ -97,7 +104,6 @@ export function revealHero() {
   tl.to(words, { yPercent: 0, rotate: 0, duration: 1.6, stagger: 0.08 })
     .from('.hero__eyebrow', { opacity: 0, x: -30, duration: 1.2 }, 0.1)
     .to('.hero [data-reveal]', { opacity: 1, y: 0, duration: 1.3, stagger: 0.12 }, 0.5)
-    .from('.hero__frame i', { opacity: 0, scale: 0.4, duration: 1.4, stagger: 0.08 }, 0.3)
-    .from('.hero__badge', { opacity: 0, scale: 0.6, rotate: -60, duration: 1.8 }, 0.6)
+    .from(['.hero__counter', '.hero__dish'], { opacity: 0, y: 24, duration: 1.2, stagger: 0.1 }, 0.9)
     .from('.hero__scroll', { opacity: 0, y: 20, duration: 1 }, 1);
 }

@@ -60,24 +60,21 @@
     <!-- ============ EN-TÊTE ============ -->
     <header class="header" id="haut">
       <a class="brand" href="#accueil" aria-label="L'Académie — retour à l'accueil" data-cursor>
-        <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true">
-          <circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="1" />
-          <text x="24" y="31" text-anchor="middle">A</text>
-        </svg>
-        <span class="brand__name">L'Académie</span>
+        <span class="brand__word">L'Académie</span>
+        <span class="brand__sub">Restaurant · Apportez votre vin</span>
       </a>
       <nav class="nav" aria-label="Navigation principale">
         <ul class="nav__list">
+          <li><a href="#histoire" class="nav__link">Notre histoire</a></li>
           <li><a href="#concept" class="nav__link">Le concept</a></li>
           <li><a href="#accord" class="nav__link">L'accord</a></li>
           <li><a href="#menu" class="nav__link">La carte</a></li>
           <li><a href="#galerie" class="nav__link">Galerie</a></li>
-          <li><a href="#equipe" class="nav__link">L'équipe</a></li>
           <li><a href="#infos" class="nav__link">Nous trouver</a></li>
         </ul>
       </nav>
-      <a href="#reservation" class="btn btn--ghost header__cta" data-magnetic>
-        <span class="btn__label">Réserver</span>
+      <a href="#reservation" class="btn btn--frame header__cta" data-magnetic>
+        <span class="btn__label">Réservation</span>
       </a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu">
         <span></span><span></span>
@@ -86,13 +83,14 @@
 
     <div class="mobile-menu" id="menu-mobile" hidden>
       <ul class="mobile-menu__list">
-        <li><a href="#concept"><span>01</span>Le concept</a></li>
-        <li><a href="#accord"><span>02</span>L'accord parfait</a></li>
-        <li><a href="#menu"><span>03</span>La carte</a></li>
-        <li><a href="#galerie"><span>04</span>Galerie</a></li>
-        <li><a href="#equipe"><span>05</span>L'équipe</a></li>
-        <li><a href="#reservation"><span>06</span>Réserver</a></li>
-        <li><a href="#infos"><span>07</span>Nous trouver</a></li>
+        <li><a href="#histoire"><span>01</span>Notre histoire</a></li>
+        <li><a href="#concept"><span>02</span>Le concept</a></li>
+        <li><a href="#accord"><span>03</span>L'accord parfait</a></li>
+        <li><a href="#menu"><span>04</span>La carte</a></li>
+        <li><a href="#galerie"><span>05</span>Galerie</a></li>
+        <li><a href="#equipe"><span>06</span>L'équipe</a></li>
+        <li><a href="#reservation"><span>07</span>Réserver</a></li>
+        <li><a href="#infos"><span>08</span>Nous trouver</a></li>
       </ul>
       <p class="mobile-menu__foot" data-phone-text></p>
     </div>
@@ -106,14 +104,15 @@
     <main id="contenu">
       <!-- ============ 2. HERO ============ -->
       <section class="hero" id="accueil" aria-labelledby="hero-title">
+        <div class="hero__media" aria-hidden="true"></div>
+        <div class="hero__shade" aria-hidden="true"></div>
         <canvas class="hero__canvas" aria-hidden="true"></canvas>
-        <div class="hero__glow" aria-hidden="true"></div>
-        <div class="hero__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
         <div class="hero__content">
-          <p class="eyebrow hero__eyebrow"><span class="eyebrow__line"></span>Boulevard Maloney · Gatineau</p>
+          <p class="eyebrow hero__eyebrow">Cuisine française &amp; italienne <span class="eyebrow__sep">/</span> Apportez votre vin</p>
           <h1 class="hero__title" id="hero-title" data-split="hero">
-            <span class="hero__line">Vous apportez <br class="br-sm" />le vin.</span>
+            <span class="hero__line">Vous apportez</span>
+            <span class="hero__line">le vin.</span>
             <span class="hero__line"><em class="gold-text">Nous signons l'accord.</em></span>
           </h1>
           <p class="hero__lead" data-reveal>
@@ -125,22 +124,59 @@
               <span class="btn__label">Réserver une table</span>
               <span class="btn__shine" aria-hidden="true"></span>
             </a>
-            <a href="#accord" class="btn btn--link" data-cursor>
-              <span class="btn__label">Trouver l'accord parfait</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            <a href="#accord" class="btn-round" data-cursor>
+              <span class="btn-round__circle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+              <span class="btn-round__label">Trouver l'accord parfait</span>
             </a>
           </div>
         </div>
 
-        <div class="hero__badge" aria-hidden="true">
-          <span>Apportez</span>
-          <strong>votre vin</strong>
-          <span>& votre boisson</span>
+        <div class="hero__counter" aria-hidden="true">
+          <span class="hero__count-cur">01</span><span class="hero__count-sep">/</span><span class="hero__count-tot">03</span>
+          <i class="hero__count-bar"><b></b></i>
         </div>
 
-        <a href="#concept" class="hero__scroll" aria-label="Défiler vers le concept" data-cursor>
+        <div class="hero__dish" aria-live="polite">
+          <p class="hero__dish-label">Plat signature</p>
+          <p class="hero__dish-name"></p>
+          <i class="hero__dish-line" aria-hidden="true"></i>
+        </div>
+
+        <a href="#histoire" class="hero__scroll" aria-label="Défiler vers notre histoire" data-cursor>
           <span>Défiler</span><i></i>
         </a>
+      </section>
+
+      <!-- ============ HISTOIRE & CHEF (bandeau éditorial) ============ -->
+      <section class="story" id="histoire" aria-label="Notre histoire et notre chef">
+        <figure class="story__cell story__photo story__photo--salle">
+          <img data-story="salle-img" alt="" width="1000" height="1250" loading="lazy" decoding="async" />
+          <figcaption data-story="salle-legende"></figcaption>
+        </figure>
+        <div class="story__cell story__text">
+          <p class="eyebrow" data-story="histoire-surtitre"></p>
+          <h2 class="story__title" data-story="histoire-titre"></h2>
+          <p class="story__body" data-story="histoire-texte"></p>
+          <a href="#concept" class="link-arrow" data-cursor>Le concept <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+        </div>
+        <figure class="story__cell story__photo story__photo--chef">
+          <img data-story="chef-img" alt="" width="800" height="1000" loading="lazy" decoding="async" />
+        </figure>
+        <div class="story__cell story__text story__text--chef">
+          <p class="eyebrow" data-story="chef-surtitre"></p>
+          <h2 class="story__title" data-story="chef-titre"></h2>
+          <p class="story__name" data-story="chef-nom"></p>
+          <p class="story__body" data-story="chef-texte"></p>
+          <a href="#equipe" class="link-arrow" data-cursor>Rencontrer l'équipe <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+          <svg class="story__sprig" viewBox="0 0 120 120" aria-hidden="true">
+            <path d="M10 110 C40 80 70 50 112 8" />
+            <path d="M40 80 C30 66 32 54 44 46 C48 60 46 70 40 80 Z" />
+            <path d="M58 62 C50 46 54 34 68 28 C70 44 66 54 58 62 Z" />
+            <path d="M76 44 C70 30 76 18 90 14 C90 28 86 38 76 44 Z" />
+            <path d="M48 72 C62 74 72 70 80 58 C66 56 56 62 48 72 Z" />
+            <path d="M66 54 C80 56 90 50 96 38 C82 38 72 44 66 54 Z" />
+          </svg>
+        </div>
       </section>
 
       <!-- ============ 3. CONCEPT ============ -->
@@ -280,6 +316,21 @@
           <p class="pairings__empty">Choisissez une boisson : trois plats vous attendent.</p>
           <div class="pairings__grid"></div>
         </div>
+      </section>
+
+      <!-- ============ PLATS SIGNATURE ============ -->
+      <section class="signatures" aria-labelledby="sig-title">
+        <div class="signatures__intro">
+          <p class="eyebrow">La maison</p>
+          <h2 class="signatures__title" id="sig-title" data-split>Plats <em class="gold-text">signature</em></h2>
+          <p class="signatures__text">Chaque assiette raconte une histoire : celle d'un produit, d'une saison et de la bouteille qui l'accompagne.</p>
+          <a href="#menu" class="link-arrow" data-cursor>Voir toute la carte <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+        </div>
+        <div class="signatures__cards"></div>
+        <nav class="signatures__menu" aria-label="Catégories de la carte">
+          <p class="signatures__menu-title">La<br />carte</p>
+          <ul class="signatures__list"></ul>
+        </nav>
       </section>
 
       <!-- ============ 5. LE MENU ============ -->
@@ -466,48 +517,47 @@
     <footer class="footer" id="infos">
       <div class="footer__mark" aria-hidden="true"><span class="gold-text">L'Académie</span></div>
 
-      <div class="footer__grid">
-        <div class="footer__col">
-          <h3 class="footer__title">Adresse</h3>
-          <address class="footer__text" data-address></address>
-          <a class="footer__link" data-directions target="_blank" rel="noopener" data-cursor>Itinéraire →</a>
+      <div class="locale">
+        <div class="locale__col">
+          <p class="locale__eyebrow">Nous trouver</p>
+          <h2 class="locale__title">Au cœur <em>de Gatineau</em></h2>
+          <address class="locale__address" data-address></address>
+          <a class="locale__link" data-directions target="_blank" rel="noopener" data-cursor>Itinéraire <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
         </div>
-        <div class="footer__col">
-          <h3 class="footer__title">Heures</h3>
-          <dl class="footer__hours" data-hours></dl>
+        <div class="locale__map">
+          <iframe
+            title="Carte : L'Académie, boulevard Maloney, Gatineau"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            data-map
+          ></iframe>
+          <a class="locale__map-link" data-directions target="_blank" rel="noopener" data-cursor>Ouvrir dans Google Maps</a>
         </div>
-        <div class="footer__col">
-          <h3 class="footer__title">Réservations</h3>
-          <a class="footer__phone" data-phone-link data-cursor href="#"></a>
-          <p class="footer__text footer__text--muted">Apportez votre vin · Apportez votre boisson</p>
-        </div>
-        <div class="footer__col">
-          <h3 class="footer__title">Suivez-nous</h3>
-          <ul class="footer__social">
-            <li>
-              <a data-social="instagram" target="_blank" rel="noopener" aria-label="Instagram" data-cursor>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.6" /></svg>
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a data-social="facebook" target="_blank" rel="noopener" aria-label="Facebook" data-cursor>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z" /></svg>
-                Facebook
-              </a>
-            </li>
-          </ul>
+        <div class="locale__col locale__col--info">
+          <h3 class="locale__label">Heures</h3>
+          <dl class="locale__hours" data-hours></dl>
+          <h3 class="locale__label">Réservations</h3>
+          <a class="locale__phone" data-phone-link data-cursor href="#"></a>
+          <p class="locale__note">Apportez votre vin · Apportez votre boisson</p>
         </div>
       </div>
 
-      <div class="footer__map">
-        <iframe
-          title="Carte : L'Académie, boulevard Maloney, Gatineau"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          data-map
-        ></iframe>
-        <a class="footer__map-link" data-directions target="_blank" rel="noopener" data-cursor>Ouvrir dans Google Maps</a>
+      <div class="footer__bar">
+        <ul class="footer__social">
+          <li>
+            <a data-social="instagram" target="_blank" rel="noopener" aria-label="Instagram" data-cursor>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.6" /></svg>
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a data-social="facebook" target="_blank" rel="noopener" aria-label="Facebook" data-cursor>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z" /></svg>
+              Facebook
+            </a>
+          </li>
+        </ul>
+        <p class="footer__motto">Bonne table · Belle bouteille · Beaux moments</p>
       </div>
 
       <div class="footer__bottom">

@@ -25,6 +25,7 @@ import { initGallery } from './modules/gallery.js';
 import { initTeam } from './modules/team.js';
 import { initReservation } from './modules/reservation.js';
 import { initInfos } from './modules/infos.js';
+import { initHeroSlides, startHeroSlides, initStory, initSignatures } from './modules/accueil.js';
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MorphSVGPlugin);
 
@@ -32,6 +33,9 @@ const lenis = initSmoothScroll();
 
 // Contenu piloté par les fichiers JSON / config
 initInfos();
+initHeroSlides();
+initStory();
+initSignatures();
 initMenu();
 initAccord();
 initGallery();
@@ -55,6 +59,7 @@ playIntro().then(() => {
   document.body.classList.remove('is-loading');
   lenis?.start();
   revealHero();
+  startHeroSlides();
   particlesReady.then((p) => p?.reveal());
   ScrollTrigger.refresh();
 });

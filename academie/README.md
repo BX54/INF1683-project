@@ -24,12 +24,14 @@ academie/
 ├─ public/
 │  ├─ favicon.svg
 │  └─ images/
+│     ├─ ambiance/                Photos du hero, de la salle, de la table (.webp)
 │     ├─ plats/                   Photos des plats (.webp)
 │     └─ equipe/                  Portraits de l'équipe (.webp)
 ├─ scripts/generate-placeholders.mjs   Crée les images de remplacement
 └─ src/
    ├─ config.js                   ← Coordonnées, heures, réservation
    ├─ data/
+   │  ├─ accueil.json             ← Hero, histoire, chef, plats signature
    │  ├─ menu.json                ← La carte
    │  ├─ accords.json             ← L'accord parfait
    │  ├─ equipe.json              ← L'équipe
@@ -42,7 +44,10 @@ academie/
 
 1. Exportez vos photos en **WebP** (qualité 75–80 %). Tailles conseillées :
    - plats : **1200 × 1200 px** (carré ; le site recadre automatiquement) ;
-   - équipe : **800 × 1000 px** (portrait 4:5).
+   - équipe : **800 × 1000 px** (portrait 4:5) ;
+   - hero (`ambiance/hero-1.webp` à `hero-3.webp`) : **2400 × 1500 px**, plat cadré **à droite**
+     (le texte occupe la gauche) ;
+   - salle (`ambiance/salle.webp`) : **1000 × 1250 px**, portrait.
 2. Donnez-leur **exactement le même nom** que l'image de remplacement, puis écrasez-la dans
    `public/images/plats/` ou `public/images/equipe/` (ex. `filet-mignon.webp`, `chef.webp`).
 3. Rechargez la page. C'est tout.
@@ -52,6 +57,13 @@ academie/
 Pour un **nouveau** plat ou membre, ajoutez l'entrée dans le JSON correspondant puis lancez
 `npm run images` : le script crée une image de remplacement pour chaque fichier manquant,
 **sans jamais écraser** vos vraies photos.
+
+## Modifier l'accueil — `src/data/accueil.json`
+
+- `hero.diapos` : les photos du diaporama et le nom du plat affiché en bas à droite (« Plat signature »).
+  Ajoutez ou retirez des diapos librement ; `hero.duree` règle le temps d'affichage (en secondes).
+- `histoire` et `chef` : textes du bandeau sous le hero.
+- `signatures` : les 3 plats mis en avant avant la carte (leurs `id` dans `menu.json`).
 
 ## Modifier le menu — `src/data/menu.json`
 
