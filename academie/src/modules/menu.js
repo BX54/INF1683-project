@@ -10,29 +10,30 @@ export function initMenu() {
   const grid = section.querySelector('.menu__grid');
   const catName = section.querySelector('.menu__cat-name');
   const catHook = section.querySelector('.menu__cat-hook');
+  const catNote = section.querySelector('.menu__cat-note');
 
   tabs.innerHTML = menu.categories
     .map(
       (c, i) => `<button type="button" class="tab" role="tab" id="tab-${c.id}" aria-controls="menu-panel"
         aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-id="${c.id}">
-        <span class="tab__num">0${i + 1}</span><span class="tab__name">${escapeHtml(c.nom)}</span>
+        <span class="tab__num">${String(i + 1).padStart(2, '0')}</span><span class="tab__name">${escapeHtml(c.nom)}</span>
         <span class="tab__count">${c.plats.length}</span></button>`
     )
     .join('');
   grid.id = 'menu-panel';
 
   const card = (p) => `
-    <article class="dish">
-      <div class="dish__media">
+    <article class="dish${p.image ? '' : ' dish--text'}">
+      ${p.image ? `<div class="dish__media">
         <img src="${p.image}" alt="${escapeHtml(p.nom)}" width="1200" height="1200" loading="lazy" decoding="async" />
-      </div>
+      </div>` : ''}
       <div class="dish__body">
         <div class="dish__top">
           <h4 class="dish__name">${escapeHtml(p.nom)}</h4>
           <span class="dish__leader" aria-hidden="true"></span>
           <span class="dish__price">${escapeHtml(formatPrice(p.prix))}</span>
         </div>
-        <p class="dish__desc">${escapeHtml(p.description)}</p>
+        ${p.description ? `<p class="dish__desc">${escapeHtml(p.description)}</p>` : ''}
         ${p.tags?.length ? `<div class="dish__tags">${p.tags.map((t) => `<span>${escapeHtml(t)}</span>`).join('')}</div>` : ''}
       </div>
     </article>`;
@@ -53,6 +54,8 @@ export function initMenu() {
     const render = () => {
       catName.textContent = cat.nom;
       catHook.textContent = cat.accroche ?? '';
+      catNote.textContent = cat.note ?? '';
+      catNote.hidden = !cat.note;
       grid.innerHTML = cat.plats.map(card).join('');
       grid.querySelectorAll('.dish').forEach(tilt);
       ScrollTrigger.refresh();

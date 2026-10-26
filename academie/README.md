@@ -64,6 +64,7 @@ Pour un **nouveau** plat ou membre, ajoutez l'entrée dans le JSON correspondant
   Ajoutez ou retirez des diapos librement ; `hero.duree` règle le temps d'affichage (en secondes).
 - `histoire` et `chef` : textes du bandeau sous le hero.
 - `signatures` : les 3 plats mis en avant avant la carte (leurs `id` dans `menu.json`).
+- `raccourcis` : les catégories listées à droite des plats signature.
 
 ## Modifier le menu — `src/data/menu.json`
 
@@ -83,6 +84,9 @@ Chaque catégorie contient une liste de plats :
 - `id` : identifiant unique, sans espace ni accent (il sert aussi aux accords).
 - `prix` : le nombre seulement, le « $ » est ajouté automatiquement.
 - `tags` : facultatif (« Végétarien », « Épicé », « Signature »…).
+- `image` : facultatif. Sans image, l'article s'affiche en carte texte (utile pour les à-côtés, extras et menu enfants).
+- `prix` peut contenir plusieurs montants (`"8 · repas 14"`) : le « $ » est ajouté après chaque nombre. « Prix du marché » s'affiche tel quel.
+- `note` (catégorie, facultatif) : texte encadré sous le titre, par exemple les conditions des spéciaux.
 - Pour ajouter une catégorie, copiez un bloc `{ "id", "nom", "accroche", "plats" }`.
 
 Les prix fournis sont des **exemples** : ajustez-les.

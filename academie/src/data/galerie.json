@@ -1,13 +1,45 @@
 {
   "_aide": "Liste des photos de la galerie, dans l'ordre d'affichage. « format » : portrait, paysage ou carre. Les fichiers sont dans /public/images/plats.",
   "photos": [
-    { "image": "/images/plats/filet-mignon.webp", "legende": "Filet mignon, sauce au poivre", "format": "portrait" },
-    { "image": "/images/plats/moules-marinieres.webp", "legende": "Moules marinières", "format": "paysage" },
-    { "image": "/images/plats/burrata.webp", "legende": "Burrata crémeuse", "format": "carre" },
-    { "image": "/images/plats/linguine-fruits-de-mer.webp", "legende": "Linguine aux fruits de mer", "format": "portrait" },
-    { "image": "/images/plats/osso-buco.webp", "legende": "Osso buco à la milanaise", "format": "paysage" },
-    { "image": "/images/plats/petoncles-poeles.webp", "legende": "Pétoncles poêlés", "format": "carre" },
-    { "image": "/images/plats/tiramisu.webp", "legende": "Tiramisu", "format": "portrait" },
-    { "image": "/images/plats/creme-brulee.webp", "legende": "Crème brûlée à la vanille", "format": "paysage" }
+    {
+      "image": "/images/plats/mosaique.webp",
+      "legende": "Mosaïque",
+      "format": "portrait"
+    },
+    {
+      "image": "/images/plats/moules-mariniere.webp",
+      "legende": "Moules marinière",
+      "format": "paysage"
+    },
+    {
+      "image": "/images/plats/bruschetta-campagnola.webp",
+      "legende": "Bruschetta Campagnola",
+      "format": "carre"
+    },
+    {
+      "image": "/images/plats/fettuccini-di-mare.webp",
+      "legende": "Fettuccini di Mare",
+      "format": "portrait"
+    },
+    {
+      "image": "/images/plats/magret-de-canard.webp",
+      "legende": "Magret de canard",
+      "format": "paysage"
+    },
+    {
+      "image": "/images/plats/pizza-prosciutto-e-rucola.webp",
+      "legende": "Pizza prosciutto e rucola",
+      "format": "carre"
+    },
+    {
+      "image": "/images/plats/tartare-de-saumon.webp",
+      "legende": "Tartare de saumon",
+      "format": "portrait"
+    },
+    {
+      "image": "/images/plats/creme-brulee.webp",
+      "legende": "Crème brûlée",
+      "format": "paysage"
+    }
   ]
 }

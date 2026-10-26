@@ -179,7 +179,7 @@ await mkdir(path.join(root, 'public/images/equipe'), { recursive: true });
 await mkdir(path.join(root, 'public/images/ambiance'), { recursive: true });
 
 const jobs = new Map();
-for (const c of menu.categories) for (const p of c.plats) jobs.set(p.image, { type: 'plat', label: p.nom });
+for (const c of menu.categories) for (const p of c.plats) if (p.image) jobs.set(p.image, { type: 'plat', label: p.nom });
 for (const g of galerie.photos) if (!jobs.has(g.image)) jobs.set(g.image, { type: 'plat', label: g.legende });
 for (const m of equipe.membres) jobs.set(m.image, { type: 'portrait', label: m.nom, role: m.role });
 for (const d of accueil.hero.diapos) jobs.set(d.image, { type: 'ambiance', label: d.plat, w: 2400, h: 1500 });

@@ -41,4 +41,5 @@ export function splitWords(el, innerClass = 'w-i') {
   return words;
 }
 
-export const formatPrice = (p) => `${p} $`;
+/** « 14 · repas 20 » → « 14 $ · repas 20 $ » ; un texte sans chiffre (« Prix du marché ») reste tel quel. */
+export const formatPrice = (p = '') => String(p).replace(/\d+(?:[.,]\d+)?/g, '$& $');

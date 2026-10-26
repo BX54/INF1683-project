@@ -8,7 +8,7 @@
       "verre": "ballon",
       "couleur": "#5E0B1A",
       "reflet": "#A3243B",
-      "intro": "Le rouge appelle la braise, les sauces mijotées et les belles pièces de viande. Dites-nous quel caractère a votre bouteille.",
+      "intro": "Le rouge appelle le grill, les sauces au porto et les pâtes à la viande. Dites-nous quel caractère a votre bouteille.",
       "question": "Votre rouge est plutôt…",
       "profils": [
         {
@@ -18,9 +18,18 @@
           "couleur": "#8A1C2B",
           "reflet": "#C8475A",
           "plats": [
-            { "id": "magret-canard", "pourquoi": "Les fruits rouges du pinot répondent aux cerises, et sa fraîcheur allège le gras du canard." },
-            { "id": "raviolis-champignons", "pourquoi": "Les notes de sous-bois d'un pinot épousent les champignons sauvages et la truffe." },
-            { "id": "saumon-beurre-blanc", "pourquoi": "Un rouge léger aux tanins soyeux est l'un des rares à bien accompagner le saumon." }
+            {
+              "id": "magret-de-canard",
+              "pourquoi": "Les fruits rouges du pinot répondent à la sauce framboises et porto, et sa fraîcheur allège le canard."
+            },
+            {
+              "id": "fettucini-all-anatra",
+              "pourquoi": "Canard confit et champignons : les notes de sous-bois d'un pinot ou d'un gamay s'y fondent."
+            },
+            {
+              "id": "filet-de-saumon-de-l-atlantique",
+              "pourquoi": "Un rouge léger aux tanins soyeux est l'un des rares à bien accompagner le saumon."
+            }
           ]
         },
         {
@@ -30,9 +39,18 @@
           "couleur": "#6E0F22",
           "reflet": "#B12A45",
           "plats": [
-            { "id": "tagliatelles-bolognaise", "pourquoi": "L'acidité du Chianti tient tête à la tomate, et le fruit enrobe le ragù." },
-            { "id": "osso-buco", "pourquoi": "Un merlot rond accompagne la tendreté du veau braisé sans couvrir le safran." },
-            { "id": "lasagne-maison", "pourquoi": "Le fruit généreux répond à la béchamel et à la mozzarella gratinée." }
+            {
+              "id": "spaghetti-bolognese",
+              "pourquoi": "L'acidité du Chianti tient tête à la tomate, et son fruit enrobe la sauce à la viande."
+            },
+            {
+              "id": "penne-con-salsiccia",
+              "pourquoi": "Saucisse, poivron et basilic : un merlot ou un côtes-du-rhône en prolonge les épices douces."
+            },
+            {
+              "id": "escalope-parmigiana",
+              "pourquoi": "Tomate, basilic, mozzarella gratinée : l'accord classique d'un rouge italien fruité."
+            }
           ]
         },
         {
@@ -42,9 +60,18 @@
           "couleur": "#3E0712",
           "reflet": "#7D1830",
           "plats": [
-            { "id": "filet-mignon", "pourquoi": "Les tanins fermes s'arrondissent au contact du bœuf saisi et du poivre." },
-            { "id": "carre-agneau", "pourquoi": "Les épices de la syrah prolongent la croûte d'herbes et le romarin." },
-            { "id": "moelleux-chocolat", "pourquoi": "Un rouge puissant et un chocolat intense : la finale la plus audacieuse de la soirée." }
+            {
+              "id": "filet-mignon",
+              "pourquoi": "Les tanins fermes s'arrondissent au contact du bœuf, avec la sauce au poivre comme avec le porto."
+            },
+            {
+              "id": "jarret-d-agneau",
+              "pourquoi": "La syrah ou le malbec ont l'épaule qu'il faut pour un agneau braisé au porto."
+            },
+            {
+              "id": "mosaique",
+              "pourquoi": "Filet mignon au porto et crevettes au beurre d'ail : un grand rouge pour le plat le plus généreux de la carte."
+            }
           ]
         }
       ]
@@ -58,9 +85,18 @@
       "reflet": "#F4DD8E",
       "intro": "Vif ou beurré, le blanc révèle l'iode, les crèmes et les herbes fraîches.",
       "plats": [
-        { "id": "moules-marinieres", "pourquoi": "Le vin qui a servi à la cuisson est celui qu'on boit : l'accord le plus naturel qui soit." },
-        { "id": "petoncles-poeles", "pourquoi": "Un chardonnay boisé fait écho au beurre noisette et à la douceur des pétoncles." },
-        { "id": "linguine-fruits-de-mer", "pourquoi": "La vivacité d'un sauvignon souligne l'iode et l'ail sans les écraser." }
+        {
+          "id": "moules-mariniere",
+          "pourquoi": "Vin blanc dans la marmite, vin blanc dans le verre : l'accord le plus naturel qui soit."
+        },
+        {
+          "id": "fettuccini-di-mare",
+          "pourquoi": "Moules, palourdes et crème d'ail : un chardonnay rond fait écho à la crème, un sauvignon souligne l'iode."
+        },
+        {
+          "id": "scaloppini-piccata-limone",
+          "pourquoi": "Le citron et le vin blanc de la sauce appellent un blanc vif et minéral."
+        }
       ]
     },
     {
@@ -72,9 +108,18 @@
       "reflet": "#F8C1B8",
       "intro": "Le rosé, c'est le soleil du Sud dans le verre : tomates, olives et légèreté.",
       "plats": [
-        { "id": "moules-provencale", "pourquoi": "Rosé de Provence et moules provençales : un même terroir, une même lumière." },
-        { "id": "burrata", "pourquoi": "Sa fraîcheur fruitée réveille les tomates anciennes et la crème de la burrata." },
-        { "id": "bar-mediterraneen", "pourquoi": "Un rosé sec accompagne la chair délicate du bar et les tomates confites." }
+        {
+          "id": "moules-provencale",
+          "pourquoi": "Rosé de Provence et moules provençales : un même terroir, une même lumière."
+        },
+        {
+          "id": "bruschetta-campagnola",
+          "pourquoi": "Tomate, câpres, olives et feta : la fraîcheur fruitée du rosé réveille chaque bouchée."
+        },
+        {
+          "id": "linguini-con-gamberi",
+          "pourquoi": "Crevettes, tomate et feta : un rosé sec accompagne le côté méditerranéen du plat."
+        }
       ]
     },
     {
@@ -87,9 +132,18 @@
       "bulles": true,
       "intro": "Champagne, crémant ou prosecco : les bulles nettoient le palais et rendent tout plus festif.",
       "plats": [
-        { "id": "tartare-saumon", "pourquoi": "L'effervescence et l'acidité tranchent dans la richesse du saumon et réveillent les agrumes." },
-        { "id": "escargots", "pourquoi": "Les bulles allègent le beurre à l'ail, bouchée après bouchée." },
-        { "id": "creme-brulee", "pourquoi": "Un crémant légèrement dosé répond à la vanille et au caramel craquant." }
+        {
+          "id": "calmars-frits",
+          "pourquoi": "L'effervescence et l'acidité tranchent dans la friture : le duo apéritif par excellence."
+        },
+        {
+          "id": "tartare-de-saumon",
+          "pourquoi": "Les bulles allègent le saumon et répondent à la mangue et au citron."
+        },
+        {
+          "id": "creme-brulee",
+          "pourquoi": "Un crémant légèrement dosé répond à la vanille et au caramel craquant."
+        }
       ]
     },
     {
@@ -101,11 +155,20 @@
       "reflet": "#F0B84A",
       "bulles": true,
       "mousse": true,
-      "intro": "Blanche, ambrée ou IPA de microbrasserie : la bière a toute sa place à une grande table.",
+      "intro": "Blanche, ambrée ou IPA de microbrasserie : la bière se marie aux moules, aux burgers et aux poutines.",
       "plats": [
-        { "id": "moules-biere", "pourquoi": "Une blanche aux notes d'agrumes, dans la marmite comme dans le verre." },
-        { "id": "penne-arrabbiata", "pourquoi": "L'amertume d'une IPA apaise le piment et prolonge la sauce tomate." },
-        { "id": "soupe-oignon", "pourquoi": "Une ambrée maltée et caramélisée répond aux oignons fondants et au gruyère." }
+        {
+          "id": "moules-au-cari",
+          "pourquoi": "Cari et lait de coco : une IPA ou une blanche aux agrumes calme les épices et rafraîchit."
+        },
+        {
+          "id": "burger-au-boeuf",
+          "pourquoi": "Bœuf haché maison et cheddar : une ambrée de microbrasserie, l'accord qui ne déçoit jamais."
+        },
+        {
+          "id": "poutine-au-boeuf-braise",
+          "pourquoi": "Une rousse maltée et une poutine au bœuf braisé : l'accord québécois par excellence."
+        }
       ]
     },
     {
@@ -118,9 +181,18 @@
       "bulles": true,
       "intro": "Fierté des vergers du Québec, le cidre marie fruit, acidité et fines bulles.",
       "plats": [
-        { "id": "tarte-tatin", "pourquoi": "La pomme dans le verre, la pomme dans l'assiette : un accord tout en écho." },
-        { "id": "magret-canard", "pourquoi": "Le fruit et l'acidité du cidre équilibrent la richesse du canard." },
-        { "id": "moules-gorgonzola", "pourquoi": "Les bulles et la pomme acidulée allègent la crème au gorgonzola." }
+        {
+          "id": "poitrine-de-poulet-cajun",
+          "pourquoi": "Le cidre du Québec et la crème dijonnaise à l'érable : sucre, acidité et épices s'équilibrent."
+        },
+        {
+          "id": "feuillete-de-champignons",
+          "pourquoi": "La pomme et les fines bulles du cidre allègent la crème et la pâte feuilletée."
+        },
+        {
+          "id": "salade-de-betteraves",
+          "pourquoi": "Betterave et feta : un cidre sec apporte le fruit et l'acidité qui les relèvent."
+        }
       ]
     },
     {
@@ -133,9 +205,18 @@
       "bulles": true,
       "intro": "Kombucha, mocktail, vin désalcoolisé ou eau pétillante citronnée : l'accord reste une fête.",
       "plats": [
-        { "id": "carpaccio-boeuf", "pourquoi": "Une boisson pétillante aux agrumes réveille la roquette et le balsamique." },
-        { "id": "veau-marsala", "pourquoi": "Un thé glacé ou un kombucha légèrement fumé répond aux champignons et au marsala." },
-        { "id": "panna-cotta", "pourquoi": "Une limonade aux fruits rouges prolonge le coulis de framboises." }
+        {
+          "id": "carpaccio-de-boeuf",
+          "pourquoi": "Une eau pétillante aux agrumes réveille la roquette, les câpres et le balsamique."
+        },
+        {
+          "id": "penne-con-pollo",
+          "pourquoi": "Un kombucha ou un thé glacé maison répond à la crème et au vin blanc de la sauce."
+        },
+        {
+          "id": "verrine-a-la-mangue",
+          "pourquoi": "Une limonade maison ou un mocktail aux fruits prolonge la mangue en douceur."
+        }
       ]
     }
   ]

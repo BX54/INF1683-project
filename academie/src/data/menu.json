@@ -1,261 +1,818 @@
 {
-  "_aide": "Chaque plat a un « id » unique (utilisé aussi par accords.json et galerie.json) et une photo dans /public/images/plats. Les prix sont des exemples : ajustez-les.",
+  "_aide": "Menu 2026 de L'Académie. Chaque plat a un « id » unique (utilisé par accords.json, accueil.json et galerie.json). « image » est facultatif : sans image, le plat s'affiche en carte texte. « prix » : nombre(s) sans le signe $, qui est ajouté automatiquement.",
   "categories": [
     {
       "id": "entrees",
       "nom": "Entrées",
-      "accroche": "Pour ouvrir la bouteille en douceur",
+      "accroche": "Pour ouvrir la bouteille",
       "plats": [
         {
-          "id": "soupe-oignon",
-          "nom": "Soupe à l'oignon gratinée",
-          "description": "Bouillon de bœuf longuement mijoté, croûton doré, gruyère fondant.",
-          "prix": "12",
-          "image": "/images/plats/soupe-oignon.webp",
-          "tags": ["Classique"]
+          "id": "saumon-fume",
+          "nom": "Saumon fumé",
+          "description": "Salade mixte, oignon rouge, câpres frites, huile d'olive et citron",
+          "prix": "15",
+          "image": "/images/plats/saumon-fume.webp"
         },
         {
-          "id": "burrata",
-          "nom": "Burrata crémeuse",
-          "description": "Tomates anciennes, basilic frais, huile d'olive vierge et fleur de sel.",
-          "prix": "17",
-          "image": "/images/plats/burrata.webp",
-          "tags": ["Végétarien"]
-        },
-        {
-          "id": "escargots",
-          "nom": "Escargots de Bourgogne",
-          "description": "Beurre à l'ail et au persil, pain grillé pour saucer.",
+          "id": "fondue-parmesan",
+          "nom": "Fondue parmesan",
+          "description": "Notre recette de parmesan fondu, sauce marinara maison",
           "prix": "14",
-          "image": "/images/plats/escargots.webp",
-          "tags": []
+          "image": "/images/plats/fondue-parmesan.webp"
         },
         {
-          "id": "carpaccio-boeuf",
+          "id": "focaccia",
+          "nom": "Focaccia",
+          "description": "Huile d'olive, fines herbes italiennes, ail rôti, parmesan, sauce marinara",
+          "prix": "11",
+          "image": "/images/plats/focaccia.webp"
+        },
+        {
+          "id": "potage-du-chef",
+          "nom": "Potage du chef",
+          "description": "Selon l'inspiration du moment",
+          "prix": "8",
+          "image": "/images/plats/potage-du-chef.webp"
+        },
+        {
+          "id": "pain-a-l-ail",
+          "nom": "Pain à l'ail",
+          "description": "",
+          "prix": "5 · gratiné 8",
+          "image": "/images/plats/pain-a-l-ail.webp"
+        },
+        {
+          "id": "escargots-a-l-ail",
+          "nom": "Escargots à l'ail",
+          "description": "",
+          "prix": "13 · gratinés 16",
+          "image": "/images/plats/escargots-a-l-ail.webp"
+        },
+        {
+          "id": "crevettes-a-l-ail",
+          "nom": "Crevettes à l'ail",
+          "description": "",
+          "prix": "14 · gratinées 17",
+          "image": "/images/plats/crevettes-a-l-ail.webp"
+        },
+        {
+          "id": "coquille-saint-jacques",
+          "nom": "Coquille Saint-Jacques",
+          "description": "Fruits de mer assortis, champignons, purée de pommes de terre, béchamel, gratinée",
+          "prix": "19",
+          "image": "/images/plats/coquille-saint-jacques.webp"
+        },
+        {
+          "id": "calmars-frits",
+          "nom": "Calmars frits",
+          "description": "Citron et mayo épicée",
+          "prix": "20",
+          "image": "/images/plats/calmars-frits.webp"
+        },
+        {
+          "id": "zucchinis-frits",
+          "nom": "Zucchinis frits",
+          "description": "",
+          "prix": "16",
+          "image": "/images/plats/zucchinis-frits.webp"
+        },
+        {
+          "id": "feuillete-de-champignons",
+          "nom": "Feuilleté de champignons",
+          "description": "Pâte feuilletée, champignons, crème, échalote",
+          "prix": "13",
+          "image": "/images/plats/feuillete-de-champignons.webp"
+        },
+        {
+          "id": "bruschetta-campagnola",
+          "nom": "Bruschetta Campagnola",
+          "description": "Tomate, oignon rouge, basilic, câpres, olives noires, échalote, origan, zeste de citron, réduction balsamique et feta émiettée",
+          "prix": "15",
+          "image": "/images/plats/bruschetta-campagnola.webp"
+        },
+        {
+          "id": "carpaccio-de-boeuf",
           "nom": "Carpaccio de bœuf",
-          "description": "Roquette, copeaux de parmesan, câpres et réduction balsamique.",
-          "prix": "16",
-          "image": "/images/plats/carpaccio-boeuf.webp",
-          "tags": []
-        },
-        {
-          "id": "tartare-saumon",
-          "nom": "Tartare de saumon",
-          "description": "Agrumes, aneth, échalote et croustillant de pain.",
-          "prix": "16",
-          "image": "/images/plats/tartare-saumon.webp",
-          "tags": []
+          "description": "Roquette, câpres frites, oignon rouge, huile d'olive, copeaux de parmesan, moutarde de Dijon, réduction balsamique",
+          "prix": "20",
+          "image": "/images/plats/carpaccio-de-boeuf.webp"
         }
       ]
     },
     {
-      "id": "moules",
-      "nom": "Moules",
-      "accroche": "Servies en marmite, avec frites maison",
+      "id": "salades",
+      "nom": "Salades",
+      "accroche": "Format entrée ou repas",
       "plats": [
         {
-          "id": "moules-marinieres",
-          "nom": "Moules marinières",
-          "description": "Vin blanc, échalotes, beurre et persil plat.",
-          "prix": "24",
-          "image": "/images/plats/moules-marinieres.webp",
-          "tags": ["Signature"]
+          "id": "salade-du-chef",
+          "nom": "Salade du chef",
+          "description": "Salade mixte, tomate, olives noires, vinaigrette maison",
+          "prix": "8 · repas 14",
+          "image": "/images/plats/salade-du-chef.webp"
         },
         {
-          "id": "moules-provencale",
-          "nom": "Moules provençales",
-          "description": "Tomates, ail, olives noires et herbes de Provence.",
-          "prix": "24",
-          "image": "/images/plats/moules-provencale.webp",
-          "tags": []
+          "id": "salade-cesar",
+          "nom": "Salade César",
+          "description": "Parmesan, bacon, croûtons aux fines herbes italiennes, vinaigrette César crémeuse",
+          "prix": "11 · repas 16",
+          "image": "/images/plats/salade-cesar.webp"
         },
         {
-          "id": "moules-gorgonzola",
-          "nom": "Moules au gorgonzola",
-          "description": "Crème onctueuse au gorgonzola et poivre noir concassé.",
-          "prix": "26",
-          "image": "/images/plats/moules-gorgonzola.webp",
-          "tags": []
+          "id": "salade-de-roquette",
+          "nom": "Salade de roquette",
+          "description": "Tomate, oignon rouge, copeaux de parmesan, vinaigrette maison (ou simplement huile d'olive), réduction balsamique",
+          "prix": "14 · repas 20",
+          "image": "/images/plats/salade-de-roquette.webp"
         },
         {
-          "id": "moules-biere",
-          "nom": "Moules à la bière blanche",
-          "description": "Bière blanche, lardons fumés, oignons et crème.",
-          "prix": "25",
-          "image": "/images/plats/moules-biere.webp",
-          "tags": []
+          "id": "salade-de-betteraves",
+          "nom": "Salade de betteraves",
+          "description": "Betteraves en dés, feta émiettée, persil et vinaigrette au vin blanc citronnée",
+          "prix": "14 · repas 19",
+          "image": "/images/plats/salade-de-betteraves.webp"
+        },
+        {
+          "id": "ajout-poulet-grille",
+          "nom": "Ajout : poulet grillé",
+          "description": "",
+          "prix": "10"
+        },
+        {
+          "id": "ajout-6-crevettes",
+          "nom": "Ajout : 6 crevettes",
+          "description": "",
+          "prix": "11"
+        },
+        {
+          "id": "ajout-3-crevettes-papillon",
+          "nom": "Ajout : 3 crevettes papillon",
+          "description": "",
+          "prix": "11"
+        },
+        {
+          "id": "ajout-saumon-de-l-atlantique-frais",
+          "nom": "Ajout : saumon de l'Atlantique frais",
+          "description": "",
+          "prix": "12"
+        },
+        {
+          "id": "ajout-canard-confit",
+          "nom": "Ajout : canard confit",
+          "description": "",
+          "prix": "13"
+        }
+      ]
+    },
+    {
+      "id": "tartares",
+      "nom": "Tartares",
+      "accroche": "Repas : avec frites et salade · Entrée : avec salade",
+      "plats": [
+        {
+          "id": "tartare-de-saumon",
+          "nom": "Tartare de saumon",
+          "description": "Saumon de l'Atlantique, mangue, câpres, graines de sésame, aneth, jus de citron, huile d'olive et échalote",
+          "prix": "23 · repas 32",
+          "image": "/images/plats/tartare-de-saumon.webp"
+        },
+        {
+          "id": "tartare-de-boeuf",
+          "nom": "Tartare de bœuf",
+          "description": "Bœuf frais, câpres, cornichons, moutarde de Dijon, échalote, huile d'olive, persil, mayonnaise, estragon et copeaux de parmesan",
+          "prix": "25 · repas 34",
+          "image": "/images/plats/tartare-de-boeuf.webp"
         }
       ]
     },
     {
       "id": "pates",
-      "nom": "Pâtes",
-      "accroche": "Fraîches, comme à la trattoria",
+      "nom": "Pâtes classiques",
+      "accroche": "Sauces faites maison, sur place",
+      "note": "Option sans gluten : +3 $.",
       "plats": [
         {
-          "id": "linguine-fruits-de-mer",
-          "nom": "Linguine aux fruits de mer",
-          "description": "Crevettes, pétoncles, moules, ail, vin blanc et tomates cerises.",
-          "prix": "29",
-          "image": "/images/plats/linguine-fruits-de-mer.webp",
-          "tags": []
+          "id": "fettucini-primavera",
+          "nom": "Fettucini primavera",
+          "description": "Légumes de saison, huile d'olive, ail, fines herbes italiennes",
+          "prix": "20",
+          "image": "/images/plats/fettucini-primavera.webp",
+          "tags": [
+            "Végétarien"
+          ]
         },
         {
-          "id": "tagliatelles-bolognaise",
-          "nom": "Tagliatelles bolognaise",
-          "description": "Ragoût de bœuf et de veau mijoté six heures, parmigiano.",
-          "prix": "24",
-          "image": "/images/plats/tagliatelles-bolognaise.webp",
-          "tags": ["Classique"]
-        },
-        {
-          "id": "raviolis-champignons",
-          "nom": "Raviolis aux champignons sauvages",
-          "description": "Crème légère à la truffe, parmesan et ciboulette.",
-          "prix": "27",
-          "image": "/images/plats/raviolis-champignons.webp",
-          "tags": ["Végétarien"]
-        },
-        {
-          "id": "penne-arrabbiata",
-          "nom": "Penne all'arrabbiata",
-          "description": "Sauce tomate relevée au piment, ail et basilic.",
+          "id": "spaghetti-bolognese",
+          "nom": "Spaghetti bolognese",
+          "description": "Sauce à la viande traditionnelle",
           "prix": "21",
-          "image": "/images/plats/penne-arrabbiata.webp",
-          "tags": ["Végétarien", "Épicé"]
+          "image": "/images/plats/spaghetti-bolognese.webp",
+          "tags": [
+            "Classique"
+          ]
         },
         {
-          "id": "lasagne-maison",
-          "nom": "Lasagne de la maison",
-          "description": "Couches de pâte fraîche, béchamel, ragù et mozzarella gratinée.",
-          "prix": "25",
-          "image": "/images/plats/lasagne-maison.webp",
-          "tags": []
+          "id": "fettucini-alfredo",
+          "nom": "Fettucini Alfredo",
+          "description": "Crème, beurre, parmesan",
+          "prix": "22",
+          "image": "/images/plats/fettucini-alfredo.webp",
+          "tags": [
+            "Végétarien"
+          ]
+        },
+        {
+          "id": "tortellini-emilia",
+          "nom": "Tortellini Emilia",
+          "description": "Farcis à la viande, sauce tomate, crème, ail, échalote et parmesan",
+          "prix": "24",
+          "image": "/images/plats/tortellini-emilia.webp"
+        },
+        {
+          "id": "ravioli",
+          "nom": "Ravioli",
+          "description": "Farcis aux fromages, sauce rosée, basilic et échalote",
+          "prix": "24",
+          "image": "/images/plats/ravioli.webp",
+          "tags": [
+            "Végétarien"
+          ]
         }
       ]
     },
     {
-      "id": "viandes",
-      "nom": "Viandes",
+      "id": "specialites",
+      "nom": "Spécialités pâtes",
+      "accroche": "Nos pâtes signature",
+      "note": "En spécial à 20 $. Nos spéciaux ne sont pas valides la Saint-Valentin, la fête des Mères et certains jours fériés. Option sans gluten : +3 $.",
+      "plats": [
+        {
+          "id": "spaghetti-carbonara",
+          "nom": "Spaghetti Carbonara",
+          "description": "Crème, vin blanc, échalote, pancetta et parmesan",
+          "prix": "26",
+          "image": "/images/plats/spaghetti-carbonara.webp"
+        },
+        {
+          "id": "linguini-con-lumache",
+          "nom": "Linguini con Lumache",
+          "description": "Crème d'ail, escargots, tomates séchées, basilic et parmesan",
+          "prix": "26",
+          "image": "/images/plats/linguini-con-lumache.webp"
+        },
+        {
+          "id": "penne-con-salsiccia",
+          "nom": "Penne con Salsiccia",
+          "description": "Saucisse, poivron, ail, tomate, basilic, épinards, sauce tomate",
+          "prix": "26",
+          "image": "/images/plats/penne-con-salsiccia.webp"
+        },
+        {
+          "id": "penne-con-pollo",
+          "nom": "Penne con Pollo",
+          "description": "Poulet grillé en cubes, épinards, échalote, poivron, oignon rouge, crème et vin blanc",
+          "prix": "28",
+          "image": "/images/plats/penne-con-pollo.webp"
+        },
+        {
+          "id": "penne-di-trieste",
+          "nom": "Penne di Trieste",
+          "description": "Prosciutto, champignons, sauce rosée, échalote, vin blanc",
+          "prix": "26",
+          "image": "/images/plats/penne-di-trieste.webp"
+        },
+        {
+          "id": "linguini-giorgio",
+          "nom": "Linguini Giorgio",
+          "description": "Champignons, tomates séchées, épinards, ail, poireau, sauce crémeuse aux fines herbes, roquette, fromage de chèvre",
+          "prix": "26",
+          "image": "/images/plats/linguini-giorgio.webp",
+          "tags": [
+            "Végétarien"
+          ]
+        },
+        {
+          "id": "fettucini-all-anatra",
+          "nom": "Fettucini all'Anatra",
+          "description": "Canard confit, champignons, ail, échalote et sauce crémeuse aux fines herbes",
+          "prix": "28",
+          "image": "/images/plats/fettucini-all-anatra.webp"
+        },
+        {
+          "id": "lasagne-pasticciata",
+          "nom": "Lasagne pasticciata",
+          "description": "Tomate, basilic, viande, œufs, crème et champignons",
+          "prix": "26",
+          "image": "/images/plats/lasagne-pasticciata.webp"
+        },
+        {
+          "id": "cannelloni",
+          "nom": "Cannelloni",
+          "description": "Viande, parmesan, fines herbes, gratinés",
+          "prix": "26",
+          "image": "/images/plats/cannelloni.webp"
+        },
+        {
+          "id": "fettucini-nastaba",
+          "nom": "Fettucini Nastaba",
+          "description": "Saumon fumé, crème, vin blanc, poivre concassé, échalote et roquette",
+          "prix": "30",
+          "image": "/images/plats/fettucini-nastaba.webp"
+        },
+        {
+          "id": "linguini-con-gamberi",
+          "nom": "Linguini con Gamberi",
+          "description": "Crevettes, sauce tomate, feta émiettée, épinards, tomate, basilic",
+          "prix": "30",
+          "image": "/images/plats/linguini-con-gamberi.webp"
+        },
+        {
+          "id": "fettuccini-con-gamberi-e-giardiniera",
+          "nom": "Fettuccini con Gamberi e Giardiniera",
+          "description": "Crevettes, poivron, tomates séchées, champignons, épinards, huile d'olive, ail, vin blanc et fines herbes",
+          "prix": "30",
+          "image": "/images/plats/fettuccini-con-gamberi-e-giardiniera.webp"
+        },
+        {
+          "id": "fettuccini-di-mare",
+          "nom": "Fettuccini di Mare",
+          "description": "Moules, palourdes, tomates séchées, crème d'ail, poivre, vin blanc, parmesan et échalotes",
+          "prix": "32",
+          "image": "/images/plats/fettuccini-di-mare.webp",
+          "tags": [
+            "Signature"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "moules",
+      "nom": "Moules et frites",
+      "accroche": "Servies avec frites maison",
+      "note": "En spécial à 20 $. Nos spéciaux ne sont pas valides la Saint-Valentin, la fête des Mères et certains jours fériés.",
+      "plats": [
+        {
+          "id": "moules-flamande",
+          "nom": "Moules flamande",
+          "description": "Crème, poireau, ail, bouillon de légumes et vin blanc",
+          "prix": "28",
+          "image": "/images/plats/moules-flamande.webp"
+        },
+        {
+          "id": "moules-mariniere",
+          "nom": "Moules marinière",
+          "description": "Ail, citron, échalote, oignon, bouillon de légumes et vin blanc",
+          "prix": "28",
+          "image": "/images/plats/moules-mariniere.webp",
+          "tags": [
+            "Signature"
+          ]
+        },
+        {
+          "id": "moules-a-l-italienne",
+          "nom": "Moules à l'italienne",
+          "description": "Sauce tomate, basilic, ail, bouillon de légumes et vin blanc",
+          "prix": "28",
+          "image": "/images/plats/moules-a-l-italienne.webp"
+        },
+        {
+          "id": "moules-provencale",
+          "nom": "Moules provençale",
+          "description": "Tomate, oignon, ail, bouillon de légumes et vin blanc",
+          "prix": "28",
+          "image": "/images/plats/moules-provencale.webp"
+        },
+        {
+          "id": "moules-madagascar",
+          "nom": "Moules Madagascar",
+          "description": "Crème, ail, demi-glace, poivre vert de Madagascar, cognac",
+          "prix": "28",
+          "image": "/images/plats/moules-madagascar.webp"
+        },
+        {
+          "id": "moules-au-roquefort",
+          "nom": "Moules au roquefort",
+          "description": "Crème, ail, bouillon de légumes et roquefort",
+          "prix": "28",
+          "image": "/images/plats/moules-au-roquefort.webp"
+        },
+        {
+          "id": "moules-dijonnaise",
+          "nom": "Moules dijonnaise",
+          "description": "Crème, ail, moutarde de Dijon, bouillon de légumes, vin blanc et échalote",
+          "prix": "28",
+          "image": "/images/plats/moules-dijonnaise.webp"
+        },
+        {
+          "id": "moules-au-cari",
+          "nom": "Moules au cari",
+          "description": "Crème, oignon, cari, ail, échalote et lait de coco",
+          "prix": "28",
+          "image": "/images/plats/moules-au-cari.webp",
+          "tags": [
+            "Épicé"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poutines",
+      "nom": "Poutines gourmet",
+      "accroche": "Frites maison et fromage en grains du Québec",
+      "plats": [
+        {
+          "id": "poutine-au-filet-mignon",
+          "nom": "Poutine au filet mignon",
+          "description": "Sauce au poivre et échalote",
+          "prix": "28",
+          "image": "/images/plats/poutine-au-filet-mignon.webp"
+        },
+        {
+          "id": "poutine-au-canard-effiloche",
+          "nom": "Poutine au canard effiloché",
+          "description": "Sauce au porto, oignons frits",
+          "prix": "28",
+          "image": "/images/plats/poutine-au-canard-effiloche.webp"
+        },
+        {
+          "id": "poutine-saucisses-italiennes-et-pancetta",
+          "nom": "Poutine saucisses italiennes et pancetta",
+          "description": "Échalote et sauce marsala",
+          "prix": "25",
+          "image": "/images/plats/poutine-saucisses-italiennes-et-pancetta.webp"
+        },
+        {
+          "id": "poutine-au-boeuf-braise",
+          "nom": "Poutine au bœuf braisé",
+          "description": "Sauce demi-glace et échalote",
+          "prix": "26",
+          "image": "/images/plats/poutine-au-boeuf-braise.webp"
+        }
+      ]
+    },
+    {
+      "id": "burgers",
+      "nom": "Burgers",
+      "accroche": "Servis avec frites maison",
+      "plats": [
+        {
+          "id": "burger-au-poulet",
+          "nom": "Burger au poulet",
+          "description": "Pain brioché, poitrine de poulet grillée, tomate, laitue, oignons frits, cheddar, vinaigrette maison",
+          "prix": "19",
+          "image": "/images/plats/burger-au-poulet.webp"
+        },
+        {
+          "id": "burger-au-boeuf",
+          "nom": "Burger au bœuf",
+          "description": "Pain brioché, bœuf haché maison, tomate, laitue, oignons frits, cheddar, vinaigrette maison",
+          "prix": "22",
+          "image": "/images/plats/burger-au-boeuf.webp"
+        }
+      ]
+    },
+    {
+      "id": "veau-poulet",
+      "nom": "Veau et poulet",
+      "accroche": "Avec pâtes à l'ail et légumes de saison",
+      "note": "En spécial à 28 $. Nos spéciaux ne sont pas valides la Saint-Valentin, la fête des Mères et certains jours fériés.",
+      "plats": [
+        {
+          "id": "scaloppini-piccata-limone",
+          "nom": "Scaloppini piccata limone",
+          "description": "Citron, bouillon de légumes, vin blanc, persillade",
+          "prix": "33",
+          "image": "/images/plats/scaloppini-piccata-limone.webp"
+        },
+        {
+          "id": "scaloppini-marsala",
+          "nom": "Scaloppini Marsala",
+          "description": "Champignons, demi-glace et vin Marsala",
+          "prix": "33",
+          "image": "/images/plats/scaloppini-marsala.webp"
+        },
+        {
+          "id": "escalope-parmigiana",
+          "nom": "Escalope Parmigiana",
+          "description": "Légèrement panée, sauce tomate, basilic et mozzarella",
+          "prix": "34",
+          "image": "/images/plats/escalope-parmigiana.webp"
+        },
+        {
+          "id": "scaloppini-aux-champignons-sauvages",
+          "nom": "Scaloppini aux champignons sauvages",
+          "description": "Crème, champignons sauvages, demi-glace, brandy, tomates séchées et fromage de chèvre",
+          "prix": "35",
+          "image": "/images/plats/scaloppini-aux-champignons-sauvages.webp"
+        },
+        {
+          "id": "scaloppini-duo-pepe",
+          "nom": "Scaloppini duo Pepe",
+          "description": "Crème, poivres, demi-glace et cognac",
+          "prix": "35",
+          "image": "/images/plats/scaloppini-duo-pepe.webp"
+        },
+        {
+          "id": "scaloppini-san-daniele",
+          "nom": "Scaloppini San Daniele",
+          "description": "Prosciutto, épinards, crème, demi-glace et brandy",
+          "prix": "35",
+          "image": "/images/plats/scaloppini-san-daniele.webp"
+        },
+        {
+          "id": "scaloppini-dijonnaise",
+          "nom": "Scaloppini dijonnaise",
+          "description": "Crème, ail, moutarde de Dijon, champignons",
+          "prix": "33",
+          "image": "/images/plats/scaloppini-dijonnaise.webp"
+        },
+        {
+          "id": "poitrine-de-poulet-cajun",
+          "nom": "Poitrine de poulet cajun",
+          "description": "Crème dijonnaise à l'érable, échalote et épices cajun",
+          "prix": "32",
+          "image": "/images/plats/poitrine-de-poulet-cajun.webp",
+          "tags": [
+            "Épicé"
+          ]
+        },
+        {
+          "id": "poitrine-de-poulet-aux-champignons-sauvages",
+          "nom": "Poitrine de poulet aux champignons sauvages",
+          "description": "Crème, champignons sauvages, demi-glace, brandy et tomates séchées",
+          "prix": "32",
+          "image": "/images/plats/poitrine-de-poulet-aux-champignons-sauvages.webp"
+        },
+        {
+          "id": "poitrine-de-poulet-a-la-campania",
+          "nom": "Poitrine de poulet à la Campania",
+          "description": "Salsa aux tomates et fines herbes, oignons frits",
+          "prix": "30",
+          "image": "/images/plats/poitrine-de-poulet-a-la-campania.webp"
+        },
+        {
+          "id": "poulet-parmigiana",
+          "nom": "Poulet Parmigiana",
+          "description": "Pané, sauce tomate et basilic, gratiné",
+          "prix": "31",
+          "image": "/images/plats/poulet-parmigiana.webp"
+        }
+      ]
+    },
+    {
+      "id": "grill",
+      "nom": "Grill",
       "accroche": "Le cœur de la soirée",
       "plats": [
         {
+          "id": "magret-de-canard",
+          "nom": "Magret de canard",
+          "description": "Sauce aux framboises et porto, pommes de terre et légumes de saison",
+          "prix": "42",
+          "image": "/images/plats/magret-de-canard.webp"
+        },
+        {
+          "id": "jarret-d-agneau",
+          "nom": "Jarret d'agneau",
+          "description": "Sauce au porto, pommes de terre et légumes de saison",
+          "prix": "40",
+          "image": "/images/plats/jarret-d-agneau.webp"
+        },
+        {
           "id": "filet-mignon",
-          "nom": "Filet mignon, sauce au poivre",
-          "description": "Bœuf tendre saisi, sauce au cognac et poivre vert, gratin dauphinois.",
-          "prix": "46",
-          "image": "/images/plats/filet-mignon.webp",
-          "tags": ["Signature"]
+          "nom": "Filet mignon de bœuf canadien",
+          "description": "Sauce au poivre ou au porto, pommes de terre et légumes de saison",
+          "prix": "Prix du marché",
+          "image": "/images/plats/filet-mignon.webp"
         },
         {
-          "id": "osso-buco",
-          "nom": "Osso buco à la milanaise",
-          "description": "Jarret de veau braisé, gremolata et risotto au safran.",
-          "prix": "39",
-          "image": "/images/plats/osso-buco.webp",
-          "tags": []
+          "id": "filet-de-saumon-de-l-atlantique",
+          "nom": "Filet de saumon de l'Atlantique",
+          "description": "Salsa aux tomates et fines herbes, oignons frits, riz et légumes du marché",
+          "prix": "33",
+          "image": "/images/plats/filet-de-saumon-de-l-atlantique.webp"
         },
         {
-          "id": "magret-canard",
-          "nom": "Magret de canard aux cerises",
-          "description": "Cuisson rosée, jus aux cerises noires, purée de céleri-rave.",
-          "prix": "38",
-          "image": "/images/plats/magret-canard.webp",
-          "tags": []
+          "id": "grosses-crevettes-a-la-florentine",
+          "nom": "Grosses crevettes à la florentine",
+          "description": "Crème, ail et épinards, riz et légumes du marché",
+          "prix": "43",
+          "image": "/images/plats/grosses-crevettes-a-la-florentine.webp"
         },
         {
-          "id": "carre-agneau",
-          "nom": "Carré d'agneau en croûte d'herbes",
-          "description": "Moutarde à l'ancienne, jus au romarin, légumes rôtis.",
-          "prix": "44",
-          "image": "/images/plats/carre-agneau.webp",
-          "tags": []
-        },
-        {
-          "id": "veau-marsala",
-          "nom": "Escalope de veau au marsala",
-          "description": "Champignons de Paris, sauce au marsala, linguine au beurre.",
-          "prix": "34",
-          "image": "/images/plats/veau-marsala.webp",
-          "tags": []
+          "id": "mosaique",
+          "nom": "Mosaïque",
+          "description": "Filet mignon au porto et crevettes papillon au beurre à l'ail, riz et légumes du marché",
+          "prix": "59",
+          "image": "/images/plats/mosaique.webp",
+          "tags": [
+            "Signature"
+          ]
         }
       ]
     },
     {
-      "id": "poissons",
-      "nom": "Poissons",
-      "accroche": "De la mer à la table",
+      "id": "pizzas",
+      "nom": "Pizzas",
+      "accroche": "Sauce tomate maison",
       "plats": [
         {
-          "id": "saumon-beurre-blanc",
-          "nom": "Saumon, beurre blanc",
-          "description": "Pavé de saumon rôti, beurre blanc citronné, asperges.",
-          "prix": "33",
-          "image": "/images/plats/saumon-beurre-blanc.webp",
-          "tags": []
+          "id": "pizza-margherita",
+          "nom": "Pizza Margherita",
+          "description": "Sauce tomate maison, tomates fraîches, mozzarella et basilic frais",
+          "prix": "20",
+          "image": "/images/plats/pizza-margherita.webp",
+          "tags": [
+            "Végétarien"
+          ]
         },
         {
-          "id": "petoncles-poeles",
-          "nom": "Pétoncles poêlés",
-          "description": "Purée de chou-fleur, beurre noisette et noisettes torréfiées.",
-          "prix": "38",
-          "image": "/images/plats/petoncles-poeles.webp",
-          "tags": []
+          "id": "pizza-prosciutto-e-rucola",
+          "nom": "Pizza prosciutto e rucola",
+          "description": "Sauce tomate maison, prosciutto, mozzarella, roquette et réduction balsamique",
+          "prix": "25",
+          "image": "/images/plats/pizza-prosciutto-e-rucola.webp"
         },
         {
-          "id": "bar-mediterraneen",
-          "nom": "Filet de bar méditerranéen",
-          "description": "Tomates confites, olives, câpres, fenouil braisé.",
-          "prix": "36",
-          "image": "/images/plats/bar-mediterraneen.webp",
-          "tags": []
+          "id": "pizza-frutti-di-mare",
+          "nom": "Pizza frutti di mare",
+          "description": "Mozzarella, sauce crémeuse maison, crevettes, pétoncles, champignons, ail",
+          "prix": "28",
+          "image": "/images/plats/pizza-frutti-di-mare.webp"
+        },
+        {
+          "id": "pizza-traditionnelle",
+          "nom": "Pizza traditionnelle",
+          "description": "Mozzarella, sauce tomate maison, pepperoni, champignons, poivron",
+          "prix": "22",
+          "image": "/images/plats/pizza-traditionnelle.webp"
+        },
+        {
+          "id": "pizza-con-pollo",
+          "nom": "Pizza con pollo",
+          "description": "Sauce crémeuse maison, poulet grillé, poivron, oignon rouge, épinards",
+          "prix": "24",
+          "image": "/images/plats/pizza-con-pollo.webp"
+        },
+        {
+          "id": "pizza-trois-viandes",
+          "nom": "Pizza trois viandes",
+          "description": "Sauce à la viande, champignons, pepperoni, saucisse, bacon et mozzarella",
+          "prix": "28",
+          "image": "/images/plats/pizza-trois-viandes.webp"
         }
       ]
     },
     {
       "id": "desserts",
       "nom": "Desserts",
-      "accroche": "La dernière gorgée, en douceur",
+      "accroche": "Tous faits maison",
       "plats": [
         {
+          "id": "gateau-au-fromage-et-coco-rape",
+          "nom": "Gâteau au fromage et coco râpé",
+          "description": "",
+          "prix": "10",
+          "image": "/images/plats/gateau-au-fromage-et-coco-rape.webp"
+        },
+        {
           "id": "creme-brulee",
-          "nom": "Crème brûlée à la vanille",
-          "description": "Gousse de vanille de Madagascar, caramel craquant.",
-          "prix": "11",
-          "image": "/images/plats/creme-brulee.webp",
-          "tags": ["Classique"]
+          "nom": "Crème brûlée",
+          "description": "",
+          "prix": "9",
+          "image": "/images/plats/creme-brulee.webp"
         },
         {
-          "id": "tiramisu",
-          "nom": "Tiramisu",
-          "description": "Mascarpone, espresso, amaretto et cacao amer.",
-          "prix": "12",
-          "image": "/images/plats/tiramisu.webp",
-          "tags": []
+          "id": "fritta-dolce",
+          "nom": "Fritta dolce",
+          "description": "",
+          "prix": "7",
+          "image": "/images/plats/fritta-dolce.webp"
         },
         {
-          "id": "moelleux-chocolat",
-          "nom": "Moelleux au chocolat",
-          "description": "Cœur coulant, glace vanille et fleur de sel.",
-          "prix": "13",
-          "image": "/images/plats/moelleux-chocolat.webp",
-          "tags": []
+          "id": "verrine-biscotti",
+          "nom": "Verrine biscotti",
+          "description": "",
+          "prix": "7",
+          "image": "/images/plats/verrine-biscotti.webp"
         },
         {
-          "id": "panna-cotta",
-          "nom": "Panna cotta aux fruits rouges",
-          "description": "Crème vanillée, coulis de framboises et fraises fraîches.",
-          "prix": "11",
-          "image": "/images/plats/panna-cotta.webp",
-          "tags": []
+          "id": "verrine-a-la-mangue",
+          "nom": "Verrine à la mangue",
+          "description": "",
+          "prix": "7",
+          "image": "/images/plats/verrine-a-la-mangue.webp"
         },
         {
-          "id": "tarte-tatin",
-          "nom": "Tarte Tatin",
-          "description": "Pommes caramélisées du Québec, crème fraîche.",
-          "prix": "12",
-          "image": "/images/plats/tarte-tatin.webp",
-          "tags": []
+          "id": "verrine-au-chocolat",
+          "nom": "Verrine au chocolat",
+          "description": "",
+          "prix": "7",
+          "image": "/images/plats/verrine-au-chocolat.webp"
+        }
+      ]
+    },
+    {
+      "id": "enfants",
+      "nom": "Menu enfants",
+      "accroche": "12 ans et moins · avec boisson gazeuse",
+      "plats": [
+        {
+          "id": "doigts-de-poulet-et-frites",
+          "nom": "Doigts de poulet et frites",
+          "description": "",
+          "prix": "12"
+        },
+        {
+          "id": "spaghetti-sauce-a-la-viande",
+          "nom": "Spaghetti sauce à la viande",
+          "description": "",
+          "prix": "11"
+        },
+        {
+          "id": "spaghetti-sauce-napolitaine",
+          "nom": "Spaghetti sauce napolitaine",
+          "description": "",
+          "prix": "11"
+        },
+        {
+          "id": "penne-sauce-rosee",
+          "nom": "Penne sauce rosée",
+          "description": "",
+          "prix": "11"
+        },
+        {
+          "id": "petite-poutine-reguliere",
+          "nom": "Petite poutine régulière",
+          "description": "",
+          "prix": "10"
+        },
+        {
+          "id": "pizza-bambino",
+          "nom": "Pizza bambino",
+          "description": "",
+          "prix": "13"
+        }
+      ]
+    },
+    {
+      "id": "a-cotes",
+      "nom": "À-côtés",
+      "accroche": "Pour compléter",
+      "plats": [
+        {
+          "id": "roquette",
+          "nom": "Roquette",
+          "description": "",
+          "prix": "4"
+        },
+        {
+          "id": "champignons-sautes-a-l-ail",
+          "nom": "Champignons sautés à l'ail",
+          "description": "",
+          "prix": "7"
+        },
+        {
+          "id": "legumes-grilles",
+          "nom": "Légumes grillés",
+          "description": "",
+          "prix": "5"
+        },
+        {
+          "id": "riz",
+          "nom": "Riz",
+          "description": "",
+          "prix": "4"
+        },
+        {
+          "id": "frites-maison",
+          "nom": "Frites maison",
+          "description": "",
+          "prix": "6 · 9"
+        },
+        {
+          "id": "pancetta-prosciutto-ou-saucisses-italiennes",
+          "nom": "Pancetta, prosciutto ou saucisses italiennes",
+          "description": "",
+          "prix": "6"
+        },
+        {
+          "id": "poitrine-de-poulet-grillee",
+          "nom": "Poitrine de poulet grillée",
+          "description": "",
+          "prix": "10"
+        },
+        {
+          "id": "fromage-feta-roquefort-ou-chevre",
+          "nom": "Fromage feta, roquefort ou chèvre",
+          "description": "",
+          "prix": "5"
+        },
+        {
+          "id": "sauce-porto-poivre-ou-lyonnaise-2-oz",
+          "nom": "Sauce porto, poivre ou lyonnaise (2 oz)",
+          "description": "",
+          "prix": "3"
         }
       ]
     }

@@ -186,7 +186,11 @@ export function initSignatures() {
     .join('');
   cards.querySelectorAll('.sig').forEach(trackGlow);
 
-  list.innerHTML = menu.categories
+  // Raccourcis vers la carte : catégories choisies dans accueil.json (toutes si la liste est absente)
+  const shortcuts = accueil.raccourcis?.length
+    ? accueil.raccourcis.map((id) => menu.categories.find((c) => c.id === id)).filter(Boolean)
+    : menu.categories;
+  list.innerHTML = shortcuts
     .map(
       (c) => `<li><a href="#menu" data-menu-tab="${c.id}" data-cursor>${escapeHtml(c.nom)}
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a></li>`

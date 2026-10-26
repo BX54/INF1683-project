@@ -2,16 +2,25 @@
   "_aide": "Textes et photos de l'accueil. Les photos d'ambiance vont dans /public/images/ambiance (hero : 2400 × 1500 px, paysage).",
   "hero": {
     "diapos": [
-      { "image": "/images/ambiance/hero-1.webp", "plat": "Filet mignon, sauce au poivre" },
-      { "image": "/images/ambiance/hero-2.webp", "plat": "Moules marinières" },
-      { "image": "/images/ambiance/hero-3.webp", "plat": "Linguine aux fruits de mer" }
+      {
+        "image": "/images/ambiance/hero-1.webp",
+        "plat": "Mosaïque, filet mignon et crevettes papillon"
+      },
+      {
+        "image": "/images/ambiance/hero-2.webp",
+        "plat": "Moules marinière et frites maison"
+      },
+      {
+        "image": "/images/ambiance/hero-3.webp",
+        "plat": "Fettuccini di Mare"
+      }
     ],
     "duree": 6
   },
   "histoire": {
     "surtitre": "Notre histoire",
     "titre": "Une table où l'on vient comme chez soi",
-    "texte": "L'Académie est née d'une idée simple : une grande cuisine n'a pas besoin d'une grande carte des vins. Ici, vous apportez la bouteille qui vous ressemble, et nous préparons la cuisine qui lui rend hommage, entre bistrot parisien et trattoria florentine.",
+    "texte": "L'Académie est née d'une idée simple : une grande cuisine n'a pas besoin d'une grande carte des vins. Vous apportez la bouteille qui vous ressemble ; nous préparons pâtes fraîches, moules et frites, veau, grillades et pizzas, avec des sauces faites maison sur place.",
     "image": "/images/ambiance/salle.webp",
     "legende": "La salle à la lueur des bougies"
   },
@@ -22,8 +31,21 @@
     "texte": "Formé aux classiques de la cuisine française et amoureux des pâtes fraîches italiennes, notre chef compose une carte de saison pensée pour s'accorder à toutes les bouteilles.",
     "image": "/images/equipe/chef.webp"
   },
-  "signatures": ["filet-mignon", "moules-marinieres", "moelleux-chocolat"],
+  "signatures": [
+    "mosaique",
+    "moules-mariniere",
+    "fettuccini-di-mare"
+  ],
   "reservation": {
     "image": "/images/ambiance/table.webp"
-  }
+  },
+  "raccourcis": [
+    "entrees",
+    "specialites",
+    "moules",
+    "veau-poulet",
+    "grill",
+    "pizzas",
+    "desserts"
+  ]
 }
