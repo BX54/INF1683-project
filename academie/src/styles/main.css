@@ -3793,3 +3793,14 @@ html:not(.js) .concept__manifesto {
   color: #8a6a28;
   border-color: #8a6a28;
 }
+
+/* Créneaux aux 15 minutes : grille plus serrée */
+.slots {
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 6px;
+}
+
+.slot {
+  min-height: 40px;
+  font-size: 13px;
+}
