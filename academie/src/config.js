@@ -6,19 +6,19 @@
 
 export const RESTAURANT = {
   nom: "L'Académie",
-  adresse: '[ADRESSE EXACTE], boulevard Maloney',
-  ville: 'Gatineau, QC',
+  adresse: '25, chemin de la Savane',
+  ville: 'Gatineau (Québec)',
   // Affiché tel quel :
-  telephone: '[TÉLÉPHONE]',
+  telephone: '819 600-1300',
   // Utilisé pour le lien « appeler » (chiffres seulement, avec +1) :
-  telephoneLien: '+18190000000',
-  courriel: '',
+  telephoneLien: '+18196001300',
+  courriel: 'lacademiegatineau@gmail.com',
   // Lignes d'horaire affichées dans le pied de page.
   heures: [
-    { jours: 'Lundi – Dimanche', heures: "[HEURES D'OUVERTURE]" },
+    { jours: 'Tous les jours', heures: '11 h 30 – 22 h' },
   ],
   // Recherche Google Maps utilisée pour la carte intégrée.
-  carteRecherche: "Restaurant L'Académie, boulevard Maloney, Gatineau, QC",
+  carteRecherche: "Restaurant L'Académie, 25 chemin de la Savane, Gatineau, QC",
   reseaux: {
     facebook: 'https://www.facebook.com/',
     instagram: 'https://www.instagram.com/',
@@ -45,7 +45,10 @@ export const RESERVATION = {
   },
 
   // Créneaux proposés (heure de début de la réservation).
-  creneaux: ['17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'],
+  creneaux: [
+    '11:30', '12:00', '12:30', '13:00', '13:30',
+    '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00',
+  ],
 
   // Jours fermés : 0 = dimanche, 1 = lundi, … 6 = samedi. Ex. [1, 2] pour lundi et mardi.
   joursFermes: [],

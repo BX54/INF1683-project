@@ -1,6 +1,6 @@
 # L'Académie — site web
 
-Site vitrine immersif du restaurant **L'Académie** (Apportez votre vin, cuisine française et italienne), boulevard Maloney, Gatineau.
+Site vitrine immersif du restaurant **L'Académie** (Apportez votre vin, cuisine française et italienne), 25, chemin de la Savane, Gatineau.
 
 **Stack :** Vite · JavaScript · GSAP (ScrollTrigger, DrawSVG, MorphSVG) · Lenis · Three.js · polices auto-hébergées (Playfair Display, Manrope).
 
@@ -120,15 +120,16 @@ Si un `id` ne correspond à aucun plat du menu, un avertissement s'affiche dans 
 
 ```js
 export const RESTAURANT = {
-  adresse: '[ADRESSE EXACTE], boulevard Maloney',
-  telephone: '[TÉLÉPHONE]',          // affiché
-  telephoneLien: '+18190000000',     // utilisé pour « appeler »
-  heures: [{ jours: 'Mardi – Samedi', heures: '17 h – 22 h' }],
+  adresse: '25, chemin de la Savane',
+  telephone: '819 600-1300',         // affiché
+  telephoneLien: '+18196001300',     // utilisé pour « appeler »
+  courriel: 'lacademiegatineau@gmail.com',
+  heures: [{ jours: 'Tous les jours', heures: '11 h 30 – 22 h' }],
   reseaux: { facebook: '…', instagram: '…' },
 };
 ```
 
-Remplacez les valeurs entre crochets. La carte Google Maps utilise `carteRecherche`.
+Modifiez ces valeurs au besoin. La carte Google Maps utilise `carteRecherche`.
 
 ### Configurer l'envoi des réservations
 

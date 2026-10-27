@@ -13,6 +13,11 @@ export function initInfos() {
     el.href = `tel:${r.telephoneLien}`;
     el.textContent = r.telephone;
   });
+  document.querySelectorAll('[data-mail-link]').forEach((el) => {
+    if (!r.courriel) return el.remove();
+    el.href = `mailto:${r.courriel}`;
+    el.textContent = r.courriel;
+  });
   document.querySelectorAll('[data-phone-text]').forEach((el) => {
     el.innerHTML = `Réservations · <a href="tel:${r.telephoneLien}">${escapeHtml(r.telephone)}</a>`;
   });

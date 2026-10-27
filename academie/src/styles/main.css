@@ -3778,3 +3778,18 @@ html:not(.js) .concept__manifesto {
     justify-content: space-between;
   }
 }
+
+.locale__mail {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: rgba(28, 24, 20, 0.75);
+  border-bottom: 1px solid transparent;
+  width: fit-content;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.locale__mail:hover {
+  color: #8a6a28;
+  border-color: #8a6a28;
+}
