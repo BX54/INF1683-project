@@ -23,6 +23,17 @@ export const RESTAURANT = {
     facebook: 'https://www.facebook.com/',
     instagram: 'https://www.instagram.com/',
   },
+  // Loi 25 : responsable de la protection des renseignements personnels.
+  // Par défaut, c'est la personne ayant la plus haute autorité dans l'entreprise (le propriétaire).
+  confidentialite: {
+    responsable: 'Le propriétaire de L\'Académie',
+    titre: 'Responsable de la protection des renseignements personnels',
+    courriel: 'lacademiegatineau@gmail.com',
+    // Durée de conservation des demandes de réservation (à confirmer par le restaurant).
+    conservation: '12 mois',
+    // Date de la dernière mise à jour de la politique.
+    miseAJour: '1er novembre 2026',
+  },
 };
 
 export const RESERVATION = {

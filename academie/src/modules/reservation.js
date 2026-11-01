@@ -223,6 +223,11 @@ export function initReservation({ lenis }) {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // Champ piège rempli : c'est un robot. On simule un succès sans rien envoyer.
+    if (form.elements._gotcha?.value) {
+      form.reset();
+      return;
+    }
     const invalid = Object.keys(rules).filter((n) => !validate(n));
     if (invalid.length) {
       const first = invalid[0];

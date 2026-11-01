@@ -155,3 +155,21 @@ Autres réglages :
 - Images en WebP avec `loading="lazy"`. La carte n'est chargée qu'à l'approche du pied de page.
 - Navigation au clavier (onglets du menu, sélecteurs, calendrier), libellés ARIA et lien d'évitement.
 - Les polices sont servies depuis le site lui-même : aucune requête vers Google Fonts.
+
+## Loi 25 et sécurité
+
+Déjà en place :
+- **Avis de collecte** sous le formulaire de réservation (finalités, transfert hors Québec, durée de conservation, droits) et lien vers la **politique de confidentialité** (`politique-confidentialite.html`).
+- **Responsable de la protection des renseignements personnels** affiché dans le pied de page et la politique : à régler dans `src/config.js` → `RESTAURANT.confidentialite` (nom, courriel, durée de conservation, date de mise à jour).
+- Aucun renseignement de santé demandé : les allergies sont à signaler sur place.
+- **Carte Google** chargée seulement après un clic (pas de témoins tiers par défaut). Aucun outil de suivi ni témoin publicitaire.
+- **Anti-robots** : champ piège invisible dans le formulaire.
+- **En-têtes de sécurité HTTP** (CSP, HSTS, anti-iframe…) : `public/_headers` (Netlify, Cloudflare Pages) et `vercel.json` (Vercel).
+  Si vous modifiez le petit script en ligne de `index.html`, recalculez son empreinte `sha256` dans ces deux fichiers.
+
+À faire par le restaurant (hors du code) :
+1. Désigner par écrit le ou la responsable, et mettre son nom dans `src/config.js`.
+2. Faire une **évaluation des facteurs relatifs à la vie privée** (EFVP) pour l'envoi des réservations vers Formspree/EmailJS et Gmail (serveurs hors Québec), et la garder au dossier.
+3. Tenir un **registre des incidents de confidentialité** et une procédure de suppression des demandes après la durée de conservation.
+4. Pour EmailJS : limiter la clé publique au nom de domaine du site (Account → Security).
+5. Faire relire la politique par un ou une juriste si possible.

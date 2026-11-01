@@ -3804,3 +3804,135 @@ html:not(.js) .concept__manifesto {
   min-height: 40px;
   font-size: 13px;
 }
+
+/* =====================================================================
+   Loi 25 : avis de collecte, carte sur consentement, politique
+   ===================================================================== */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.field__hint {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--ivoire-3);
+}
+
+.rform__privacy {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ivoire-3);
+}
+
+.rform__privacy a {
+  color: var(--or-clair);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.locale__map-consent {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+  font-size: 13.5px;
+  color: rgba(28, 24, 20, 0.7);
+  background: repeating-linear-gradient(45deg, #e8e0d2 0 2px, #e4dccd 2px 14px);
+}
+
+.locale__map-consent p {
+  max-width: 34ch;
+}
+
+.locale__map-load {
+  padding: 11px 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ivoire);
+  background: #1c1814;
+  transition: background-color 0.3s;
+}
+
+.locale__map-load:hover {
+  background: #8a6a28;
+}
+
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+
+.footer__legal a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer__legal a:hover {
+  color: var(--or-clair);
+}
+
+/* Page « Politique de confidentialité » */
+.legal {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 40px) var(--gutter) 100px;
+}
+
+.legal h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 1.08;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.legal h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--or-clair);
+  margin: 44px 0 12px;
+}
+
+.legal p,
+.legal li {
+  color: var(--ivoire-2);
+  margin-bottom: 10px;
+}
+
+.legal ul {
+  list-style: disc;
+  padding-left: 22px;
+}
+
+.legal a {
+  color: var(--or-clair);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal__meta {
+  font-size: 13px;
+  color: var(--ivoire-3);
+}
+
+.legal__back {
+  display: inline-block;
+  margin-bottom: 40px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--or);
+}

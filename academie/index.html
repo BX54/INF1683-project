@@ -481,8 +481,15 @@
 
           <div class="field field--area">
             <textarea class="field__input" id="r-demandes" name="demandes" rows="3" placeholder=" "></textarea>
-            <label class="field__label" for="r-demandes">Demandes spéciales (allergies, anniversaire, chaise haute…)</label>
+            <label class="field__label" for="r-demandes">Demandes spéciales (anniversaire, chaise haute, terrasse…)</label>
             <span class="field__line"></span>
+            <p class="field__hint">Allergies ou restrictions alimentaires : mentionnez-les à votre serveur à votre arrivée.</p>
+          </div>
+
+          <!-- Champ piège anti-robots : invisible pour les humains -->
+          <div class="hp" aria-hidden="true">
+            <label for="r-site">Ne pas remplir</label>
+            <input id="r-site" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
           </div>
 
           <div class="rform__submit">
@@ -492,6 +499,14 @@
               <span class="btn__shine" aria-hidden="true"></span>
             </button>
             <p class="rform__status" role="status" aria-live="polite"></p>
+            <p class="rform__privacy">
+              Vos renseignements (nom, téléphone, courriel, date, heure, nombre de personnes, demandes) servent
+              uniquement à traiter et confirmer votre réservation. Ils sont transmis par un service d'envoi de
+              formulaires dont les serveurs peuvent être situés hors du Québec, puis conservés au plus
+              <span data-retention>12 mois</span>. Vous pouvez y accéder, les faire corriger ou supprimer en écrivant à
+              <a data-privacy-mail href="#"></a>.
+              <a href="politique-confidentialite.html">Politique de confidentialité</a>
+            </p>
           </div>
         </form>
 
@@ -529,9 +544,14 @@
           <iframe
             title="Carte : L'Académie, 25 chemin de la Savane, Gatineau"
             loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
+            referrerpolicy="strict-origin-when-cross-origin"
             data-map
+            hidden
           ></iframe>
+          <div class="locale__map-consent" data-map-consent>
+            <p>La carte est fournie par Google, qui peut déposer des témoins (cookies) sur votre appareil.</p>
+            <button type="button" class="locale__map-load" data-map-load data-cursor>Afficher la carte</button>
+          </div>
           <a class="locale__map-link" data-directions target="_blank" rel="noopener" data-cursor>Ouvrir dans Google Maps</a>
         </div>
         <div class="locale__col locale__col--info">
@@ -564,6 +584,11 @@
 
       <div class="footer__bottom">
         <p>© <span data-year></span> L'Académie · Gatineau, Québec</p>
+        <p class="footer__legal">
+          <a href="politique-confidentialite.html" data-cursor>Politique de confidentialité</a>
+          <span aria-hidden="true">·</span>
+          <span data-privacy-officer></span>
+        </p>
         <a href="#accueil" class="footer__top" data-cursor>Retour en haut ↑</a>
       </div>
     </footer>

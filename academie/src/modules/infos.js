@@ -34,19 +34,25 @@ export function initInfos() {
     el.href = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
   });
 
-  // La carte n'est chargée qu'à l'approche du pied de page (performance)
+  // Loi 25 : la carte Google (qui peut déposer des témoins) ne se charge qu'à la demande du visiteur
   const map = document.querySelector('[data-map]');
-  if (map) {
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        map.src = `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
-        io.disconnect();
-      },
-      { rootMargin: '600px 0px' }
-    );
-    io.observe(map);
-  }
+  const consent = document.querySelector('[data-map-consent]');
+  document.querySelector('[data-map-load]')?.addEventListener('click', () => {
+    map.src = `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
+    map.hidden = false;
+    consent?.remove();
+  });
+
+  const privacy = r.confidentialite ?? {};
+  document.querySelectorAll('[data-privacy-mail]').forEach((el) => {
+    el.href = `mailto:${privacy.courriel}`;
+    el.textContent = privacy.courriel;
+  });
+  document.querySelectorAll('[data-retention]').forEach((el) => (el.textContent = privacy.conservation));
+  document.querySelectorAll('[data-privacy-officer]').forEach((el) => {
+    el.innerHTML = `${escapeHtml(privacy.titre)} : ${escapeHtml(privacy.responsable)},
+      <a href="mailto:${escapeHtml(privacy.courriel)}">${escapeHtml(privacy.courriel)}</a>`;
+  });
 
   document.querySelectorAll('[data-social]').forEach((el) => {
     const url = r.reseaux?.[el.dataset.social];
