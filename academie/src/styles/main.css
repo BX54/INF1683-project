@@ -4637,3 +4637,10 @@ body.is-loading {
     grid-template-columns: 1fr;
   }
 }
+
+/* Photos réelles (hero) : voile un peu plus dense sur mobile pour garder le texte lisible. */
+@media (max-width: 900px) {
+  .hero__shade {
+    background: linear-gradient(0deg, var(--noir) 42%, rgba(11, 11, 11, 0.7) 62%, rgba(11, 11, 11, 0.4) 80%, rgba(11, 11, 11, 0.7) 100%);
+  }
+}

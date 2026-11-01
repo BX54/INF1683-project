@@ -4,15 +4,15 @@
     "diapos": [
       {
         "image": "/images/ambiance/hero-1.webp",
-        "plat": "Mosaïque, filet mignon et crevettes papillon"
+        "plat": "Filet mignon, sauce au poivre"
       },
       {
         "image": "/images/ambiance/hero-2.webp",
-        "plat": "Moules marinière et frites maison"
+        "plat": "Moules à l'italienne"
       },
       {
         "image": "/images/ambiance/hero-3.webp",
-        "plat": "Fettuccini di Mare"
+        "plat": "Filet de saumon de l'Atlantique"
       }
     ],
     "duree": 6
@@ -32,8 +32,8 @@
     "image": "/images/equipe/chef.webp"
   },
   "signatures": [
-    "mosaique",
-    "moules-mariniere",
+    "filet-mignon",
+    "moules-a-l-italienne",
     "fettuccini-di-mare"
   ],
   "reservation": {

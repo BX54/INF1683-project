@@ -2,18 +2,18 @@
   "_aide": "Liste des photos de la galerie, dans l'ordre d'affichage. « format » : portrait, paysage ou carre. Les fichiers sont dans /public/images/plats.",
   "photos": [
     {
-      "image": "/images/plats/mosaique.webp",
-      "legende": "Mosaïque",
+      "image": "/images/plats/penne-con-salsiccia.webp",
+      "legende": "Penne con Salsiccia",
       "format": "portrait"
     },
     {
-      "image": "/images/plats/moules-mariniere.webp",
-      "legende": "Moules marinière",
+      "image": "/images/plats/filet-de-saumon-de-l-atlantique.webp",
+      "legende": "Filet de saumon de l'Atlantique",
       "format": "paysage"
     },
     {
-      "image": "/images/plats/bruschetta-campagnola.webp",
-      "legende": "Bruschetta Campagnola",
+      "image": "/images/plats/verrine-biscotti.webp",
+      "legende": "Verrine biscotti",
       "format": "carre"
     },
     {
@@ -27,13 +27,13 @@
       "format": "paysage"
     },
     {
-      "image": "/images/plats/pizza-prosciutto-e-rucola.webp",
-      "legende": "Pizza prosciutto e rucola",
+      "image": "/images/plats/salade-de-betteraves.webp",
+      "legende": "Salade de betteraves",
       "format": "carre"
     },
     {
-      "image": "/images/plats/tartare-de-saumon.webp",
-      "legende": "Tartare de saumon",
+      "image": "/images/plats/linguini-con-gamberi.webp",
+      "legende": "Linguini con Gamberi",
       "format": "portrait"
     },
     {
