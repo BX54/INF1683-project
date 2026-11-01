@@ -140,6 +140,17 @@ export const RESTAURANT = {
 
 Modifiez ces valeurs au besoin. La carte Google Maps utilise `carteRecherche`.
 
+### Réservations avec Libro
+
+Dans `src/config.js`, collez le lien de réservation Libro du restaurant dans `RESERVATION.libroUrl`
+(Libro › Mon restaurant › Paramètres › Widget de réservation). Dès qu'il est rempli :
+- tous les boutons « Réserver » (en-tête, hero, bouton mobile, menu, accords) ouvrent Libro dans un nouvel onglet ;
+- la section Réservation affiche un bouton « Réserver sur Libro » à la place du formulaire du site ;
+- la politique de confidentialité mentionne Libro.
+
+Aucun script ni module Libro n'est intégré au site : c'est un simple lien, donc rien n'est stocké dans le navigateur
+et les en-têtes de sécurité restent inchangés. Laissez `libroUrl: ''` pour garder le formulaire du site.
+
 ### Configurer l'envoi des réservations
 
 Dans `RESERVATION`, choisissez le `service` :

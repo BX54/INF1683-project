@@ -26,6 +26,7 @@ import { initTeam } from './modules/team.js';
 import { initReservation } from './modules/reservation.js';
 import { initInfos } from './modules/infos.js';
 import { initServices } from './modules/services.js';
+import { initLibro } from './modules/libro.js';
 import { initHeroSlides, startHeroSlides, initStory, initSignatures } from './modules/accueil.js';
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MorphSVGPlugin);
@@ -41,7 +42,8 @@ initMenu();
 initAccord();
 initGallery();
 initTeam();
-initReservation({ lenis });
+// Réservations : Libro si un lien est configuré, sinon le formulaire du site
+if (!initLibro()) initReservation({ lenis });
 initServices();
 
 // Interactions globales

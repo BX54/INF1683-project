@@ -45,6 +45,15 @@ export const RESERVATION = {
    */
   service: 'formspree',
 
+  /*
+   * Libro : collez ici le lien de réservation Libro du restaurant
+   * (Libro › Mon restaurant › Paramètres › Widget de réservation).
+   * Dès qu'il est rempli, tous les boutons « Réserver » ouvrent Libro dans un nouvel onglet
+   * et le formulaire de réservation du site est remplacé par un bouton Libro.
+   * Laissez vide ('') pour garder le formulaire du site.
+   */
+  libroUrl: '',
+
   // Formspree : créez un formulaire sur https://formspree.io
   // et collez ici son identifiant (ex. 'xyzabcd' tiré de formspree.io/f/xyzabcd).
   formspreeId: 'xgaanbpo',

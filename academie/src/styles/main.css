@@ -4245,3 +4245,76 @@ html:not(.js) .concept__manifesto {
     padding: 22px 18px;
   }
 }
+
+/* Réservation via Libro (lien externe) */
+.libro {
+  display: grid;
+  align-content: center;
+  gap: 22px;
+  padding: clamp(32px, 5vw, 64px);
+  border: 1px solid var(--ligne);
+  background: radial-gradient(circle at 50% 0%, rgba(201, 162, 75, 0.12), transparent 60%), rgba(11, 11, 11, 0.7);
+}
+
+.libro[hidden] {
+  display: none;
+}
+
+.libro__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--or);
+}
+
+.libro__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(32px, 3.4vw, 52px);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.libro__title em {
+  text-transform: none;
+}
+
+.libro__points {
+  display: grid;
+  gap: 8px;
+}
+
+.libro__points li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--ivoire-2);
+}
+
+.libro__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 14px;
+  height: 1px;
+  background: var(--or);
+}
+
+.libro__note {
+  font-size: 13px;
+  color: var(--ivoire-3);
+}
+
+.libro__note a {
+  color: var(--or-clair);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.is-libro .ticket {
+  display: none;
+}
+
+.rform[hidden] {
+  display: none;
+}

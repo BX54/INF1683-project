@@ -3,7 +3,7 @@ import '@fontsource/manrope/latin-300.css';
 import '@fontsource/manrope/latin-400.css';
 import './styles/main.css';
 
-import { RESTAURANT } from './config.js';
+import { RESTAURANT, RESERVATION } from './config.js';
 
 // Remplit la politique avec les coordonnées de src/config.js
 const p = RESTAURANT.confidentialite ?? {};
@@ -19,6 +19,9 @@ document.querySelectorAll('[data-p-mail]').forEach((el) => {
   el.href = `mailto:${p.courriel}`;
   el.textContent = p.courriel;
 });
+if ((RESERVATION.libroUrl || '').trim()) {
+  document.querySelectorAll('[data-if-libro]').forEach((el) => el.removeAttribute('hidden'));
+}
 document.querySelectorAll('[data-p-tel]').forEach((el) => {
   el.href = `tel:${RESTAURANT.telephoneLien}`;
   el.textContent = RESTAURANT.telephone;
