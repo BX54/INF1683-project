@@ -45,8 +45,8 @@ export const RESTAURANT = {
    * La section « Commander » n'apparaît que si au moins un lien est rempli.
    */
   livraison: {
-    uberEats: '',
-    doorDash: '',
+    uberEats: 'https://www.ubereats.com/ca-fr/store/restaurant-lacademie-gatineau/fdmgAxQxQduHD7e6fh00pg',
+    doorDash: 'https://www.doordash.com/fr-CA/store/restaurant-l%27acad%C3%A9mie-gatineau-gatineau-1243319/',
     skipTheDishes: '',
   },
 
