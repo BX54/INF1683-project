@@ -4660,3 +4660,13 @@ body.is-loading {
     margin-left: auto;
   }
 }
+
+/* Carte sur mobile : quand l'en-tête réapparaît (en remontant), la barre des catégories se place dessous au lieu d'être cachée. */
+@media (max-width: 900px) {
+  .menu__tabs {
+    transition: top 0.6s var(--ease);
+  }
+  body:has(.header:not(.is-hidden)) .menu__tabs {
+    top: calc(var(--header-h) - 1px);
+  }
+}

@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { menu, escapeHtml } from './data.js';
 import { reduced, finePointer, formatPrice } from './motion.js';
+import { scrollToEl } from './smooth.js';
 
 export function initMenu() {
   const section = document.querySelector('.menu');
@@ -74,12 +75,38 @@ export function initMenu() {
     } else render();
   };
 
+  const panel = section.querySelector('.menu__panel');
+  const mobile = window.matchMedia('(max-width: 900px)');
+
+  /*
+   * Changement de catégorie choisi par le visiteur.
+   * - La grille garde sa hauteur pendant la transition : une catégorie courte (ex. Tartares)
+   *   ne fait plus « sauter » la page jusqu'à la section suivante.
+   * - Si le haut de la catégorie est sorti de l'écran, on y remonte en douceur.
+   */
+  const choose = (id) => {
+    if (id === currentId) return;
+    grid.style.minHeight = `${grid.offsetHeight}px`;
+    const header = document.querySelector('.header')?.offsetHeight ?? 0;
+    const offset = mobile.matches ? header + tabs.offsetHeight + 12 : 120;
+    const above = panel.getBoundingClientRect().top < offset - 4;
+    if (above) scrollToEl(panel, -offset);
+    show(id);
+    clearTimeout(choose.t);
+    choose.t = setTimeout(() => (grid.style.minHeight = ''), above && !reduced ? 1700 : 450);
+  };
+
+  // Sur mobile, recentre l'onglet dans la barre horizontale (sans faire défiler la page)
+  const centerTab = (t) => {
+    if (tabs.scrollWidth <= tabs.clientWidth) return;
+    tabs.scrollTo({ left: t.offsetLeft - (tabs.clientWidth - t.offsetWidth) / 2, behavior: reduced ? 'auto' : 'smooth' });
+  };
+
   tabs.addEventListener('click', (e) => {
     const t = e.target.closest('.tab');
     if (!t) return;
-    show(t.dataset.id);
-    // Sur mobile, ramène l'onglet visible
-    t.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' });
+    choose(t.dataset.id);
+    centerTab(t);
   });
   tabs.addEventListener('keydown', (e) => {
     const list = [...tabs.querySelectorAll('.tab')];
@@ -92,8 +119,9 @@ export function initMenu() {
     if (e.key === 'End') n = list.length - 1;
     if (n === null) return;
     e.preventDefault();
-    list[n].focus();
-    show(list[n].dataset.id);
+    list[n].focus({ preventScroll: true });
+    choose(list[n].dataset.id);
+    centerTab(list[n]);
   });
 
   show(menu.categories[0].id, false);
