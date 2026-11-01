@@ -20,6 +20,9 @@ const formatHeure = (h) => h.replace(':', ' h ');
 export function initReservation({ lenis }) {
   const form = document.querySelector('.rform');
   if (!form) return;
+  document.querySelectorAll('[data-confirm-delay]').forEach((el) => {
+    el.textContent = RESERVATION.delaiConfirmation ?? 'sous peu';
+  });
 
   const state = { date: null, heure: null, personnes: 2, boisson: null };
   const today = startOfDay(new Date());
@@ -332,7 +335,9 @@ function showConfirmation(data, boissonId, lenis) {
     data.personnes > 1 ? 's' : ''
   }</strong>, le <strong>${escapeHtml(data.date_lisible)}</strong> à <strong>${formatHeure(
     data.heure
-  )}</strong>, est bien reçue. Nous vous confirmons la réservation très vite, par téléphone ou par courriel.`;
+  )}</strong>, est bien reçue. Nous vous confirmerons votre table par courriel ou par téléphone, généralement ${escapeHtml(
+    RESERVATION.delaiConfirmation ?? 'sous peu'
+  )}.`;
 
   const sugg = modal.querySelector('.confirm__suggest');
   const list = suggestions(boissonId);

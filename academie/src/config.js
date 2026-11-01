@@ -73,4 +73,7 @@ export const RESERVATION = {
   joursOuverts: 60,
 
   personnesMax: 12,
+
+  // Délai de confirmation annoncé aux clients (sous le bouton et dans le message de remerciement).
+  delaiConfirmation: 'en moins de 24 h',
 };
