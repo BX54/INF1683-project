@@ -1,22 +1,22 @@
 {
-  "_aide": "Section « Nos services » : salle de réception et service traiteur. Photos dans /public/images/ambiance (1400 × 1000 px conseillé). Les « occasions » alimentent aussi la liste du formulaire de soumission.",
+  "_aide": "Section « Nos services » : salle de réception et service traiteur. Photos dans /public/images/ambiance (1400 × 1000 px conseillé). Les « occasions » alimentent aussi la liste du formulaire de soumission. « salles » et « modesTraiteur » alimentent les choix du formulaire.",
   "surtitre": "Nos services",
   "titre": "Vos grands moments,",
   "titreAccent": "à notre table",
-  "intro": "Mariage, anniversaire, baptême ou party de bureau : nous recevons vos invités dans notre salle ou nous préparons le repas de votre réception. Et ici aussi, vous apportez votre vin.",
+  "intro": "Mariage, anniversaire, baptême ou party de bureau : nous recevons vos invités dans nos salles ou nous préparons le repas de votre réception, en livraison ou à emporter. Et ici aussi, vous apportez votre vin.",
   "services": [
     {
       "id": "salle",
-      "titre": "Salle de réception",
-      "chiffre": "200",
-      "chiffreLabel": "invités",
-      "texte": "Une salle pouvant accueillir jusqu'à 200 personnes, pour célébrer en grand dans une ambiance chaleureuse.",
+      "titre": "Salles de réception",
+      "chiffre": "3",
+      "chiffreLabel": "salles en une",
+      "texte": "Une grande salle pour vos grands événements, qui se divise en trois salles séparées pour les réceptions plus intimes.",
       "points": [
-        "Mariages et fiançailles",
-        "Anniversaires et fêtes de famille",
+        "Grande salle pour les grands événements",
+        "Divisible en trois salles privées",
+        "Mariages, anniversaires et fêtes de famille",
         "Événements d'entreprise et partys de bureau",
-        "Menus de groupe sur mesure",
-        "Apportez votre vin, même pour les grands groupes"
+        "Menus de groupe sur mesure, et vous apportez votre vin"
       ],
       "image": "/images/ambiance/salle-reception.webp"
     },
@@ -27,14 +27,32 @@
       "chiffreLabel": "fait maison",
       "texte": "Notre cuisine française et italienne pour vos réceptions : pâtes, plats chauds, entrées et desserts faits maison.",
       "points": [
+        "Livraison ou cueillette au restaurant",
         "Menus composés selon votre budget",
-        "Réceptions à la maison ou au bureau",
         "Plats en format partage",
         "Soumission gratuite et sans engagement"
       ],
       "image": "/images/ambiance/traiteur.webp"
     }
   ],
-  "occasions": ["Mariage", "Anniversaire", "Baptême", "Fête de famille", "Événement d'entreprise", "Party de bureau", "Autre"],
-  "delaiReponse": "en moins de 48 h"
+  "occasions": [
+    "Mariage",
+    "Anniversaire",
+    "Baptême",
+    "Fête de famille",
+    "Événement d'entreprise",
+    "Party de bureau",
+    "Autre"
+  ],
+  "delaiReponse": "en moins de 48 h",
+  "salles": [
+    "La grande salle",
+    "Une salle privée (plus intime)",
+    "Je ne sais pas encore"
+  ],
+  "modesTraiteur": [
+    "Livraison",
+    "Cueillette au restaurant",
+    "Je ne sais pas encore"
+  ]
 }

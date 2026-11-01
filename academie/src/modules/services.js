@@ -10,7 +10,6 @@ import { radioGroup, setChecked } from './accord.js';
 import { trackGlow } from './cursor.js';
 import { sendForm } from './envoi.js';
 
-const CAPACITE_SALLE = 200;
 const DATE_LONGUE = new Intl.DateTimeFormat('fr-CA', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
 export function initServices() {
@@ -55,7 +54,12 @@ export function initServices() {
   const done = root.querySelector('.quote__done');
   const types = form.querySelector('.qform__types');
   const occasion = form.elements.occasion;
-  occasion.innerHTML = services.occasions.map((o) => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+  const options = (list) => list.map((o) => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+  occasion.innerHTML = options(services.occasions);
+  form.elements.salle.innerHTML = options(services.salles ?? []);
+  form.elements.mode.innerHTML = options(services.modesTraiteur ?? []);
+  const blocSalle = form.querySelector('[data-for="salle"]');
+  const blocTraiteur = form.querySelector('[data-for="traiteur"]');
 
   // Date : à partir de demain
   const tomorrow = new Date();
@@ -67,9 +71,9 @@ export function initServices() {
   const setType = (v) => {
     type = v;
     setChecked(types, v);
-    const max = v === 'Service traiteur' ? 1000 : CAPACITE_SALLE;
-    form.elements.invites.max = String(max);
-    if (form.elements.invites.value) validate('invites');
+    // Champs utiles seulement selon le service choisi
+    blocSalle.hidden = v === 'Service traiteur';
+    blocTraiteur.hidden = v === 'Salle de réception';
   };
   radioGroup(types, setType);
   setType(type);
@@ -96,8 +100,6 @@ export function initServices() {
     invites: (v) => {
       const n = Number(v);
       if (!Number.isInteger(n) || n < 10) return 'Indiquez au moins 10 invités.';
-      if (type !== 'Service traiteur' && n > CAPACITE_SALLE) return `Notre salle accueille jusqu'à ${CAPACITE_SALLE} personnes.`;
-      if (n > 1000) return 'Pour plus de 1000 invités, appelez-nous.';
       return '';
     },
   };
@@ -145,6 +147,8 @@ export function initServices() {
       date: form.elements.date.value,
       date_lisible: dateLisible,
       invites: Number(form.elements.invites.value),
+      salle: blocSalle.hidden ? '—' : form.elements.salle.value,
+      traiteur: blocTraiteur.hidden ? '—' : form.elements.mode.value,
       message: form.elements.message.value.trim() || '—',
       _subject: `SOUMISSION ${type} — ${occasion.value} — ${form.elements.nom.value.trim()} — ${dateLisible} (${form.elements.invites.value} pers.)`,
     };

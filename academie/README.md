@@ -73,7 +73,7 @@ Pour un **nouveau** plat ou membre, ajoutez l'entrée dans le JSON correspondant
 - `delaiReponse` : délai de réponse annoncé (« en moins de 48 h »).
 - Les demandes de soumission arrivent dans le même Formspree que les réservations, avec un sujet qui commence par **« SOUMISSION »**.
   Pour les recevoir dans un formulaire séparé, mettez son identifiant dans `src/config.js` → `soumissionFormspreeId`.
-- La capacité maximale de la salle (200) est vérifiée dans le formulaire (`src/modules/services.js`, `CAPACITE_SALLE`).
+- `salles` et `modesTraiteur` : choix proposés dans le formulaire (grande salle ou salle privée ; livraison ou cueillette). Ils ne s'affichent que pour le service concerné.
 
 ## Modifier le menu — `src/data/menu.json`
 
