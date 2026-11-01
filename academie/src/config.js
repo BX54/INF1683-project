@@ -43,11 +43,11 @@ export const RESERVATION = {
    * En mode 'demo', rien n'est envoyé : la confirmation s'affiche et
    * la demande est affichée dans la console (pratique pour tester).
    */
-  service: 'demo',
+  service: 'formspree',
 
   // Formspree : créez un formulaire sur https://formspree.io
   // et collez ici son identifiant (ex. 'xyzabcd' tiré de formspree.io/f/xyzabcd).
-  formspreeId: '',
+  formspreeId: 'xgaanbpo',
 
   // EmailJS : https://www.emailjs.com → Email Services, Email Templates, Account.
   emailjs: {
