@@ -4644,3 +4644,19 @@ body.is-loading {
     background: linear-gradient(0deg, var(--noir) 42%, rgba(11, 11, 11, 0.7) 62%, rgba(11, 11, 11, 0.4) 80%, rgba(11, 11, 11, 0.7) 100%);
   }
 }
+
+/* Carte sur mobile : un prix long (« 13 $ · gratinés 16 $ ») passe sous le nom au lieu de déborder. */
+@media (max-width: 720px) {
+  .dish__top {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+  .dish__name {
+    flex: 1 1 9em;
+    min-width: 0;
+  }
+  .dish__price {
+    max-width: 100%;
+    margin-left: auto;
+  }
+}
