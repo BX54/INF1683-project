@@ -4318,3 +4318,38 @@ html:not(.js) .concept__manifesto {
 .rform[hidden] {
   display: none;
 }
+
+/* En-tête : liens courts sur une seule ligne, menu burger dès que la place manque */
+.nav__link,
+.brand__word,
+.brand__sub,
+.header__cta {
+  white-space: nowrap;
+}
+
+.nav__list {
+  gap: clamp(16px, 1.8vw, 30px);
+}
+
+.brand__sub {
+  letter-spacing: 0.24em;
+}
+
+@media (max-width: 1240px) {
+  .nav {
+    display: none;
+  }
+  .burger {
+    display: block;
+    margin-left: 0;
+  }
+  .header__cta {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 1080px) {
+  .burger {
+    margin-left: auto;
+  }
+}
