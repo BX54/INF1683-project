@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
+import seo from './plugins/seo.js';
 
 export default defineConfig({
+  plugins: [seo()],
   server: { host: true, port: 5173 },
   build: {
     target: 'es2020',

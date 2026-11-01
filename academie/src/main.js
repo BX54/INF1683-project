@@ -54,9 +54,22 @@ initReveals();
 
 // Particules dorées (Three.js chargé à la demande pour alléger le premier rendu)
 const canvas = document.querySelector('.hero__canvas');
-const particlesReady = import('./modules/particles.js')
-  .then(({ initParticles }) => initParticles(canvas))
-  .catch((err) => console.warn('Particules désactivées :', err));
+// Chargées après l'affichage du contenu, quand le navigateur est libre (vitesse / référencement)
+const whenIdle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 600));
+// Pas de 3D sur téléphone, en mode économie de données ou sur appareil modeste : la photo du hero suffit
+const lightDevice =
+  window.matchMedia('(max-width: 900px)').matches ||
+  navigator.connection?.saveData === true ||
+  (navigator.hardwareConcurrency || 8) <= 2;
+const loadParticles = () =>
+  (lightDevice ? Promise.resolve(null) : new Promise((resolve) => whenIdle(resolve)))
+    .then((ok) => (lightDevice ? Promise.reject(new Error('appareil léger')) : ok))
+    .then(() => import('./modules/particles.js'))
+    .then(({ initParticles }) => initParticles(canvas))
+    .catch((err) => {
+      if (!lightDevice) console.warn('Particules désactivées :', err);
+      canvas?.remove();
+    });
 
 lenis?.stop();
 playIntro().then(() => {
@@ -64,7 +77,7 @@ playIntro().then(() => {
   lenis?.start();
   revealHero();
   startHeroSlides();
-  particlesReady.then((p) => p?.reveal());
+  loadParticles().then((p) => p?.reveal());
   ScrollTrigger.refresh();
 });
 

@@ -6,6 +6,7 @@ import { defineConfig } from 'vite';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
+import seo from './plugins/seo.js';
 
 // Remplace les chemins "/images/…" des fichiers JSON par les images encodées en base64
 const inlineDataImages = () => ({
@@ -21,6 +22,6 @@ const inlineDataImages = () => ({
 });
 
 export default defineConfig({
-  plugins: [inlineDataImages(), viteSingleFile()],
+  plugins: [seo(), inlineDataImages(), viteSingleFile()],
   build: { target: 'es2020', outDir: 'dist-apercu', copyPublicDir: false, chunkSizeWarningLimit: 5000 },
 });

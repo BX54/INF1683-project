@@ -8,6 +8,11 @@ export const RESTAURANT = {
   nom: "L'Académie",
   adresse: '25, chemin de la Savane',
   ville: 'Gatineau (Québec)',
+  // Pour Google (données structurées). Code postal relevé dans un annuaire en ligne : à confirmer.
+  codePostal: 'J8T 8A4',
+  // Adresse du site une fois en ligne (ex. 'https://lacademiegatineau.ca') : sert à l'adresse canonique,
+  // à l'image de partage et au sitemap. Laissez vide tant que le nom de domaine n'est pas choisi.
+  siteUrl: '',
   // Affiché tel quel :
   telephone: '819 600-1300',
   // Utilisé pour le lien « appeler » (chiffres seulement, avec +1) :
@@ -17,6 +22,16 @@ export const RESTAURANT = {
   heures: [
     { jours: 'Tous les jours', heures: '11 h 30 – 22 h' },
   ],
+  // Mêmes heures, au format lu par Google (jours en anglais, heures sur 24 h).
+  heuresGoogle: [
+    {
+      jours: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      ouverture: '11:30',
+      fermeture: '22:00',
+    },
+  ],
+  // Gamme de prix affichée par Google ($ à $$$$).
+  gammePrix: '$$',
   // Recherche Google Maps utilisée pour la carte intégrée.
   carteRecherche: "Restaurant L'Académie, 25 chemin de la Savane, Gatineau, QC",
   // Liens vers les pages du restaurant. Laissez vide ('') pour masquer le lien.

@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import { reduced } from './motion.js';
 
 const fontsReady = () =>
-  Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 2200))]);
+  Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 400))]);
 
 /** Logo qui se dessine en or, compteur, puis ouverture en rideau. */
 export function playIntro() {
@@ -23,29 +23,17 @@ export function playIntro() {
       const num = intro.querySelector('.intro__num');
       const count = { v: 0 };
 
+      // Intro express (~1 s) : le logo s'écrit en or puis le rideau s'ouvre aussitôt,
+      // pour ne pas retarder l'affichage du contenu (vitesse et référencement).
+      num.parentElement.hidden = true;
       const tl = gsap.timeline({ onComplete: done });
-      tl.timeScale(1.25);
-
-      tl.from(intro.querySelectorAll('.draw'), {
-        drawSVG: '50% 50%',
-        duration: 1.5,
-        stagger: 0.12,
-        ease: 'power2.inOut',
-      })
-        .to(word, { strokeDashoffset: 0, duration: 2.3, ease: 'power2.inOut' }, 0.15)
-        .to(count, {
-          v: 100,
-          duration: 2.5,
-          ease: 'power2.inOut',
-          onUpdate: () => (num.textContent = Math.round(count.v)),
-        }, 0)
-        .to(word, { fillOpacity: 1, duration: 0.9, ease: 'power1.out' }, '-=0.7')
-        .to('.intro__sub', { opacity: 1, duration: 0.8 }, '<0.1')
-        .to(word, { strokeOpacity: 0, duration: 0.6 }, '<0.3')
-        .to('.intro__inner', { autoAlpha: 0, y: -16, scale: 0.97, duration: 0.7, ease: 'power3.in' }, '+=0.35')
-        .to('.intro__panel--top', { yPercent: -101, duration: 1.2, ease: 'expo.inOut' }, '-=0.1')
-        .to('.intro__panel--bottom', { yPercent: 101, duration: 1.2, ease: 'expo.inOut' }, '<')
-        .add(resolve, '-=0.85');
+      // Le nom est déjà visible en or (CSS) dès le premier affichage ; seuls les ornements se dessinent.
+      tl.from(intro.querySelectorAll('.draw'), { drawSVG: '50% 50%', duration: 0.5, stagger: 0.04, ease: 'power2.out' })
+        .from(word, { scale: 0.97, transformOrigin: '50% 50%', duration: 0.6, ease: 'power2.out' }, 0)
+        .to('.intro__inner', { autoAlpha: 0, scale: 0.98, duration: 0.3, ease: 'power2.in' }, 0.6)
+        .to('.intro__panel--top', { yPercent: -101, duration: 0.6, ease: 'expo.inOut' }, 0.6)
+        .to('.intro__panel--bottom', { yPercent: 101, duration: 0.6, ease: 'expo.inOut' }, 0.6)
+        .add(resolve, 0.75);
     });
   });
 }
