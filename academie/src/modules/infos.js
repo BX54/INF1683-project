@@ -34,14 +34,8 @@ export function initInfos() {
     el.href = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
   });
 
-  // Loi 25 : la carte Google (qui peut déposer des témoins) ne se charge qu'à la demande du visiteur
-  const map = document.querySelector('[data-map]');
-  const consent = document.querySelector('[data-map-consent]');
-  document.querySelector('[data-map-load]')?.addEventListener('click', () => {
-    map.src = `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
-    map.hidden = false;
-    consent?.remove();
-  });
+  // Pas de carte Google intégrée (elle déposerait des témoins) : un lien ouvre Google Maps dans un nouvel onglet
+  document.querySelectorAll('[data-map-addr]').forEach((el) => (el.textContent = `${r.adresse}, ${r.ville}`));
 
   const privacy = r.confidentialite ?? {};
   document.querySelectorAll('[data-privacy-mail]').forEach((el) => {

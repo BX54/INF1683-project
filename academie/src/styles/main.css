@@ -3606,14 +3606,6 @@ html:not(.js) .concept__manifesto {
   overflow: hidden;
 }
 
-.locale__map iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  filter: grayscale(1) sepia(0.3) contrast(0.95) brightness(1.02);
-}
 
 .locale__map-link {
   position: absolute;
@@ -3834,38 +3826,6 @@ html:not(.js) .concept__manifesto {
   text-underline-offset: 3px;
 }
 
-.locale__map-consent {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 16px;
-  padding: 24px;
-  text-align: center;
-  font-size: 13.5px;
-  color: rgba(28, 24, 20, 0.7);
-  background: repeating-linear-gradient(45deg, #e8e0d2 0 2px, #e4dccd 2px 14px);
-}
-
-.locale__map-consent p {
-  max-width: 34ch;
-}
-
-.locale__map-load {
-  padding: 11px 20px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ivoire);
-  background: #1c1814;
-  transition: background-color 0.3s;
-}
-
-.locale__map-load:hover {
-  background: #8a6a28;
-}
 
 .footer__legal {
   display: flex;
@@ -3935,4 +3895,23 @@ html:not(.js) .concept__manifesto {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--or);
+}
+
+/* Carte stylisée (aucune carte tierce intégrée) */
+.locale__map-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.locale__map-addr {
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  max-width: 55%;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.3;
+  color: #1c1814;
 }

@@ -319,7 +319,7 @@ async function send(data) {
   if (service !== 'demo') {
     console.warn(`[Réservation] Le service « ${service} » n'est pas complètement configuré dans src/config.js — mode démo utilisé.`);
   }
-  console.info('[Réservation — mode démo] Demande reçue :', data);
+  console.info('[Réservation — mode démo] Aucune donnée envoyée ni conservée. Configurez le service dans src/config.js.');
   await new Promise((r) => setTimeout(r, 1100));
 }
 

@@ -10,22 +10,13 @@ export function playIntro() {
   if (!intro) return Promise.resolve();
 
   return new Promise((resolve) => {
-    const done = () => {
-      intro.remove();
-      try {
-        sessionStorage.setItem('academie-intro', '1');
-      } catch {}
-    };
+    // Rien n'est enregistré dans le navigateur : l'intro est jouée à chaque visite.
+    const done = () => intro.remove();
 
     if (reduced) {
       gsap.to(intro, { autoAlpha: 0, duration: 0.4, delay: 0.2, onComplete: () => (done(), resolve()) });
       return;
     }
-
-    let seen = false;
-    try {
-      seen = sessionStorage.getItem('academie-intro') === '1';
-    } catch {}
 
     fontsReady().then(() => {
       const word = intro.querySelector('.intro__word');
@@ -33,7 +24,7 @@ export function playIntro() {
       const count = { v: 0 };
 
       const tl = gsap.timeline({ onComplete: done });
-      tl.timeScale(seen ? 2.2 : 1);
+      tl.timeScale(1.25);
 
       tl.from(intro.querySelectorAll('.draw'), {
         drawSVG: '50% 50%',

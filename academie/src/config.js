@@ -19,9 +19,10 @@ export const RESTAURANT = {
   ],
   // Recherche Google Maps utilisée pour la carte intégrée.
   carteRecherche: "Restaurant L'Académie, 25 chemin de la Savane, Gatineau, QC",
+  // Liens vers les pages du restaurant. Laissez vide ('') pour masquer le lien.
   reseaux: {
-    facebook: 'https://www.facebook.com/',
-    instagram: 'https://www.instagram.com/',
+    facebook: '',
+    instagram: '',
   },
   // Loi 25 : responsable de la protection des renseignements personnels.
   // Par défaut, c'est la personne ayant la plus haute autorité dans l'entreprise (le propriétaire).

@@ -541,17 +541,20 @@
           <a class="locale__link" data-directions target="_blank" rel="noopener" data-cursor>Itinéraire <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
         </div>
         <div class="locale__map">
-          <iframe
-            title="Carte : L'Académie, 25 chemin de la Savane, Gatineau"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            data-map
-            hidden
-          ></iframe>
-          <div class="locale__map-consent" data-map-consent>
-            <p>La carte est fournie par Google, qui peut déposer des témoins (cookies) sur votre appareil.</p>
-            <button type="button" class="locale__map-load" data-map-load data-cursor>Afficher la carte</button>
-          </div>
+          <svg class="locale__map-art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <g fill="none" stroke="#1c1814" stroke-opacity="0.16" stroke-width="10" stroke-linecap="round">
+              <path d="M-20 210 C 80 190 160 230 260 200 S 380 150 430 160" />
+              <path d="M120 -20 C 140 80 110 160 150 320" />
+              <path d="M-20 70 L 430 110" />
+            </g>
+            <g fill="none" stroke="#1c1814" stroke-opacity="0.08" stroke-width="4">
+              <path d="M260 -20 L 300 320" /><path d="M-20 140 L 430 250" /><path d="M40 -20 L 70 320" />
+            </g>
+            <circle cx="205" cy="148" r="34" fill="#c9a24b" fill-opacity="0.18" />
+            <path d="M205 112 c-15 0-26 11-26 25 0 19 26 43 26 43 s26-24 26-43 c0-14-11-25-26-25 z" fill="#8a6a28" />
+            <circle cx="205" cy="137" r="8" fill="#f3ede2" />
+          </svg>
+          <p class="locale__map-addr" data-map-addr></p>
           <a class="locale__map-link" data-directions target="_blank" rel="noopener" data-cursor>Ouvrir dans Google Maps</a>
         </div>
         <div class="locale__col locale__col--info">

@@ -162,7 +162,7 @@ Déjà en place :
 - **Avis de collecte** sous le formulaire de réservation (finalités, transfert hors Québec, durée de conservation, droits) et lien vers la **politique de confidentialité** (`politique-confidentialite.html`).
 - **Responsable de la protection des renseignements personnels** affiché dans le pied de page et la politique : à régler dans `src/config.js` → `RESTAURANT.confidentialite` (nom, courriel, durée de conservation, date de mise à jour).
 - Aucun renseignement de santé demandé : les allergies sont à signaler sur place.
-- **Carte Google** chargée seulement après un clic (pas de témoins tiers par défaut). Aucun outil de suivi ni témoin publicitaire.
+- **Aucune donnée stockée dans le navigateur** : ni témoin (cookie), ni localStorage/sessionStorage, ni IndexedDB, ni service worker. Pas de carte Google intégrée (un lien ouvre Google Maps), aucun outil de suivi, aucun contenu tiers.
 - **Anti-robots** : champ piège invisible dans le formulaire.
 - **En-têtes de sécurité HTTP** (CSP, HSTS, anti-iframe…) : `public/_headers` (Netlify, Cloudflare Pages) et `vercel.json` (Vercel).
   Si vous modifiez le petit script en ligne de `index.html`, recalculez son empreinte `sha256` dans ces deux fichiers.
