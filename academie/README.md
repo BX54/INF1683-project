@@ -140,6 +140,13 @@ export const RESTAURANT = {
 
 Modifiez ces valeurs au besoin. La carte Google Maps utilise `carteRecherche`.
 
+### Livraison (Uber Eats, DoorDash, SkipTheDishes)
+
+Dans `src/config.js` → `RESTAURANT.livraison`, collez le lien de la page du restaurant sur chaque plateforme.
+Dès qu'un lien est rempli, une section « L'Académie chez vous » apparaît sous la carte, avec un bouton par
+plateforme (nouvel onglet), un lien dans le menu mobile, une mention dans la politique de confidentialité et
+une action « Commander » dans les données structurées Google. Simples liens : aucun script tiers.
+
 ### Réservations avec Libro
 
 Dans `src/config.js`, collez le lien de réservation Libro du restaurant dans `RESERVATION.libroUrl`

@@ -4539,3 +4539,101 @@ body.is-loading {
 .intro__panel {
   will-change: transform;
 }
+
+/* =====================================================================
+   Commander (livraison) — liens vers les plateformes
+   ===================================================================== */
+.order {
+  padding: clamp(56px, 7vw, 100px) var(--gutter);
+  background: linear-gradient(90deg, rgba(201, 162, 75, 0.1), transparent 60%), var(--charbon);
+  border-top: 1px solid var(--ligne);
+  border-bottom: 1px solid var(--ligne);
+}
+
+.order[hidden] {
+  display: none;
+}
+
+.order__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(28px, 5vw, 80px);
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.order__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(32px, 3.6vw, 56px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.order__title em {
+  text-transform: none;
+}
+
+.order__lead {
+  color: var(--ivoire-2);
+  max-width: 46ch;
+}
+
+.order__lead a {
+  color: var(--or-clair);
+  white-space: nowrap;
+}
+
+.order__links {
+  display: grid;
+  gap: 12px;
+}
+
+.order__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border: 1px solid var(--ligne-forte);
+  background: rgba(11, 11, 11, 0.5);
+  transition: border-color 0.4s, background-color 0.4s, transform 0.5s var(--ease);
+}
+
+.order__btn:hover {
+  border-color: var(--or-clair);
+  background: rgba(201, 162, 75, 0.08);
+  transform: translateX(6px);
+}
+
+.order__name {
+  font-family: var(--serif);
+  font-size: 24px;
+}
+
+.order__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--or-clair);
+}
+
+.order__cta svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+@media (max-width: 860px) {
+  .order__inner {
+    grid-template-columns: 1fr;
+  }
+}

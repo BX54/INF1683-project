@@ -19,6 +19,9 @@ document.querySelectorAll('[data-p-mail]').forEach((el) => {
   el.href = `mailto:${p.courriel}`;
   el.textContent = p.courriel;
 });
+if (Object.values(RESTAURANT.livraison || {}).some((u) => /^https:\/\//.test(u || ''))) {
+  document.querySelectorAll('[data-if-order]').forEach((el) => el.removeAttribute('hidden'));
+}
 if ((RESERVATION.libroUrl || '').trim()) {
   document.querySelectorAll('[data-if-libro]').forEach((el) => el.removeAttribute('hidden'));
 }

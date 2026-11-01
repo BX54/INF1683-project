@@ -39,6 +39,17 @@ export const RESTAURANT = {
     facebook: '',
     instagram: '',
   },
+  /*
+   * Livraison : liens vers la page du restaurant sur chaque plateforme
+   * (ex. 'https://www.ubereats.com/ca-fr/store/...'). Laissez vide ('') pour masquer une plateforme.
+   * La section « Commander » n'apparaît que si au moins un lien est rempli.
+   */
+  livraison: {
+    uberEats: '',
+    doorDash: '',
+    skipTheDishes: '',
+  },
+
   // Loi 25 : responsable de la protection des renseignements personnels.
   // Par défaut, c'est la personne ayant la plus haute autorité dans l'entreprise (le propriétaire).
   confidentialite: {

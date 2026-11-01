@@ -82,6 +82,14 @@ function jsonLd({ menu, accueil, siteUrl, libro }) {
     data.url = siteUrl;
     data.image = `${siteUrl}${accueil.hero.diapos[0].image}`;
   }
+  const commandes = Object.values(R.livraison || {}).filter((u) => /^https:\/\//.test(u || ''));
+  if (commandes.length) {
+    data.potentialAction = [].concat(data.potentialAction || [], {
+      '@type': 'OrderAction',
+      target: commandes.map((u) => ({ '@type': 'EntryPoint', urlTemplate: u, inLanguage: 'fr-CA' })),
+      deliveryMethod: 'http://purl.org/goodrelations/v1#DeliveryModeOwnFleet',
+    });
+  }
   if (libro) {
     data.potentialAction = {
       '@type': 'ReserveAction',

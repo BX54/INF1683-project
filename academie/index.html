@@ -91,6 +91,7 @@
         <li><a href="#menu"><span>04</span>La carte</a></li>
         <li><a href="#galerie"><span>05</span>Galerie</a></li>
         <li><a href="#equipe"><span>06</span>L'équipe</a></li>
+        <li data-if-order hidden><a href="#commander"><span>·</span>Commander en livraison</a></li>
         <li><a href="#services"><span>07</span>Salle et traiteur</a></li>
         <li><a href="#reservation"><span>08</span>Réserver</a></li>
         <li><a href="#infos"><span>09</span>Nous trouver</a></li>
@@ -362,6 +363,21 @@
           <summary data-cursor>Voir toute la carte en texte</summary>
           <div class="menu-texte__body" data-menu-texte></div>
         </details>
+      </section>
+
+      <!-- ============ COMMANDER (livraison) : visible seulement si un lien est configuré ============ -->
+      <section class="order" id="commander" aria-labelledby="order-title" hidden>
+        <div class="order__inner">
+          <div class="order__text">
+            <p class="eyebrow">Livraison et pour emporter</p>
+            <h2 class="order__title" id="order-title">L'Académie <em class="gold-text">chez vous</em></h2>
+            <p class="order__lead">
+              Nos pâtes, moules et grillades livrées à votre porte. Commandez sur votre plateforme préférée,
+              ou appelez-nous pour un repas à emporter : <a data-phone-link href="#"></a>.
+            </p>
+          </div>
+          <ul class="order__links" data-order-links></ul>
+        </div>
       </section>
 
       <!-- ============ 6. GALERIE ============ -->
