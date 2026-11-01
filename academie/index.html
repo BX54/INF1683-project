@@ -70,6 +70,7 @@
           <li><a href="#accord" class="nav__link">L'accord</a></li>
           <li><a href="#menu" class="nav__link">La carte</a></li>
           <li><a href="#galerie" class="nav__link">Galerie</a></li>
+          <li><a href="#services" class="nav__link">Événements</a></li>
           <li><a href="#infos" class="nav__link">Nous trouver</a></li>
         </ul>
       </nav>
@@ -89,8 +90,9 @@
         <li><a href="#menu"><span>04</span>La carte</a></li>
         <li><a href="#galerie"><span>05</span>Galerie</a></li>
         <li><a href="#equipe"><span>06</span>L'équipe</a></li>
-        <li><a href="#reservation"><span>07</span>Réserver</a></li>
-        <li><a href="#infos"><span>08</span>Nous trouver</a></li>
+        <li><a href="#services"><span>07</span>Salle et traiteur</a></li>
+        <li><a href="#reservation"><span>08</span>Réserver</a></li>
+        <li><a href="#infos"><span>09</span>Nous trouver</a></li>
       </ul>
       <p class="mobile-menu__foot" data-phone-text></p>
     </div>
@@ -381,6 +383,111 @@
           </h2>
         </div>
         <div class="team__grid"></div>
+      </section>
+
+      <!-- ============ NOS SERVICES : salle de réception & traiteur ============ -->
+      <section class="services section" id="services" aria-labelledby="services-title">
+        <header class="services__head">
+          <p class="eyebrow" data-sv="surtitre"></p>
+          <h2 class="section-title" id="services-title" data-sv-title></h2>
+          <p class="services__intro" data-sv="intro" data-reveal></p>
+        </header>
+
+        <div class="services__grid"></div>
+
+        <div class="quote" id="soumission">
+          <div class="quote__aside">
+            <p class="eyebrow">Demande de soumission</p>
+            <h3 class="quote__title">Parlez-nous de <em class="gold-text">votre événement</em></h3>
+            <p class="quote__text">
+              Décrivez-nous votre projet : nous vous répondons avec une proposition sur mesure,
+              généralement <span data-sv="delaiReponse"></span>. Gratuit et sans engagement.
+            </p>
+            <a class="quote__phone" data-phone-link data-cursor href="#"></a>
+          </div>
+
+          <form class="qform" novalidate>
+            <div class="qform__group" role="radiogroup" aria-labelledby="q-type-label">
+              <p class="rform__label" id="q-type-label">Je suis intéressé·e par</p>
+              <div class="qform__types">
+                <button type="button" class="chip" role="radio" aria-checked="true" data-value="Salle de réception">Salle de réception</button>
+                <button type="button" class="chip" role="radio" aria-checked="false" data-value="Service traiteur">Service traiteur</button>
+                <button type="button" class="chip" role="radio" aria-checked="false" data-value="Salle et traiteur">Les deux</button>
+              </div>
+            </div>
+
+            <div class="rform__row rform__row--2">
+              <div class="field">
+                <input class="field__input" id="q-nom" name="nom" type="text" autocomplete="name" placeholder=" " required />
+                <label class="field__label" for="q-nom">Nom complet</label>
+                <p class="field__error" id="q-nom-err"></p>
+              </div>
+              <div class="field">
+                <input class="field__input" id="q-tel" name="telephone" type="tel" autocomplete="tel" inputmode="tel" placeholder=" " required />
+                <label class="field__label" for="q-tel">Téléphone</label>
+                <p class="field__error" id="q-tel-err"></p>
+              </div>
+            </div>
+            <div class="field">
+              <input class="field__input" id="q-courriel" name="courriel" type="email" autocomplete="email" placeholder=" " required />
+              <label class="field__label" for="q-courriel">Courriel</label>
+              <p class="field__error" id="q-courriel-err"></p>
+            </div>
+
+            <div class="rform__row rform__row--3">
+              <div class="field field--select">
+                <select class="field__input" id="q-occasion" name="occasion" required></select>
+                <label class="field__label field__label--fixed" for="q-occasion">Occasion</label>
+              </div>
+              <div class="field">
+                <input class="field__input" id="q-date" name="date" type="date" placeholder=" " required />
+                <label class="field__label field__label--fixed" for="q-date">Date souhaitée</label>
+                <p class="field__error" id="q-date-err"></p>
+              </div>
+              <div class="field">
+                <input class="field__input" id="q-invites" name="invites" type="number" inputmode="numeric" min="10" max="1000" step="1" placeholder=" " required />
+                <label class="field__label" for="q-invites">Nombre d'invités</label>
+                <p class="field__error" id="q-invites-err"></p>
+              </div>
+            </div>
+
+            <div class="field field--area">
+              <textarea class="field__input" id="q-message" name="message" rows="4" placeholder=" "></textarea>
+              <label class="field__label" for="q-message">Votre projet (heure, budget, style de menu, besoins particuliers…)</label>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="q-site">Ne pas remplir</label>
+              <input id="q-site" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="rform__submit">
+              <button type="submit" class="btn btn--gold btn--wide" data-magnetic>
+                <span class="btn__label">Demander une soumission</span>
+                <span class="btn__spinner" aria-hidden="true"></span>
+                <span class="btn__shine" aria-hidden="true"></span>
+              </button>
+              <p class="rform__status" role="status" aria-live="polite"></p>
+              <p class="rform__privacy">
+                Vos renseignements servent uniquement à préparer et vous envoyer votre soumission. Ils sont transmis
+                par un service d'envoi de formulaires dont les serveurs peuvent être situés hors du Québec, puis
+                conservés au plus <span data-retention>12 mois</span>. Accès, correction ou suppression :
+                <a data-privacy-mail href="#"></a>. <a href="politique-confidentialite.html">Politique de confidentialité</a>
+              </p>
+            </div>
+          </form>
+
+          <div class="quote__done" hidden tabindex="-1">
+            <svg class="confirm__seal" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="confirm__ring" cx="60" cy="60" r="54" />
+              <circle class="confirm__ring confirm__ring--inner" cx="60" cy="60" r="46" />
+              <path class="confirm__check" d="M40 61 L54 75 L82 46" />
+            </svg>
+            <h3 class="confirm__title quote__done-title"></h3>
+            <p class="confirm__text quote__done-text"></p>
+            <button type="button" class="btn btn--ghost quote__again" data-magnetic><span class="btn__label">Nouvelle demande</span></button>
+          </div>
+        </div>
       </section>
 
       <!-- ============ 8. RÉSERVATION ============ -->

@@ -173,6 +173,7 @@ const menu = await readJson('src/data/menu.json');
 const equipe = await readJson('src/data/equipe.json');
 const galerie = await readJson('src/data/galerie.json');
 const accueil = await readJson('src/data/accueil.json');
+const services = await readJson('src/data/services.json');
 
 await mkdir(path.join(root, 'public/images/plats'), { recursive: true });
 await mkdir(path.join(root, 'public/images/equipe'), { recursive: true });
@@ -185,6 +186,7 @@ for (const m of equipe.membres) jobs.set(m.image, { type: 'portrait', label: m.n
 for (const d of accueil.hero.diapos) jobs.set(d.image, { type: 'ambiance', label: d.plat, w: 2400, h: 1500 });
 jobs.set(accueil.histoire.image, { type: 'ambiance', label: 'La salle', w: 1000, h: 1250 });
 jobs.set(accueil.reservation.image, { type: 'ambiance', label: 'Une table pour vous', w: 1400, h: 1000 });
+for (const s of services.services) jobs.set(s.image, { type: 'ambiance', label: s.titre, w: 1400, h: 1000 });
 
 let created = 0;
 for (const [src, job] of jobs) {

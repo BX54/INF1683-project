@@ -8,6 +8,7 @@ import { accords, getPlat, suggestions, escapeHtml } from './data.js';
 import { reduced } from './motion.js';
 import { radioGroup, setChecked } from './accord.js';
 import { trackGlow } from './cursor.js';
+import { sendForm } from './envoi.js';
 
 const MOIS = new Intl.DateTimeFormat('fr-CA', { month: 'long', year: 'numeric' });
 const DATE_LONGUE = new Intl.DateTimeFormat('fr-CA', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -266,7 +267,7 @@ export function initReservation({ lenis }) {
     status.textContent = 'Envoi en cours…';
 
     try {
-      await send(data);
+      await sendForm(data);
       status.textContent = '';
       showConfirmation(data, state.boisson, lenis);
       form.reset();
@@ -289,41 +290,6 @@ export function initReservation({ lenis }) {
       submit.disabled = false;
     }
   });
-}
-
-async function send(data) {
-  const { service, formspreeId, emailjs } = RESERVATION;
-
-  if (service === 'formspree' && formspreeId) {
-    const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...data, _replyto: data.courriel }),
-    });
-    if (!res.ok) throw new Error(`Formspree : ${res.status}`);
-    return;
-  }
-
-  if (service === 'emailjs' && emailjs?.serviceId && emailjs?.templateId && emailjs?.publicKey) {
-    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        service_id: emailjs.serviceId,
-        template_id: emailjs.templateId,
-        user_id: emailjs.publicKey,
-        template_params: data,
-      }),
-    });
-    if (!res.ok) throw new Error(`EmailJS : ${res.status} ${await res.text()}`);
-    return;
-  }
-
-  if (service !== 'demo') {
-    console.warn(`[Réservation] Le service « ${service} » n'est pas complètement configuré dans src/config.js — mode démo utilisé.`);
-  }
-  console.info('[Réservation — mode démo] Aucune donnée envoyée ni conservée. Configurez le service dans src/config.js.');
-  await new Promise((r) => setTimeout(r, 1100));
 }
 
 function showConfirmation(data, boissonId, lenis) {

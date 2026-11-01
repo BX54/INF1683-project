@@ -66,6 +66,15 @@ Pour un **nouveau** plat ou membre, ajoutez l'entrée dans le JSON correspondant
 - `signatures` : les 3 plats mis en avant avant la carte (leurs `id` dans `menu.json`).
 - `raccourcis` : les catégories listées à droite des plats signature.
 
+## Salle de réception et traiteur — `src/data/services.json`
+
+- Textes, chiffres (« 200 invités »), listes et photos (`/images/ambiance/salle-reception.webp`, `traiteur.webp`) des deux services.
+- `occasions` : la liste déroulante du formulaire de soumission.
+- `delaiReponse` : délai de réponse annoncé (« en moins de 48 h »).
+- Les demandes de soumission arrivent dans le même Formspree que les réservations, avec un sujet qui commence par **« SOUMISSION »**.
+  Pour les recevoir dans un formulaire séparé, mettez son identifiant dans `src/config.js` → `soumissionFormspreeId`.
+- La capacité maximale de la salle (200) est vérifiée dans le formulaire (`src/modules/services.js`, `CAPACITE_SALLE`).
+
 ## Modifier le menu — `src/data/menu.json`
 
 Chaque catégorie contient une liste de plats :

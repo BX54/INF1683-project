@@ -3,8 +3,9 @@ import accords from '../data/accords.json';
 import equipe from '../data/equipe.json';
 import galerie from '../data/galerie.json';
 import accueil from '../data/accueil.json';
+import services from '../data/services.json';
 
-export { menu, accords, equipe, galerie, accueil };
+export { menu, accords, equipe, galerie, accueil, services };
 
 /** Index id → plat (avec sa catégorie), pour que accords.json n'ait qu'à citer un id. */
 export const platsParId = new Map();

@@ -25,6 +25,7 @@ import { initGallery } from './modules/gallery.js';
 import { initTeam } from './modules/team.js';
 import { initReservation } from './modules/reservation.js';
 import { initInfos } from './modules/infos.js';
+import { initServices } from './modules/services.js';
 import { initHeroSlides, startHeroSlides, initStory, initSignatures } from './modules/accueil.js';
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MorphSVGPlugin);
@@ -41,6 +42,7 @@ initAccord();
 initGallery();
 initTeam();
 initReservation({ lenis });
+initServices();
 
 // Interactions globales
 initHeader({ lenis });
