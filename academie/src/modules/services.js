@@ -99,7 +99,7 @@ export function initServices() {
     date: (v) => (v && v >= form.elements.date.min ? '' : 'Choisissez une date à venir.'),
     invites: (v) => {
       const n = Number(v);
-      if (!Number.isInteger(n) || n < 10) return 'Indiquez au moins 10 invités.';
+      if (!Number.isInteger(n) || n < 1) return "Indiquez le nombre d'invités.";
       return '';
     },
   };
