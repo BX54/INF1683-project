@@ -116,7 +116,7 @@ export function initHeroSlides() {
     start() {
       started = true;
       if (!reduced) {
-        gsap.fromTo(media, { clipPath: 'inset(0% 0% 0% 100%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.8, ease: 'expo.inOut' });
+        gsap.fromTo(media, { clipPath: 'inset(0% 0% 0% 100%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1, ease: 'expo.inOut' });
       }
       zoom(els[0]);
       progress();
