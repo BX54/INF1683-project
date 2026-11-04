@@ -8,7 +8,7 @@ import { accords, getPlat, escapeHtml } from './data.js';
 import { reduced } from './motion.js';
 import { trackGlow } from './cursor.js';
 import { scrollToEl } from './smooth.js';
-import { libroUrl } from './libro.js';
+import { libroUrl, openLibro } from './libro.js';
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 
@@ -385,9 +385,8 @@ export function initAccord() {
   // « Réserver avec cette boisson »
   grid.addEventListener('click', (e) => {
     if (!e.target.closest('[data-reserve-drink]')) return;
-    const libro = libroUrl();
-    if (libro) {
-      window.open(libro, '_blank', 'noopener');
+    if (libroUrl()) {
+      openLibro();
       return;
     }
     document.dispatchEvent(new CustomEvent('academie:boisson', { detail: { id: current.drink } }));

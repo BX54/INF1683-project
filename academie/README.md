@@ -149,14 +149,17 @@ une action « Commander » dans les données structurées Google. Simples liens 
 
 ### Réservations avec Libro
 
-Dans `src/config.js`, collez le lien de réservation Libro du restaurant dans `RESERVATION.libroUrl`
-(Libro › Mon restaurant › Paramètres › Widget de réservation). Dès qu'il est rempli :
-- tous les boutons « Réserver » (en-tête, hero, bouton mobile, menu, accords) ouvrent Libro dans un nouvel onglet ;
+Dans `src/config.js`, `RESERVATION.libroUrl` contient l'adresse du module de réservation Libro
+(Libro › Widget Customization › « Integration tag for your website » : l'adresse `src` de l'iframe). Dès qu'il est rempli :
+- tous les boutons « Réserver » (en-tête, hero, bouton mobile, menu, accords) ouvrent une **fenêtre de réservation
+  par-dessus le site** : le client réserve sans quitter la page (Ctrl/Cmd + clic ouvre plutôt un nouvel onglet) ;
 - la section Réservation affiche un bouton « Réserver sur Libro » à la place du formulaire du site ;
-- la politique de confidentialité mentionne Libro.
+- la politique de confidentialité mentionne Libro et ses témoins.
 
-Aucun script ni module Libro n'est intégré au site : c'est un simple lien, donc rien n'est stocké dans le navigateur
-et les en-têtes de sécurité restent inchangés. Laissez `libroUrl: ''` pour garder le formulaire du site.
+Le module Libro n'est chargé **qu'au clic** sur « Réserver » : avant, rien de Libro n'est chargé et le site ne stocke rien.
+Une fois ouvert, Libro peut déposer ses propres témoins (mentionné dans la fenêtre et dans la politique).
+Les en-têtes de sécurité (`public/_headers`, `vercel.json`) autorisent uniquement `*.libroreserve.com` dans une iframe.
+Laissez `libroUrl: ''` pour garder le formulaire du site.
 
 ### Configurer l'envoi des réservations
 
