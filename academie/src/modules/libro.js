@@ -39,7 +39,12 @@ function buildDialog(url) {
       </button>
     </div>
     <div class="libro-modal__body">
-      <p class="libro-modal__loading" role="status">Chargement de la réservation…</p>
+      <div class="libro-modal__loading" role="status">
+        <span class="libro-modal__spinner" aria-hidden="true"></span>
+        <p>Chargement de la réservation…</p>
+        <p class="libro-modal__slow">Le chargement prend du temps ?
+          <a href="${url}" target="_blank" rel="noopener">Ouvrir la réservation dans un nouvel onglet</a></p>
+      </div>
     </div>
     <p class="libro-modal__note">
       Réservation gérée par Libro (OpenTable), qui peut utiliser des témoins.
@@ -60,26 +65,56 @@ function buildDialog(url) {
   return d;
 }
 
-export function openLibro() {
+/**
+ * Prépare la fenêtre et commence à charger Libro sans l'afficher.
+ * Appelé dès que le visiteur appuie sur un bouton « Réserver » (avant même la fin du clic).
+ */
+function prepare() {
   const url = libroUrl();
-  if (!url) return;
+  if (!url) return null;
   dialog ??= buildDialog(url);
   const body = dialog.querySelector('.libro-modal__body');
   // Chargé une seule fois : fermer puis rouvrir garde la réservation en cours
   if (!body.querySelector('iframe')) {
     const frame = document.createElement('iframe');
-    frame.src = url;
     frame.title = 'Réservation Libro — L\'Académie';
     frame.setAttribute('allow', 'payment');
+    frame.loading = 'eager';
     frame.referrerPolicy = 'strict-origin-when-cross-origin';
     frame.addEventListener('load', () => body.classList.add('is-loaded'), { once: true });
+    frame.src = url;
     body.appendChild(frame);
+    // Après 8 s sans réponse, on propose l'onglet séparé
+    setTimeout(() => body.classList.add('is-slow'), 8000);
   }
+  return dialog;
+}
+
+/**
+ * Ouvre seulement la connexion réseau vers Libro (DNS + chiffrement) quand le visiteur
+ * survole ou cible un bouton « Réserver ». Aucune page Libro n'est chargée, aucun témoin.
+ */
+let warmed = false;
+function warm() {
+  if (warmed) return;
+  warmed = true;
+  const origin = new URL(libroUrl()).origin;
+  for (const rel of ['dns-prefetch', 'preconnect']) {
+    const l = document.createElement('link');
+    l.rel = rel;
+    l.href = origin;
+    document.head.appendChild(l);
+  }
+}
+
+export function openLibro() {
+  const d = prepare();
+  if (!d) return;
   lastFocus = document.activeElement;
   lenisRef?.stop();
   document.documentElement.classList.add('has-modal');
-  dialog.showModal();
-  dialog.querySelector('.libro-modal__close').focus();
+  d.showModal();
+  d.querySelector('.libro-modal__close').focus();
 }
 
 export function initLibro({ lenis } = {}) {
@@ -94,6 +129,19 @@ export function initLibro({ lenis } = {}) {
     a.rel = 'noopener';
     a.setAttribute('aria-haspopup', 'dialog');
   });
+  // Les boutons qui ouvrent la réservation
+  const trigger = (el) => el?.closest?.('a[aria-haspopup="dialog"], [data-reserve-drink]');
+  // Survol / clavier : on ouvre la connexion à l'avance (gagne souvent 0,5 à 1 s)
+  document.addEventListener('pointerover', (e) => trigger(e.target) && warm(), { passive: true });
+  document.addEventListener('focusin', (e) => trigger(e.target) && warm());
+  // Appui (souris ou doigt) : Libro commence à charger avant même la fin du clic
+  document.addEventListener('pointerdown', (e) => {
+    if (e.button === 0 && trigger(e.target)) {
+      warm();
+      prepare();
+    }
+  }, { passive: true });
+
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[aria-haspopup="dialog"]');
     if (!a || a.href !== url) return;

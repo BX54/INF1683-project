@@ -4797,3 +4797,36 @@ html.has-modal { overflow: hidden; }
   .has-cursor .libro-modal a,
   .has-cursor .libro-modal button { cursor: pointer; }
 }
+/* Fenêtre Libro : indicateur de chargement et secours si Libro est lent */
+.libro-modal__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  padding: 24px;
+}
+.libro-modal__loading p { margin: 0; }
+.libro-modal__spinner {
+  width: 42px;
+  height: 42px;
+  border: 2px solid var(--ligne);
+  border-top-color: var(--or-clair);
+  border-radius: 50%;
+  animation: libro-spin 0.9s linear infinite;
+}
+@keyframes libro-spin { to { transform: rotate(360deg); } }
+.libro-modal__slow {
+  max-width: 34ch;
+  font-size: 13px;
+  color: var(--ivoire-3);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s;
+}
+.libro-modal__body.is-slow .libro-modal__slow { opacity: 1; visibility: visible; }
+.libro-modal__slow a { color: var(--or-clair); text-decoration: underline; }
+@media (prefers-reduced-motion: reduce) {
+  .libro-modal__spinner { animation-duration: 2.4s; }
+}
