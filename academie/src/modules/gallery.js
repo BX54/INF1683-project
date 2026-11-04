@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import { galerie, escapeHtml } from './data.js';
+import { platSrcset } from './img.js';
 
 /** Galerie : défilement horizontal piloté par le scroll (ordinateur), glisser natif (mobile). */
 export function initGallery() {
@@ -17,7 +18,7 @@ export function initGallery() {
       (p, i) => `
       <figure class="shot shot--${p.format || 'portrait'}">
         <div class="shot__frame">
-          <img src="${p.image}" alt="${escapeHtml(p.legende)}" width="1200" height="1200" loading="lazy" decoding="async" />
+          <img src="${p.image}"${platSrcset(p.image, '(max-width: 900px) 75vw, 40vw')} alt="${escapeHtml(p.legende)}" width="1200" height="1200" loading="lazy" decoding="async" />
         </div>
         <figcaption>${escapeHtml(p.legende)}<span>${String(i + 1).padStart(2, '0')} / ${total}</span></figcaption>
       </figure>`

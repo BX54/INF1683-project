@@ -7,6 +7,7 @@ import { accueil, menu, getPlat, escapeHtml } from './data.js';
 import { reduced, formatPrice } from './motion.js';
 import { scrollToEl } from './smooth.js';
 import { trackGlow } from './cursor.js';
+import { platSrcset, heroSlidesHtml } from './img.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -21,15 +22,20 @@ export function initHeroSlides() {
   const slides = accueil.hero.diapos;
   const duration = accueil.hero.duree ?? 6;
 
-  media.innerHTML = slides
-    .map(
-      (d, i) => `<div class="hero__slide${i === 0 ? ' is-active' : ''}">
-        <img src="${d.image}" alt="" width="2400" height="1500" decoding="async"
-          ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} /></div>`
-    )
-    .join('');
+  media.innerHTML = heroSlidesHtml(slides);
 
   const els = [...media.querySelectorAll('.hero__slide')];
+  const loadSlide = (el) =>
+    el.querySelectorAll('[data-src], [data-srcset]').forEach((n) => {
+      if (n.dataset.srcset) n.srcset = n.dataset.srcset;
+      if (n.dataset.src) n.src = n.dataset.src;
+      n.removeAttribute('data-src');
+      n.removeAttribute('data-srcset');
+    });
+  // La photo suivante est chargée environ 2 s avant son apparition (jamais pendant l'arrivée sur la page)
+  const loadNext = () => els.length > 1 && loadSlide(els[(index + 1) % els.length]);
+  const whenLoaded = (fn) =>
+    document.readyState === 'complete' ? fn() : window.addEventListener('load', fn, { once: true });
   const cur = document.querySelector('.hero__count-cur');
   const tot = document.querySelector('.hero__count-tot');
   const bar = document.querySelector('.hero__count-bar b');
@@ -42,6 +48,7 @@ export function initHeroSlides() {
   let timer = null;
   let kenBurns = null;
   let barTween = null;
+  let preTimer = null;
 
   const zoom = (el) => {
     kenBurns?.kill();
@@ -53,6 +60,7 @@ export function initHeroSlides() {
     if (next === index) return;
     const from = els[index];
     const to = els[next];
+    loadSlide(to);
     index = next;
     gsap.set(to, { zIndex: 2 });
     gsap.set(from, { zIndex: 1 });
@@ -83,6 +91,8 @@ export function initHeroSlides() {
     clearTimeout(timer);
     if (reduced || slides.length < 2) return;
     barTween = gsap.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration, ease: 'none' });
+    clearTimeout(preTimer);
+    preTimer = setTimeout(() => whenLoaded(loadNext), Math.max(0, duration - 2) * 1000);
     timer = setTimeout(() => go((index + 1) % slides.length), duration * 1000);
   };
 
@@ -174,7 +184,7 @@ export function initSignatures() {
     .filter(Boolean)
     .map(
       (p) => `<a class="sig" href="#menu" data-menu-tab="${catOf(p.id)}" data-cursor-label="Voir">
-        <div class="sig__media"><img src="${p.image}" alt="${escapeHtml(p.nom)}" width="1200" height="1200" loading="lazy" decoding="async" /></div>
+        <div class="sig__media"><img src="${p.image}"${platSrcset(p.image, '(max-width: 720px) 90vw, 320px')} alt="${escapeHtml(p.nom)}" width="1200" height="1200" loading="lazy" decoding="async" /></div>
         <div class="sig__body">
           <h3 class="sig__name">${escapeHtml(p.nom)}</h3>
           <p class="sig__desc">${escapeHtml(p.description)}</p>

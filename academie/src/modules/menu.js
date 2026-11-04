@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { menu, escapeHtml } from './data.js';
 import { reduced, finePointer, formatPrice } from './motion.js';
+import { platSrcset } from './img.js';
 import { scrollToEl } from './smooth.js';
 
 export function initMenu() {
@@ -26,7 +27,7 @@ export function initMenu() {
   const card = (p) => `
     <article class="dish${p.image ? '' : ' dish--text'}">
       ${p.image ? `<div class="dish__media">
-        <img src="${p.image}" alt="${escapeHtml(p.nom)}" width="1200" height="1200" loading="lazy" decoding="async" />
+        <img src="${p.image}"${platSrcset(p.image, '(max-width: 720px) 92px, (max-width: 1100px) 45vw, 340px')} alt="${escapeHtml(p.nom)}" width="1200" height="1200" loading="lazy" decoding="async" />
       </div>` : ''}
       <div class="dish__body">
         <div class="dish__top">

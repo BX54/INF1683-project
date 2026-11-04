@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 import seo from './plugins/seo.js';
+import perf from './plugins/perf.js';
 
 export default defineConfig({
-  plugins: [seo()],
+  plugins: [seo(), perf()],
   server: { host: true, port: 5173 },
   build: {
     target: 'es2020',

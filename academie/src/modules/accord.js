@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { accords, getPlat, escapeHtml } from './data.js';
 import { reduced } from './motion.js';
+import { platSrcset } from './img.js';
 import { trackGlow } from './cursor.js';
 import { scrollToEl } from './smooth.js';
 import { libroUrl, openLibro } from './libro.js';
@@ -276,7 +277,7 @@ export function initAccord() {
         return `
         <article class="pair">
           <div class="pair__media">
-            <img src="${plat.image}" alt="${escapeHtml(plat.nom)}" width="1200" height="1200" loading="lazy" decoding="async" />
+            <img src="${plat.image}"${platSrcset(plat.image, '(max-width: 720px) 90vw, 360px')} alt="${escapeHtml(plat.nom)}" width="1200" height="1200" loading="lazy" decoding="async" />
             <span class="pair__index">0${i + 1}</span>
             <span class="pair__cat">${escapeHtml(plat.categorie)}</span>
           </div>

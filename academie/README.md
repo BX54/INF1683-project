@@ -54,6 +54,10 @@ academie/
 
 > Pour convertir en WebP : [squoosh.app](https://squoosh.app) (gratuit, dans le navigateur).
 
+**Versions allégées automatiques.** `npm run dev` et `npm run build` créent seuls des versions plus légères
+(`xxx-600.webp` pour les plats, `hero-N-1200.webp` et `hero-N-m.webp` pour l'accueil) : le navigateur charge la plus petite
+qui suffit à l'écran. Ne les modifiez pas : remplacez seulement la photo d'origine, elles seront recréées.
+
 Pour un **nouveau** plat ou membre, ajoutez l'entrée dans le JSON correspondant puis lancez
 `npm run images` : le script crée une image de remplacement pour chaque fichier manquant,
 **sans jamais écraser** vos vraies photos.

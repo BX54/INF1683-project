@@ -2,10 +2,12 @@
   "name": "academie-restaurant",
   "version": "1.0.0",
   "scripts": {
+    "predev": "node scripts/optimize-images.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/optimize-images.mjs",
     "build": "vite build",
     "preview": "vite preview",
-    "images": "node scripts/generate-placeholders.mjs",
+    "images": "node scripts/generate-placeholders.mjs && node scripts/optimize-images.mjs",
     "apercu": "vite build --config vite.apercu.config.js"
   },
   "dependencies": {

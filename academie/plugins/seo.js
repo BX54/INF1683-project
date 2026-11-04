@@ -11,8 +11,20 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { RESTAURANT as R, RESERVATION } from '../src/config.js';
+import { heroSources, HERO_MOBILE_MQ, HERO_SIZES } from '../src/modules/img.js';
 
 const root = resolve(import.meta.dirname, '..');
+
+/** Préchargement de la 1re photo du hero : version verticale légère sur mobile, version adaptée sur ordinateur. */
+function heroPreload(src) {
+  const v = heroSources(src);
+  if (!v) return [`<link rel="preload" as="image" href="${esc(src)}" fetchpriority="high" />`];
+  const notMobile = HERO_MOBILE_MQ.replace('max-width: 900px', 'min-width: 901px');
+  return [
+    `<link rel="preload" as="image" href="${esc(v.mobile)}" media="${HERO_MOBILE_MQ}" fetchpriority="high" />`,
+    `<link rel="preload" as="image" href="${esc(src)}" imagesrcset="${esc(v.desktop)}" imagesizes="${HERO_SIZES}" media="${notMobile}" fetchpriority="high" />`,
+  ];
+}
 const json = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
 
 const esc = (s = '') =>
@@ -172,7 +184,7 @@ export default function seo() {
         // Balises de tête
         const head = [
           // Photo principale du hero : téléchargée tout de suite (elle est ajoutée plus tard par le JavaScript)
-          `<link rel="preload" as="image" href="${esc(accueil.hero.diapos[0].image)}" fetchpriority="high" />`,
+          ...heroPreload(accueil.hero.diapos[0].image),
           `<script type="application/ld+json">\n${jsonLd({ menu, accueil, siteUrl, libro })}\n</script>`,
         ];
         if (siteUrl) {
