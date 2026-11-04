@@ -78,7 +78,7 @@ export const RESERVATION = {
    * et le formulaire de réservation du site est remplacé par un bouton Libro.
    * Laissez vide ('') pour garder le formulaire du site.
    */
-  libroUrl: '',
+  libroUrl: 'https://widgets.libroreserve.com/WEB/QC016878045883/book',
 
   // Formspree : créez un formulaire sur https://formspree.io
   // et collez ici son identifiant (ex. 'xyzabcd' tiré de formspree.io/f/xyzabcd).
