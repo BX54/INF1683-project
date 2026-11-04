@@ -87,15 +87,15 @@ function jsonLd({ menu, accueil, siteUrl, libro }) {
     data.potentialAction = [].concat(data.potentialAction || [], {
       '@type': 'OrderAction',
       target: commandes.map((u) => ({ '@type': 'EntryPoint', urlTemplate: u, inLanguage: 'fr-CA' })),
-      deliveryMethod: 'http://purl.org/goodrelations/v1#DeliveryModeOwnFleet',
     });
   }
   if (libro) {
-    data.potentialAction = {
+    // Ajoutée à la commande en ligne (et non à sa place)
+    data.potentialAction = [].concat(data.potentialAction || [], {
       '@type': 'ReserveAction',
       target: { '@type': 'EntryPoint', urlTemplate: libro, inLanguage: 'fr-CA' },
       result: { '@type': 'FoodEstablishmentReservation', name: 'Réserver une table' },
-    };
+    });
   }
   const sameAs = Object.values(R.reseaux || {}).filter(Boolean);
   if (sameAs.length) data.sameAs = sameAs;
