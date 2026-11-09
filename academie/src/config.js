@@ -150,8 +150,8 @@ export const COMMANDE = {
 
   paiements: ['Comptant', 'Carte (débit ou crédit)'],
 
-  // 1re et dernière heure de livraison / cueillette (la cuisine ferme à 21 h)
-  heures: { debut: '11:45', fin: '20:45' },
+  // Heures proposées pour la livraison / cueillette (choix « personnalisé », par tranches de 15 min)
+  heures: { debut: '11:30', fin: '21:00' },
   // Délai minimum de préparation (minutes)
   delaiMinutes: 45,
 

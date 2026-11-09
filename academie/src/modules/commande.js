@@ -120,7 +120,7 @@ export function initCommande({ lenis } = {}) {
 
   /*
    * Chariot qui se remplit : le panier doré monte d'un cran à chaque article (plein à 4 articles).
-   * Dans l'en-tête, et en coin d'écran (en haut à droite) quand l'en-tête se cache au défilement.
+   * Dans l'en-tête, et en petit chariot fixe en bas à droite de l'écran.
    */
   const chariot = (uid) => `<svg class="cart-ico" viewBox="0 0 24 24" aria-hidden="true">
       <defs><clipPath id="cart-clip-${uid}"><path d="M6.4 7h13.4l-1.5 7.4a1 1 0 0 1-1 .8H8.2a1 1 0 0 1-1-.8Z" /></clipPath></defs>
@@ -139,7 +139,7 @@ export function initCommande({ lenis } = {}) {
   head.setAttribute('aria-label', 'Commander en ligne (livraison ou cueillette)');
   document.querySelector('.header__actions')?.prepend(head);
 
-  // Chariot de coin : visible quand l'en-tête est caché et que le panier contient quelque chose
+  // Petit chariot en bas à droite : visible dès que la commande contient quelque chose
   const fab = document.createElement('button');
   fab.type = 'button';
   fab.className = 'cart-fab';
@@ -159,6 +159,7 @@ export function initCommande({ lenis } = {}) {
   // ---------- Fenêtre « Ajouter » (format, sans gluten) ----------
   const add = document.createElement('dialog');
   add.className = 'cmd-modal cmd-modal--add';
+  add.setAttribute('data-lenis-prevent', '');
   add.setAttribute('aria-labelledby', 'cmd-add-title');
   document.body.appendChild(add);
   surFermeture(add);
@@ -261,6 +262,8 @@ export function initCommande({ lenis } = {}) {
   // ---------- Fenêtre du panier ----------
   const cart = document.createElement('dialog');
   cart.className = 'cmd-modal cmd-modal--cart';
+  // Défilement natif dans la fenêtre (le défilement doux de la page ne l'intercepte pas)
+  cart.setAttribute('data-lenis-prevent', '');
   cart.setAttribute('aria-labelledby', 'cmd-title');
   document.body.appendChild(cart);
   surFermeture(cart);
@@ -307,7 +310,12 @@ export function initCommande({ lenis } = {}) {
 
         <div class="cmd-block">
           <p class="rform__label" id="cmd-heure">Heure souhaitée <span data-jour></span></p>
-          <div class="qform__chips cmd-heures" role="radiogroup" aria-labelledby="cmd-heure" data-heure></div>
+          <div class="qform__chips" role="radiogroup" aria-labelledby="cmd-heure" data-heure></div>
+          <div class="cmd-time" data-perso hidden>
+            <button type="button" class="cmd-time__btn" data-tstep="-1" aria-label="15 minutes plus tôt">‹</button>
+            <output class="cmd-time__val" data-heure-val aria-live="polite"></output>
+            <button type="button" class="cmd-time__btn" data-tstep="1" aria-label="15 minutes plus tard">›</button>
+          </div>
         </div>
 
         <div class="cmd-block">
@@ -381,16 +389,38 @@ export function initCommande({ lenis } = {}) {
     rendre();
   };
   choisir('[data-paiement]', 'paiement');
-  choisir('[data-heure]', 'heure');
+  radioGroup($('[data-heure]'), (v) => {
+    etat.quand = v;
+    rendreHeures();
+  });
+  cart.querySelectorAll("[data-tstep]").forEach((b) =>
+    b.addEventListener('click', () => {
+      const l = fenetre.creneaux;
+      const i = Math.max(0, l.indexOf(etat.heure)) + Number(b.dataset.tstep);
+      etat.heure = l[Math.min(l.length - 1, Math.max(0, i))];
+      rendreHeures();
+    })
+  );
 
+  /*
+   * Heure : « Dès que possible » ou « Choisir l'heure » (de 11 h 30 à 21 h, par tranches de 15 min,
+   * au plus tôt dans le délai de préparation). Après la fermeture, la commande est pour le lendemain.
+   */
   const rendreHeures = () => {
     fenetre = creneaux();
-    const opts = (fenetre.desQuePossible ? ['asap'] : []).concat(fenetre.creneaux);
-    if (!opts.includes(etat.heure)) etat.heure = opts[0] ?? '';
+    const l = fenetre.creneaux;
+    if (!fenetre.desQuePossible) etat.quand = 'perso';
+    etat.quand ??= 'asap';
+    if (!l.includes(etat.heure)) etat.heure = l.find((h) => h >= '18:00') ?? l[0] ?? '';
     $('[data-jour]').textContent = fenetre.jour === 'demain' ? `· demain, ${JOUR.format(fenetre.date)}` : "· aujourd'hui";
-    $('[data-heure]').innerHTML = opts
-      .map((h) => chip(h, h === 'asap' ? `Dès que possible (~${COMMANDE.delaiMinutes} min)` : heureLisible(h), h === etat.heure))
-      .join('');
+    $('[data-heure]').innerHTML =
+      (fenetre.desQuePossible ? chip('asap', `Dès que possible (~${COMMANDE.delaiMinutes} min)`, etat.quand === 'asap') : '') +
+      chip('perso', "Choisir l'heure", etat.quand === 'perso');
+    $('[data-perso]').hidden = etat.quand !== 'perso';
+    $('[data-heure-val]').textContent = heureLisible(etat.heure);
+    const i = l.indexOf(etat.heure);
+    $("[data-tstep=\"-1\"]").disabled = i <= 0;
+    $("[data-tstep=\"1\"]").disabled = i >= l.length - 1;
   };
 
   function rendre() {
@@ -520,7 +550,7 @@ export function initCommande({ lenis } = {}) {
     if (t.manque || !nbArticles() || (etat.mode === 'livraison' && !etat.secteur)) return;
 
     const quand =
-      etat.heure === 'asap'
+      etat.quand === 'asap'
         ? 'Dès que possible'
         : `${fenetre.jour === 'demain' ? `Demain (${JOUR.format(fenetre.date)})` : "Aujourd'hui"} à ${heureLisible(etat.heure)}`;
     const lignes = lignesPanier()

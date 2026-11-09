@@ -156,7 +156,7 @@ une action « Commander » dans les données structurées Google. Simples liens 
 Réglages dans `src/config.js` → `COMMANDE` :
 - `actif` : `true` affiche un bouton « Commander » sur chaque plat de la carte, la section « L'Académie chez vous » et la barre « Ma commande » ;
 - `secteurs` : secteurs de Gatineau, frais de livraison et codes postaux (3 premiers caractères). Le client ne voit pas de grille de prix : les frais sont ajoutés à sa facture dès qu'il saisit son code postal. Un code absent de la liste = hors zone (cueillette proposée). `minimumLivraison` : minimum avant frais ;
-- `heures` et `delaiMinutes` : créneaux proposés (toutes les 15 min) ; `paiements` : choix affichés (paiement à la réception) ;
+- `heures` et `delaiMinutes` : le client choisit « Dès que possible » ou « Choisir l'heure » (de 11 h 30 à 21 h, par tranches de 15 min) ; `paiements` : choix affichés (paiement à la réception) ;
 - `taxes` (TPS, TVQ), `sansGluten` (supplément par catégorie) et `rabais` (ex. spécial pâtes du dimanche au mercredi).
 
 Les formats viennent du prix dans `menu.json` : `"13 · gratinés 16"` propose « Régulier 13 $ » ou « Gratinés 16 $ ».

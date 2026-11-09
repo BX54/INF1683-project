@@ -29,6 +29,7 @@ let lastFocus = null;
 function buildDialog(url) {
   const d = document.createElement('dialog');
   d.className = 'libro-modal';
+  d.setAttribute('data-lenis-prevent', '');
   d.setAttribute('aria-labelledby', 'libro-modal-title');
   d.innerHTML = `
     <div class="libro-modal__bar">
