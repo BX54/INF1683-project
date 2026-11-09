@@ -39,6 +39,19 @@ export function formats(prix) {
   return out.length ? out : null;
 }
 
+/** Code postal canadien valide → « J8T 8A4 », sinon null. */
+export function normaliserCodePostal(v) {
+  const c = String(v ?? '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  return /^[A-Z]\d[A-Z]\d[A-Z]\d$/.test(c) ? `${c.slice(0, 3)} ${c.slice(3)}` : null;
+}
+
+/** Secteur de livraison d'après le code postal (null = hors zone ou code incomplet). */
+export function secteurDe(codePostal) {
+  const c = normaliserCodePostal(codePostal);
+  if (!c) return null;
+  return COMMANDE.secteurs.find((s) => s.codes?.includes(c.slice(0, 3))) ?? null;
+}
+
 export const sansGlutenPossible = (id) => (COMMANDE.sansGluten?.categories ?? []).includes(categorieDe(id));
 
 // ---------------------------------------------------------------------
@@ -77,7 +90,7 @@ export const prixLigne = (l) => (l.prix + (l.sansGluten ? COMMANDE.sansGluten?.s
 
 const round = (n) => Math.round(n * 100) / 100;
 
-/** Totaux. jour : 0 (dimanche) à 6, jour de la livraison / cueillette (pour les rabais). */
+/** Totaux. secteur : objet de COMMANDE.secteurs (ou null) ; jour : 0 (dimanche) à 6 (pour les rabais). */
 export function totaux({ mode, secteur, jour }) {
   const sousTotal = lignes.reduce((s, l) => s + prixLigne(l), 0);
   const rabais = [];
@@ -87,7 +100,7 @@ export function totaux({ mode, secteur, jour }) {
     if (qte) rabais.push({ libelle: r.libelle, montant: r.montant * qte });
   }
   const totalRabais = rabais.reduce((s, r) => s + r.montant, 0);
-  const frais = mode === 'livraison' ? COMMANDE.secteurs.find((s) => s.nom === secteur)?.frais ?? 0 : 0;
+  const frais = mode === 'livraison' ? secteur?.frais ?? 0 : 0;
   const avantTaxes = Math.max(0, sousTotal - totalRabais) + frais;
   const taxes = Object.entries(COMMANDE.taxes ?? {}).map(([nom, taux]) => ({ nom, montant: round(avantTaxes * taux) }));
   const total = round(avantTaxes + taxes.reduce((s, t) => s + t.montant, 0));

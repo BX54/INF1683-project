@@ -23,6 +23,8 @@ import {
   heureLisible,
   argent,
   surChangement,
+  secteurDe,
+  normaliserCodePostal,
 } from './panier.js';
 
 export const PLATEFORMES = [
@@ -71,7 +73,6 @@ export function initCommande({ lenis } = {}) {
   document.querySelectorAll('[data-if-order]').forEach((el) => (el.hidden = false));
 
   // ---------- Section « L'Académie chez vous » ----------
-  const fraisMin = Math.min(...COMMANDE.secteurs.map((s) => s.frais));
   if (actif) {
     section.querySelector('.order__lead').textContent =
       'Commandez en ligne : livraison par nos livreurs partout à Gatineau, ou cueillette au restaurant. Vous payez à la réception, comptant ou par carte.';
@@ -83,7 +84,7 @@ export function initCommande({ lenis } = {}) {
           <span class="order__cta">Choisir mes plats ${ARROW}</span>
         </a></li>
         <li class="order__facts">
-          <span>Livraison dès ${argent(fraisMin)} selon le secteur</span>
+          <span>Frais de livraison calculés selon votre adresse</span>
           <span>Minimum ${argent(COMMANDE.minimumLivraison)} en livraison</span>
           <span>Paiement à la réception</span>
         </li>`
@@ -201,7 +202,7 @@ export function initCommande({ lenis } = {}) {
   document.body.appendChild(cart);
   surFermeture(cart);
 
-  const etat = { mode: COMMANDE.modes[0], secteur: COMMANDE.secteurs[0].nom, paiement: COMMANDE.paiements[0], heure: '' };
+  const etat = { mode: COMMANDE.modes[0], secteur: null, paiement: COMMANDE.paiements[0], heure: '' };
   let fenetre = creneaux();
   const libMode = (m) => (m === 'livraison' ? 'Livraison' : 'Cueillette au restaurant');
 
@@ -226,14 +227,18 @@ export function initCommande({ lenis } = {}) {
         </div>
 
         <div class="cmd-block" data-livraison>
-          <p class="rform__label" id="cmd-secteur">Secteur de Gatineau</p>
-          <div class="qform__chips" role="radiogroup" aria-labelledby="cmd-secteur" data-secteur>
-            ${COMMANDE.secteurs.map((s) => chip(s.nom, `${s.nom} · ${argent(s.frais)}`, s.nom === etat.secteur)).join('')}
-          </div>
-          <div class="field">
-            <input class="field__input" id="c-adresse" name="adresse" type="text" autocomplete="street-address" placeholder=" " />
-            <label class="field__label" for="c-adresse">Adresse de livraison (numéro, rue, app.)</label>
-            <p class="field__error" id="c-adresse-err"></p>
+          <p class="rform__label">Adresse de livraison · Gatineau</p>
+          <div class="rform__row cmd-adresse">
+            <div class="field">
+              <input class="field__input" id="c-adresse" name="adresse" type="text" autocomplete="street-address" placeholder=" " />
+              <label class="field__label" for="c-adresse">Numéro, rue et appartement</label>
+              <p class="field__error" id="c-adresse-err"></p>
+            </div>
+            <div class="field">
+              <input class="field__input" id="c-codePostal" name="codePostal" type="text" autocomplete="postal-code" autocapitalize="characters" maxlength="7" placeholder=" " />
+              <label class="field__label" for="c-codePostal">Code postal</label>
+              <p class="field__error" id="c-codePostal-err"></p>
+            </div>
           </div>
         </div>
 
@@ -305,7 +310,13 @@ export function initCommande({ lenis } = {}) {
       rendre();
     });
   choisir('[data-mode]', 'mode');
-  choisir('[data-secteur]', 'secteur');
+
+  // Code postal → secteur → frais de livraison (calculés automatiquement, sans service externe)
+  const cp = () => form.elements.codePostal;
+  const majSecteur = () => {
+    etat.secteur = secteurDe(cp().value);
+    rendre();
+  };
   choisir('[data-paiement]', 'paiement');
   choisir('[data-heure]', 'heure');
 
@@ -346,19 +357,24 @@ export function initCommande({ lenis } = {}) {
       )
       .join('');
     const t = totaux({ mode: etat.mode, secteur: etat.secteur, jour: fenetre.date.getDay() });
+    const codeComplet = !!normaliserCodePostal(form.elements.codePostal.value);
+    const horsZone = etat.mode === 'livraison' && codeComplet && !etat.secteur;
+    const fraisTexte = etat.secteur ? argent(t.frais) : horsZone ? '—' : 'selon votre code postal';
     $('[data-totals]').innerHTML = [
       ['Sous-total', argent(t.sousTotal)],
       ...t.rabais.map((r) => [r.libelle, `− ${argent(r.montant)}`]),
-      ...(etat.mode === 'livraison' ? [[`Livraison · ${etat.secteur}`, argent(t.frais)]] : []),
+      ...(etat.mode === 'livraison' ? [['Frais de livraison', fraisTexte]] : []),
       ...t.taxes.map((x) => [x.nom, argent(x.montant)]),
-      ['Total estimé', argent(t.total)],
+      [etat.mode === 'livraison' && !etat.secteur ? 'Total estimé (avant livraison)' : 'Total estimé', argent(t.total)],
     ]
       .map(([k, v], i, a) => `<div${i === a.length - 1 ? ' class="is-total"' : ''}><dt>${escapeHtml(k)}</dt><dd>${v}</dd></div>`)
       .join('');
-    $('[data-warn]').textContent = t.manque
-      ? `Minimum de ${argent(COMMANDE.minimumLivraison)} pour la livraison : il manque ${argent(t.manque)}. Vous pouvez aussi choisir la cueillette.`
-      : '';
-    $('[data-submit]').disabled = !!t.manque || n === 0;
+    $('[data-warn]').textContent = horsZone
+      ? `Désolés, nous ne livrons pas encore à ce code postal. Choisissez la cueillette au restaurant ou appelez-nous au ${RESTAURANT.telephone}.`
+      : t.manque
+        ? `Minimum de ${argent(COMMANDE.minimumLivraison)} pour la livraison : il manque ${argent(t.manque)}. Vous pouvez aussi choisir la cueillette.`
+        : '';
+    $('[data-submit]').disabled = !!t.manque || horsZone || n === 0;
     bar.querySelector('[data-count]').textContent = n;
     bar.querySelector('[data-total]').textContent = argent(t.sousTotal);
     bar.classList.toggle('is-visible', n > 0);
@@ -380,6 +396,12 @@ export function initCommande({ lenis } = {}) {
     $('[data-close]').focus();
   });
 
+  cp().addEventListener('input', majSecteur);
+  cp().addEventListener('blur', () => {
+    const c = normaliserCodePostal(cp().value);
+    if (c) cp().value = c;
+  });
+
   // Téléphone (même format que les autres formulaires)
   const tel = form.elements.telephone;
   tel.addEventListener('input', () => {
@@ -392,6 +414,14 @@ export function initCommande({ lenis } = {}) {
     telephone: (v) => (v.replace(/\D/g, '').length === 10 ? '' : 'Entrez un numéro à 10 chiffres.'),
     courriel: (v) => (!v.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Adresse courriel invalide.'),
     adresse: (v) => (etat.mode !== 'livraison' || v.trim().length >= 6 ? '' : "Indiquez l'adresse de livraison."),
+    codePostal: (v) =>
+      etat.mode !== 'livraison'
+        ? ''
+        : !normaliserCodePostal(v)
+          ? 'Entrez un code postal valide (ex. J8T 8A4).'
+          : secteurDe(v)
+            ? ''
+            : 'Hors de notre zone de livraison.',
   };
   const valider = (name) => {
     const input = form.elements[name];
@@ -417,7 +447,7 @@ export function initCommande({ lenis } = {}) {
       return;
     }
     const t = rendre();
-    if (t.manque || !nbArticles()) return;
+    if (t.manque || !nbArticles() || (etat.mode === 'livraison' && !etat.secteur)) return;
 
     const quand =
       etat.heure === 'asap'
@@ -427,13 +457,16 @@ export function initCommande({ lenis } = {}) {
       .map((l) => `${l.qte} × ${l.nom}${l.format ? ` (${l.format})` : ''}${l.sansGluten ? ' — sans gluten' : ''} : ${argent(prixLigne(l))}`)
       .join('\n');
     const nom = form.elements.nom.value.trim();
-    const mode = etat.mode === 'livraison' ? `Livraison — secteur ${etat.secteur}` : 'Cueillette au restaurant';
+    const mode = etat.mode === 'livraison' ? `Livraison — secteur ${etat.secteur.nom}` : 'Cueillette au restaurant';
     const data = {
       type_demande: `Commande — ${etat.mode === 'livraison' ? 'Livraison' : 'Cueillette'}`,
       nom,
       telephone: tel.value.trim(),
       mode,
-      adresse: etat.mode === 'livraison' ? form.elements.adresse.value.trim() : '—',
+      adresse:
+        etat.mode === 'livraison'
+          ? `${form.elements.adresse.value.trim()}, Gatineau (Québec) ${normaliserCodePostal(cp().value)}`
+          : '—',
       heure: quand,
       paiement: etat.paiement,
       commande: lignes,
@@ -462,6 +495,7 @@ export function initCommande({ lenis } = {}) {
       )}) est envoyée. Nous vous appelons au ${data.telephone} pour la confirmer. Paiement à la réception : ${etat.paiement.toLowerCase()}.`;
       done.hidden = false;
       form.reset();
+      etat.secteur = null;
       vider();
       done.focus();
     } catch (err) {

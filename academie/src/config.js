@@ -131,13 +131,18 @@ export const COMMANDE = {
 
   modes: ['livraison', 'cueillette'],
 
-  // Livraison dans Gatineau, frais selon le secteur. ⚠ Montants À CONFIRMER par le restaurant.
+  /*
+   * Livraison dans Gatineau : les frais sont ajoutés automatiquement à la facture selon le secteur,
+   * trouvé grâce aux 3 premiers caractères du code postal saisi par le client (aucun service externe).
+   * Un code postal absent de cette liste = hors zone de livraison (le client peut choisir la cueillette).
+   * ⚠ Faire valider la liste des codes par le restaurant.
+   */
   secteurs: [
-    { nom: 'Gatineau', frais: 5 },
-    { nom: 'Hull', frais: 7 },
-    { nom: 'Masson-Angers', frais: 8 },
-    { nom: 'Aylmer', frais: 10 },
-    { nom: 'Buckingham', frais: 10 },
+    { nom: 'Gatineau', frais: 5.99, codes: ['J8P', 'J8R', 'J8T', 'J8V'] },
+    { nom: 'Hull', frais: 7.99, codes: ['J8X', 'J8Y', 'J8Z', 'J9A'] },
+    { nom: 'Masson-Angers', frais: 12.99, codes: ['J8M'] },
+    { nom: 'Aylmer', frais: 12.99, codes: ['J9H', 'J9J'] },
+    { nom: 'Buckingham', frais: 17.99, codes: ['J8L'] },
   ],
 
   // Minimum de commande pour la livraison (avant frais et taxes)

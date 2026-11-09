@@ -5065,3 +5065,5 @@ html.has-modal { overflow: hidden; }
   .cmd-bar.is-bump { animation: none; }
 }
 @media (max-width: 720px) { .cmd-modal--add .cmd-add { padding-bottom: calc(28px + env(safe-area-inset-bottom)); } }
+.cmd-adresse { display: grid; grid-template-columns: 1fr 150px; gap: 20px; }
+@media (max-width: 520px) { .cmd-adresse { grid-template-columns: 1fr; gap: 0; } }
