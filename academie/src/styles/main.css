@@ -4832,3 +4832,7 @@ html.has-modal { overflow: hidden; }
 }
 /* Hero : la photo est dans un <picture> (version mobile / ordinateur) */
 .hero__slide picture { display: block; width: 100%; height: 100%; }
+/* Section Équipe masquée (equipe.json → "afficher": false) */
+#equipe[hidden],
+.link-arrow[hidden],
+.mobile-menu__list li[hidden] { display: none !important; }

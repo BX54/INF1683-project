@@ -22,13 +22,13 @@
     "titre": "Une table où l'on vient comme chez soi",
     "texte": "L'Académie est née d'une idée simple : une grande cuisine n'a pas besoin d'une grande carte des vins. Vous apportez la bouteille qui vous ressemble ; nous préparons pâtes fraîches, moules et frites, veau, grillades et pizzas, avec des sauces faites maison sur place.",
     "image": "/images/ambiance/salle.webp",
-    "legende": "La salle à la lueur des bougies"
+    "legende": "Notre grande salle"
   },
   "chef": {
-    "surtitre": "Le chef",
+    "surtitre": "Le chef propriétaire",
     "titre": "La passion, à chaque assiette",
-    "nom": "Nom du chef",
-    "texte": "Formé aux classiques de la cuisine française et amoureux des pâtes fraîches italiennes, notre chef compose une carte de saison pensée pour s'accorder à toutes les bouteilles.",
+    "nom": "Kossi",
+    "texte": "Chef propriétaire de L'Académie, Kossi signe une cuisine française et italienne faite maison, pensée pour s'accorder à toutes les bouteilles.",
     "image": "/images/equipe/chef.webp"
   },
   "signatures": [

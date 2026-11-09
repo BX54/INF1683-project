@@ -6,6 +6,13 @@ export function initTeam() {
   const grid = document.querySelector('.team__grid');
   if (!grid) return;
 
+  // Section masquée (src/data/equipe.json → "afficher": false) : on retire aussi les liens vers elle
+  if (equipe.afficher === false) {
+    document.querySelector('#equipe')?.setAttribute('hidden', '');
+    document.querySelectorAll('a[href="#equipe"]').forEach((a) => (a.closest('li') ?? a).setAttribute('hidden', ''));
+    return;
+  }
+
   // Le membre « vedette » (le chef) passe en premier
   const membres = [...equipe.membres].sort((a, b) => (b.vedette ? 1 : 0) - (a.vedette ? 1 : 0));
 
