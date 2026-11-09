@@ -659,9 +659,11 @@ export function initCommande({ lenis } = {}) {
       }
       dire('', false);
       $('[data-done-nom]').textContent = corps.nom.split(' ')[0];
-      $('[data-done-texte]').textContent = `Votre commande n° ${r.ref} (${r.total}, ${r.mode.charAt(0).toLowerCase()}${r.mode.slice(1)}, ${r.quand.charAt(0).toLowerCase()}${r.quand.slice(
-        1
-      )}) est envoyée. Nous vous appelons au ${r.telephone} pour la confirmer avant de la préparer. Paiement à la réception : ${etat.paiement.toLowerCase()}.`;
+      // Message construit avec ce que la personne vient de saisir (l'API ne renvoie aucun renseignement personnel)
+      const modeTxt = etat.mode === 'livraison' ? `livraison, secteur ${etat.secteur.nom}` : 'cueillette au restaurant';
+      const quandTxt =
+        corps.quand.type === 'asap' ? 'dès que possible' : `${dateLisible(corps.quand.date)} à ${heureLisible(corps.quand.heure)}`;
+      $('[data-done-texte]').textContent = `Votre commande n° ${r.ref} (${argent(t.total)}, ${modeTxt}, ${quandTxt}) est envoyée. Nous vous appelons au ${corps.telephone} pour la confirmer avant de la préparer. Paiement à la réception : ${etat.paiement.toLowerCase()}.`;
       verrouiller(false);
       done.hidden = false;
       form.reset();

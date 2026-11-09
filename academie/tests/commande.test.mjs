@@ -7,14 +7,20 @@ import assert from 'node:assert/strict';
 import { creerCalcul, heureRestaurant } from '../src/commande/calcul.js';
 import { COMMANDE } from '../src/config.js';
 import menu from '../src/data/menu.json' with { type: 'json' };
-import handler, { preparer } from '../netlify/functions/commande.mjs';
+import handler, { preparer, _definirRegistre } from '../netlify/functions/commande.mjs';
 
 const calc = creerCalcul({ menu, commande: COMMANDE });
 // Mardi 10 novembre 2026, 14 h à Gatineau (19 h UTC)
 const MARDI_14H = new Date('2026-11-10T19:00:00Z');
 
+// Un créneau réellement proposé en ce moment (pour les tests de la fonction, qui utilisent l'heure réelle)
+const offert = () => {
+  const f = calc.creneaux(new Date());
+  return { type: 'heure', date: f.date, heure: f.creneaux.at(-1) };
+};
+
 const base = (extra = {}) => ({
-  commande_id: 'TEST1',
+  commande_id: 'TEST01',
   mode: 'livraison',
   adresse: '25, rue Test',
   codePostal: 'j8t8a4',
@@ -44,7 +50,7 @@ test('le total est recalculé par le serveur (un total envoyé est ignoré)', ()
   assert.equal(p.status, 200);
   // 2 × 15 $ + 5,99 $ (Gatineau) = 35,99 $ ; TPS 1,80 ; TVQ 3,59 → 41,38 $
   assert.equal(p.message.total_estime, '41,38 $');
-  assert.match(p.message._subject, /^COMMANDE LIVRAISON .* 41,38 \$ — n° TEST1$/);
+  assert.match(p.message._subject, /^COMMANDE LIVRAISON .* 41,38 \$ — n° TEST01$/);
   assert.doesNotMatch(p.message._subject, /Test Audit|555/); // ni nom ni téléphone dans le sujet
 });
 
@@ -75,7 +81,7 @@ test('minimum de livraison', () => {
 test('fonction : sans FORMSPREE_COMMANDES_ID, aucune commande acceptée (pas de faux succès)', async () => {
   delete process.env.FORMSPREE_COMMANDES_ID;
   delete process.env.COMMANDE_DEMO;
-  const corps = base({ quand: { type: 'heure', date: '2099-01-05', heure: '18:30' } });
+  const corps = base({ quand: offert() });
   const res = await handler(new Request('http://x/api/commande', { method: 'POST', body: JSON.stringify(corps) }), { ip: '1' });
   assert.equal(res.status, 503);
 });
@@ -89,12 +95,14 @@ test('fonction : envoi en double (même n°) transmis une seule fois', async () 
     return new Response('{}', { status: 200 });
   };
   try {
-    const corps = JSON.stringify(base({ commande_id: 'DOUBLE1', quand: { type: 'heure', date: '2099-01-05', heure: '18:30' } }));
+    const corps = JSON.stringify(base({ commande_id: 'DOUBLE1', quand: offert() }));
     const r1 = await handler(new Request('http://x', { method: 'POST', body: corps }), { ip: '2' });
     const r2 = await handler(new Request('http://x', { method: 'POST', body: corps }), { ip: '2' });
     assert.equal(r1.status, 200);
     assert.equal(r2.status, 200);
     assert.equal(appels, 1);
+    // Aucun renseignement personnel dans les réponses (même pour un doublon venant d'une autre adresse)
+    for (const r of [await r1.json(), await r2.json()]) assert.deepEqual(Object.keys(r).filter((k) => !['ok', 'ref', 'doublon'].includes(k)), []);
   } finally {
     globalThis.fetch = vraiFetch;
     delete process.env.FORMSPREE_COMMANDES_ID;
@@ -106,10 +114,50 @@ test('fonction : refus de Formspree → erreur, pas de succès', async () => {
   const vraiFetch = globalThis.fetch;
   for (const status of [400, 429, 500]) {
     globalThis.fetch = async () => new Response('non', { status });
-    const corps = JSON.stringify(base({ commande_id: `E${status}`, quand: { type: 'heure', date: '2099-01-05', heure: '18:30' } }));
+    const corps = JSON.stringify(base({ commande_id: `ERR${status}`, quand: offert() }));
     const r = await handler(new Request('http://x', { method: 'POST', body: corps }), { ip: `e${status}` });
     assert.equal(r.status, 502);
   }
   globalThis.fetch = vraiFetch;
   delete process.env.FORMSPREE_COMMANDES_ID;
+});
+
+test('créneaux non proposés par le site : refusés', () => {
+  for (const quand of [
+    { type: 'heure', date: '2026-11-10', heure: '11:90' },
+    { type: 'heure', date: '2026-11-99', heure: '18:30' },
+    { type: 'heure', date: '2099-01-05', heure: '18:30' },
+    { type: 'heure', date: '2026-11-11', heure: '18:30' }, // le site ne propose que le jour en cours
+    { type: 'autre' },
+  ]) {
+    assert.notEqual(preparer(base({ quand }), { maintenant: MARDI_14H }).status, 200, JSON.stringify(quand));
+  }
+  // Un créneau passé depuis moins de 10 minutes reste accepté (temps de saisie)
+  const aujourdhui = calc.creneaux(MARDI_14H);
+  assert.equal(preparer(base({ quand: { type: 'heure', date: '2026-11-10', heure: aujourdhui.creneaux[0] } }), { maintenant: new Date(MARDI_14H.getTime() + 5 * 60_000) }).status, 200);
+});
+
+test('deux requêtes SIMULTANÉES avec le même numéro : un seul envoi (registre partagé atomique)', async () => {
+  process.env.FORMSPREE_COMMANDES_ID = 'test';
+  // Registre partagé simulé : écriture conditionnelle « seulement si nouveau », comme Netlify Blobs
+  const partage = new Map();
+  _definirRegistre({
+    async reserver(c) { await new Promise((z) => setTimeout(z, 5)); if (partage.has(c)) return false; partage.set(c, 'en-cours'); return true; },
+    async etat(c) { return partage.get(c) ?? null; },
+    async terminer(c) { partage.set(c, 'envoyee'); },
+    async liberer(c) { partage.delete(c); },
+  });
+  let appels = 0;
+  const vraiFetch = globalThis.fetch;
+  globalThis.fetch = async () => { appels++; await new Promise((z) => setTimeout(z, 50)); return new Response('{}', { status: 200 }); };
+  try {
+    const corps = JSON.stringify(base({ commande_id: 'SIMULT1', quand: offert() }));
+    const reponses = await Promise.all([1, 2, 3].map((i) => handler(new Request('http://x', { method: 'POST', body: corps }), { ip: `s${i}` })));
+    assert.equal(appels, 1);
+    assert.equal(reponses.filter((r) => r.status === 200).length, 1);
+    assert.ok(reponses.every((r) => [200, 409].includes(r.status)));
+  } finally {
+    globalThis.fetch = vraiFetch;
+    delete process.env.FORMSPREE_COMMANDES_ID;
+  }
 });

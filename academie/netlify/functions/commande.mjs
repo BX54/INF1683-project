@@ -5,7 +5,8 @@
  *   src/config.js : un total envoyé par le navigateur n'est jamais utilisé.
  * - Plats, formats, quantités, zone de livraison, minimum et créneau sont validés.
  * - Le sujet du courriel est fixé ici (sans nom ni téléphone).
- * - Anti-abus : taille maximale, champ piège, limite par adresse IP, envoi en double ignoré (même n° de commande).
+ * - Anti-abus : taille maximale, champ piège, limite par adresse IP, envoi en double bloqué de façon atomique
+ *   (même n° de commande, registre partagé Netlify Blobs).
  * - Transmission par courriel via un formulaire Formspree dont l'identifiant reste secret :
  *   variable d'environnement FORMSPREE_COMMANDES_ID (Netlify › Site configuration › Environment variables).
  *   Sans elle, la fonction refuse les commandes (503) : jamais de faux succès.
@@ -23,8 +24,60 @@ const TAILLE_MAX = 16_000;
 const LIGNES_MAX = 30;
 const QTE_MAX = 20;
 
-// Mémoire de l'instance (meilleur effort : réinitialisée quand la fonction redémarre)
-const dejaRecues = new Map(); // commande_id → { ref, reponse, t }
+/*
+ * Numéros de commande déjà reçus, PARTAGÉS entre toutes les instances de la fonction (Netlify Blobs,
+ * cohérence forte). La réservation du numéro est atomique (écriture « seulement si nouveau ») et a lieu
+ * AVANT l'envoi : deux requêtes simultanées avec le même numéro ne peuvent pas partir toutes les deux.
+ * Hors de Netlify (npm run dev, npm test), un registre en mémoire avec les mêmes règles est utilisé.
+ */
+const memoire = new Map();
+const registreMemoire = {
+  async reserver(cle) {
+    if (memoire.has(cle)) return false; // vérification et écriture sans « await » entre les deux : atomique
+    memoire.set(cle, 'en-cours');
+    return true;
+  },
+  async etat(cle) {
+    return memoire.get(cle) ?? null;
+  },
+  async terminer(cle) {
+    memoire.set(cle, 'envoyee');
+  },
+  async liberer(cle) {
+    memoire.delete(cle);
+  },
+};
+let registre = null;
+async function obtenirRegistre() {
+  if (registre) return registre;
+  try {
+    const { getStore } = await import('@netlify/blobs');
+    const store = getStore({ name: 'commandes-recues', consistency: 'strong' });
+    await store.get('__test__'); // lève une erreur si Netlify Blobs n'est pas disponible
+    registre = {
+      async reserver(cle) {
+        const { modified } = await store.setJSON(cle, { etat: 'en-cours', t: Date.now() }, { onlyIfNew: true });
+        return modified;
+      },
+      async etat(cle) {
+        return (await store.get(cle, { type: 'json' }))?.etat ?? null;
+      },
+      async terminer(cle) {
+        await store.setJSON(cle, { etat: 'envoyee', t: Date.now() });
+      },
+      async liberer(cle) {
+        await store.delete(cle);
+      },
+    };
+  } catch {
+    registre = registreMemoire;
+  }
+  return registre;
+}
+/** Pour les tests : remplacer le registre partagé */
+export const _definirRegistre = (r) => (registre = r);
+
+// Limite par adresse IP (mémoire de l'instance : meilleur effort)
 const parIp = new Map(); // ip → [horodatages]
 const LIMITE = { nombre: 6, fenetreMs: 10 * 60 * 1000 };
 
@@ -83,40 +136,30 @@ export function preparer(body, { maintenant = new Date() } = {}) {
     adresse = `${rue}, Gatineau (Québec) ${cp}`;
   }
 
-  // Créneau (heure de Gatineau)
-  const fenetre = calc.creneaux(maintenant);
+  // Créneau (heure de Gatineau) : il doit faire partie des créneaux réellement proposés par le site,
+  // maintenant ou il y a moins de 10 minutes (le client a pu mettre un peu de temps à remplir le formulaire).
+  const offerts = [calc.creneaux(maintenant), calc.creneaux(new Date(maintenant.getTime() - 10 * 60_000))];
   const q = body.quand ?? {};
   let date;
-  let heure;
+  let heure = null;
   if (q.type === 'asap') {
-    if (!fenetre.desQuePossible) return { status: 409, message: "« Dès que possible » n'est plus disponible : choisissez une heure.", champ: 'heure' };
-    date = fenetre.date;
-    heure = null;
-  } else {
+    const f = offerts[0];
+    if (!f.desQuePossible) return { status: 409, message: "« Dès que possible » n'est plus disponible : choisissez une heure.", champ: 'heure' };
+    date = f.date;
+  } else if (q.type === 'heure') {
     date = String(q.date ?? '');
     heure = String(q.heure ?? '');
-    const { date: auj, minutes: now } = heureRestaurant(maintenant);
-    const [h, m] = heure.split(':').map(Number);
-    const min = h * 60 + m;
-    const [dh, dm] = COMMANDE.heures.debut.split(':').map(Number);
-    const [fh, fm] = COMMANDE.heures.fin.split(':').map(Number);
-    const valide =
-      /^\d{4}-\d{2}-\d{2}$/.test(date) &&
-      /^\d{2}:\d{2}$/.test(heure) &&
-      m % 15 === 0 &&
-      min >= dh * 60 + dm &&
-      min <= fh * 60 + fm &&
-      date >= auj &&
-      !calc.ferme(date) &&
-      // Marge de 10 min si le créneau vient tout juste de passer pendant la saisie
-      (date > auj || min >= now + (COMMANDE.delaiMinutes ?? 45) - 10);
-    if (!valide) return { status: 409, message: "L'heure choisie n'est plus disponible : choisissez-en une autre.", champ: 'heure' };
+    if (!offerts.some((f) => f.date === date && f.creneaux.includes(heure)))
+      return { status: 409, message: "L'heure choisie n'est plus disponible : choisissez-en une autre.", champ: 'heure' };
+  } else {
+    return { status: 400, message: 'Heure de commande invalide.', champ: 'heure' };
   }
 
   const t = calc.totaux({ lignes, mode, secteur, jour: jourSemaine(date) });
   if (t.manque) return { status: 400, message: `Minimum de ${argent(COMMANDE.minimumLivraison)} pour la livraison.` };
 
-  const ref = String(body.commande_id ?? '').replace(/[^A-Za-z0-9]/g, '').slice(0, 12).toUpperCase() || Math.random().toString(36).slice(2, 8).toUpperCase();
+  const ref = String(body.commande_id ?? '').toUpperCase();
+  if (!/^[A-Z0-9]{6,12}$/.test(ref)) return { status: 400, message: 'Commande illisible : rechargez la page.' };
   const quand = heure ? `${dateLisible(date)} à ${heureLisible(heure)}` : `Dès que possible (${dateLisible(date)})`;
   const modeTexte = mode === 'livraison' ? `Livraison — secteur ${secteur.nom}` : 'Cueillette au restaurant';
 
@@ -147,7 +190,7 @@ export function preparer(body, { maintenant = new Date() } = {}) {
     message.courriel = courriel;
     message._replyto = courriel;
   }
-  return { status: 200, ref, message, resume: { total: argent(t.total), quand, mode: modeTexte, telephone } };
+  return { status: 200, ref, message };
 }
 
 export default async function handler(req, context) {
@@ -170,11 +213,6 @@ export default async function handler(req, context) {
   const recents = (parIp.get(ip) ?? []).filter((t) => maintenant - t < LIMITE.fenetreMs);
   if (recents.length >= LIMITE.nombre) return erreur(429, `Trop de commandes en peu de temps. Appelez-nous au ${RESTAURANT.telephone}.`);
 
-  // Même commande reçue deux fois (double clic, réseau lent) : on renvoie la première réponse
-  const cle = String(body?.commande_id ?? '');
-  for (const [k, v] of dejaRecues) if (maintenant - v.t > 3600_000) dejaRecues.delete(k);
-  if (cle && dejaRecues.has(cle)) return json(200, dejaRecues.get(cle).reponse);
-
   const p = preparer(body);
   if (p.status !== 200) return erreur(p.status, p.message, p.champ);
 
@@ -182,6 +220,15 @@ export default async function handler(req, context) {
   if (!id && process.env.COMMANDE_DEMO !== '1') {
     console.error('[commande] FORMSPREE_COMMANDES_ID manquant : commande refusée.');
     return erreur(503, `La commande en ligne est momentanément indisponible. Appelez-nous au ${RESTAURANT.telephone}.`);
+  }
+
+  // Réservation atomique du numéro AVANT l'envoi. Un doublon ne reçoit que { ok, ref } : aucun renseignement.
+  const reg = await obtenirRegistre();
+  const cle = `cmd-${p.ref}`;
+  if (!(await reg.reserver(cle))) {
+    const etat = await reg.etat(cle);
+    if (etat === 'envoyee') return json(200, { ok: true, ref: p.ref, doublon: true });
+    return erreur(409, "Cette commande est déjà en cours d'envoi. Patientez quelques secondes.");
   }
 
   if (id) {
@@ -196,10 +243,12 @@ export default async function handler(req, context) {
       });
       if (!res.ok) {
         console.error('[commande] Formspree a refusé :', res.status, await res.text().catch(() => ''));
+        await reg.liberer(cle); // échec : le client peut réessayer avec le même numéro
         return erreur(502, `La commande n'a pas pu être transmise. Réessayez ou appelez-nous au ${RESTAURANT.telephone}.`);
       }
     } catch (e) {
       console.error('[commande] Formspree injoignable :', e?.name);
+      await reg.liberer(cle);
       return erreur(504, `La commande n'a pas pu être transmise. Réessayez ou appelez-nous au ${RESTAURANT.telephone}.`);
     } finally {
       clearTimeout(minuterie);
@@ -208,9 +257,9 @@ export default async function handler(req, context) {
     console.info('[commande — DÉMO] Rien n’est transmis :', p.message._subject);
   }
 
+  await reg.terminer(cle);
   recents.push(maintenant);
   parIp.set(ip, recents);
-  const reponse = { ok: true, ref: p.ref, ...p.resume };
-  if (cle) dejaRecues.set(cle, { reponse, t: maintenant });
-  return json(200, reponse);
+  // Réponse volontairement minimale : jamais de téléphone, d'adresse ni de détail de commande
+  return json(200, { ok: true, ref: p.ref });
 }
