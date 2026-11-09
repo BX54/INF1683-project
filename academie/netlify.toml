@@ -1,0 +1,8 @@
+# Netlify : construit le site à chaque « git push » sur main.
+# Les en-têtes de sécurité et le cache sont dans public/_headers.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

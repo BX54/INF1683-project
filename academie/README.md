@@ -102,7 +102,7 @@ Chaque catégorie contient une liste de plats :
 - `note` (catégorie, facultatif) : texte encadré sous le titre, par exemple les conditions des spéciaux.
 - Pour ajouter une catégorie, copiez un bloc `{ "id", "nom", "accroche", "plats" }`.
 
-Les prix fournis sont des **exemples** : ajustez-les.
+Les prix sont ceux du menu du restaurant : modifiez-les ici quand ils changent.
 
 ## Modifier les accords — `src/data/accords.json`
 
