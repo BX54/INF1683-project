@@ -4882,3 +4882,9 @@ html.has-modal { overflow: hidden; }
 .dish__top:has(.dish__price--long) { flex-wrap: wrap; row-gap: 4px; }
 .dish__top:has(.dish__price--long) .dish__name { flex: 1 1 8em; min-width: 0; }
 .dish__price--long { max-width: 100%; margin-left: auto; }
+/* Formulaire de soumission : choix en pastilles au lieu des listes déroulantes */
+.field--chips select[hidden] { display: none; }
+.qform__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip--sm { min-height: 40px; padding: 0 16px; font-size: 13px; }
+.field--chips { padding-top: 6px; }
+.rform__row--2 > .field--chips { grid-column: 1 / -1; }

@@ -58,6 +58,46 @@ export function initServices() {
   occasion.innerHTML = options(services.occasions);
   form.elements.salle.innerHTML = options(services.salles ?? []);
   form.elements.mode.innerHTML = options(services.modesTraiteur ?? []);
+  /*
+   * Listes déroulantes remplacées par des pastilles (même style que « Type de service »).
+   * La liste <select> reste cachée dans le formulaire : c'est elle qui garde la valeur envoyée.
+   */
+  const chipify = (select) => {
+    const field = select.closest('.field');
+    const label = field.querySelector('label');
+    const group = document.createElement('div');
+    group.className = 'qform__chips';
+    group.setAttribute('role', 'radiogroup');
+    const labelId = `${select.id}-label`;
+    const title = document.createElement('p');
+    title.className = 'rform__label';
+    title.id = labelId;
+    title.textContent = label.textContent;
+    label.replaceWith(title);
+    group.setAttribute('aria-labelledby', labelId);
+    group.innerHTML = [...select.options]
+      .map(
+        (o) =>
+          `<button type="button" class="chip chip--sm" role="radio" aria-checked="false" data-value="${escapeHtml(o.value)}">${escapeHtml(
+            o.textContent
+          )}</button>`
+      )
+      .join('');
+    select.hidden = true;
+    select.tabIndex = -1;
+    field.classList.add('field--chips');
+    field.appendChild(group);
+    const pick = (v) => {
+      select.value = v;
+      setChecked(group, v);
+    };
+    radioGroup(group, pick);
+    group.querySelectorAll('.chip').forEach(trackGlow);
+    pick(select.options[0]?.value ?? '');
+    return pick;
+  };
+  const pickers = [occasion, form.elements.salle, form.elements.mode].map(chipify);
+
   const blocSalle = form.querySelector('[data-for="salle"]');
   const blocTraiteur = form.querySelector('[data-for="traiteur"]');
 
@@ -162,6 +202,7 @@ export function initServices() {
       status.textContent = '';
       showDone(data);
       form.reset();
+      [occasion, form.elements.salle, form.elements.mode].forEach((sel, i) => pickers[i](sel.options[0]?.value ?? ''));
       setType('Salle de réception');
     } catch (err) {
       console.error(err);
