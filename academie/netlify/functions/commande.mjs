@@ -28,7 +28,10 @@ const QTE_MAX = 20;
  * Numéros de commande déjà reçus, PARTAGÉS entre toutes les instances de la fonction (Netlify Blobs,
  * cohérence forte). La réservation du numéro est atomique (écriture « seulement si nouveau ») et a lieu
  * AVANT l'envoi : deux requêtes simultanées avec le même numéro ne peuvent pas partir toutes les deux.
- * Hors de Netlify (npm run dev, npm test), un registre en mémoire avec les mêmes règles est utilisé.
+ *
+ * EN PRODUCTION, SANS REGISTRE PARTAGÉ, AUCUNE COMMANDE N'EST ACCEPTÉE (erreur temporaire 503) :
+ * un registre propre à chaque instance ne protège pas contre les doublons.
+ * Le registre en mémoire n'est utilisé que si COMMANDE_REGISTRE_MEMOIRE=1 (npm run dev, npm test).
  */
 const memoire = new Map();
 const registreMemoire = {
@@ -40,16 +43,18 @@ const registreMemoire = {
   async etat(cle) {
     return memoire.get(cle) ?? null;
   },
-  async terminer(cle) {
-    memoire.set(cle, 'envoyee');
+  async terminer(cle, etat = 'envoyee') {
+    memoire.set(cle, etat);
   },
   async liberer(cle) {
     memoire.delete(cle);
   },
 };
 let registre = null;
+/** Registre partagé, ou null s'il est indisponible (jamais de repli silencieux en production). */
 async function obtenirRegistre() {
   if (registre) return registre;
+  if (process.env.COMMANDE_REGISTRE_MEMOIRE === '1') return (registre = registreMemoire);
   try {
     const { getStore } = await import('@netlify/blobs');
     const store = getStore({ name: 'commandes-recues', consistency: 'strong' });
@@ -62,15 +67,16 @@ async function obtenirRegistre() {
       async etat(cle) {
         return (await store.get(cle, { type: 'json' }))?.etat ?? null;
       },
-      async terminer(cle) {
-        await store.setJSON(cle, { etat: 'envoyee', t: Date.now() });
+      async terminer(cle, etat = 'envoyee') {
+        await store.setJSON(cle, { etat, t: Date.now() });
       },
       async liberer(cle) {
         await store.delete(cle);
       },
     };
-  } catch {
-    registre = registreMemoire;
+  } catch (e) {
+    console.error('[commande] Registre partagé (Netlify Blobs) indisponible :', e?.name, e?.message);
+    return null; // on réessaiera à la prochaine requête
   }
   return registre;
 }
@@ -85,6 +91,14 @@ const json = (status, body) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
 const erreur = (status, message, champ) => json(status, { ok: false, erreur: message, ...(champ ? { champ } : {}) });
 
+/** Résultat d'envoi incertain : surtout ne pas renvoyer, appeler pour vérifier. */
+const incertaine = (ref) =>
+  json(504, {
+    ok: false,
+    incertain: true,
+    ref,
+    erreur: `Nous ne pouvons pas confirmer la réception de votre commande n° ${ref}. Ne la renvoyez pas : appelez-nous au ${RESTAURANT.telephone} pour vérifier.`,
+  });
 const texte = (v, max) => (typeof v === 'string' ? v.replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max) : '');
 const DATE_LONGUE = new Intl.DateTimeFormat('fr-CA', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
 const dateLisible = (iso) => {
@@ -223,11 +237,21 @@ export default async function handler(req, context) {
   }
 
   // Réservation atomique du numéro AVANT l'envoi. Un doublon ne reçoit que { ok, ref } : aucun renseignement.
+  const indisponible = () => erreur(503, `La commande en ligne est momentanément indisponible. Appelez-nous au ${RESTAURANT.telephone}.`);
   const reg = await obtenirRegistre();
+  if (!reg) return indisponible();
   const cle = `cmd-${p.ref}`;
-  if (!(await reg.reserver(cle))) {
-    const etat = await reg.etat(cle);
+  let reserve;
+  try {
+    reserve = await reg.reserver(cle);
+  } catch (e) {
+    console.error('[commande] Réservation du numéro impossible :', e?.message);
+    return indisponible();
+  }
+  if (!reserve) {
+    const etat = await reg.etat(cle).catch(() => null);
     if (etat === 'envoyee') return json(200, { ok: true, ref: p.ref, doublon: true });
+    if (etat === 'incertain') return incertaine(p.ref);
     return erreur(409, "Cette commande est déjà en cours d'envoi. Patientez quelques secondes.");
   }
 
@@ -241,15 +265,30 @@ export default async function handler(req, context) {
         body: JSON.stringify(p.message),
         signal: ctrl.signal,
       });
-      if (!res.ok) {
+      if (res.status >= 400 && res.status < 500) {
+        // Refus explicite (formulaire invalide, quota, anti-spam) : rien n'a été enregistré, on peut réessayer
         console.error('[commande] Formspree a refusé :', res.status, await res.text().catch(() => ''));
-        await reg.liberer(cle); // échec : le client peut réessayer avec le même numéro
+        await reg.liberer(cle).catch(() => {});
         return erreur(502, `La commande n'a pas pu être transmise. Réessayez ou appelez-nous au ${RESTAURANT.telephone}.`);
       }
+      if (!res.ok) {
+        // Erreur du serveur de Formspree : la commande a peut-être été enregistrée → résultat incertain
+        console.error('[commande] Formspree erreur serveur :', res.status);
+        await reg.terminer(cle, 'incertain').catch(() => {});
+        return incertaine(p.ref);
+      }
     } catch (e) {
-      console.error('[commande] Formspree injoignable :', e?.name);
-      await reg.liberer(cle);
-      return erreur(504, `La commande n'a pas pu être transmise. Réessayez ou appelez-nous au ${RESTAURANT.telephone}.`);
+      // Connexion refusée ou adresse introuvable : la requête n'est jamais partie → on peut réessayer.
+      // Coupure ou délai dépassé APRÈS l'envoi : Formspree a peut-être reçu la commande → résultat incertain,
+      // le numéro reste réservé pour qu'aucun nouvel essai ne crée de doublon.
+      const code = e?.cause?.code;
+      console.error('[commande] Formspree injoignable :', e?.name, code);
+      if (['ECONNREFUSED', 'ENOTFOUND', 'EAI_AGAIN'].includes(code)) {
+        await reg.liberer(cle).catch(() => {});
+        return erreur(503, `La commande n'a pas pu être transmise. Réessayez ou appelez-nous au ${RESTAURANT.telephone}.`);
+      }
+      await reg.terminer(cle, 'incertain').catch(() => {});
+      return incertaine(p.ref);
     } finally {
       clearTimeout(minuterie);
     }
@@ -257,7 +296,7 @@ export default async function handler(req, context) {
     console.info('[commande — DÉMO] Rien n’est transmis :', p.message._subject);
   }
 
-  await reg.terminer(cle);
+  await reg.terminer(cle).catch((e) => console.error('[commande] Numéro non marqué « envoyée » :', e?.message));
   recents.push(maintenant);
   parIp.set(ip, recents);
   // Réponse volontairement minimale : jamais de téléphone, d'adresse ni de détail de commande

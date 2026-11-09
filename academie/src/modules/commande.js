@@ -673,6 +673,13 @@ export function initCommande({ lenis } = {}) {
       done.focus();
     } catch (err) {
       console.error(err);
+      if (err.reponse?.incertain) {
+        // Le restaurant a peut-être reçu la commande : on bloque tout nouvel envoi et on invite à appeler
+        dire(err.reponse.erreur);
+        submit.classList.remove('is-loading');
+        clearTimeout(minuterie);
+        return;
+      }
       verrouiller(false);
       const champ = err.reponse?.champ;
       if (champ === 'heure') rendreHeures();

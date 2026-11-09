@@ -16,6 +16,8 @@ export default function apiDev() {
     configureServer(server) {
       const env = loadEnv(server.config.mode, server.config.root, '');
       for (const k of ['FORMSPREE_COMMANDES_ID', 'COMMANDE_DEMO']) if (env[k] && !process.env[k]) process.env[k] = env[k];
+      // En développement seulement : registre des numéros de commande en mémoire (pas de Netlify Blobs)
+      process.env.COMMANDE_REGISTRE_MEMOIRE = '1';
       server.middlewares.use('/api/commande', async (req, res) => {
         const { default: handler } = await server.ssrLoadModule('/netlify/functions/commande.mjs');
         const chunks = [];

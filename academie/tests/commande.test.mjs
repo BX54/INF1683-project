@@ -9,6 +9,8 @@ import { COMMANDE } from '../src/config.js';
 import menu from '../src/data/menu.json' with { type: 'json' };
 import handler, { preparer, _definirRegistre } from '../netlify/functions/commande.mjs';
 
+// Tests : registre en mémoire autorisé (en production, il ne l'est jamais)
+process.env.COMMANDE_REGISTRE_MEMOIRE = '1';
 const calc = creerCalcul({ menu, commande: COMMANDE });
 // Mardi 10 novembre 2026, 14 h à Gatineau (19 h UTC)
 const MARDI_14H = new Date('2026-11-10T19:00:00Z');
@@ -112,7 +114,7 @@ test('fonction : envoi en double (même n°) transmis une seule fois', async () 
 test('fonction : refus de Formspree → erreur, pas de succès', async () => {
   process.env.FORMSPREE_COMMANDES_ID = 'test';
   const vraiFetch = globalThis.fetch;
-  for (const status of [400, 429, 500]) {
+  for (const status of [400, 422, 429]) {
     globalThis.fetch = async () => new Response('non', { status });
     const corps = JSON.stringify(base({ commande_id: `ERR${status}`, quand: offert() }));
     const r = await handler(new Request('http://x', { method: 'POST', body: corps }), { ip: `e${status}` });
@@ -156,6 +158,59 @@ test('deux requêtes SIMULTANÉES avec le même numéro : un seul envoi (registr
     assert.equal(appels, 1);
     assert.equal(reponses.filter((r) => r.status === 200).length, 1);
     assert.ok(reponses.every((r) => [200, 409].includes(r.status)));
+  } finally {
+    globalThis.fetch = vraiFetch;
+    delete process.env.FORMSPREE_COMMANDES_ID;
+  }
+});
+
+test('production : registre partagé indisponible → aucune commande (503), pas de repli en mémoire', async () => {
+  delete process.env.COMMANDE_REGISTRE_MEMOIRE;
+  _definirRegistre(null); // Netlify Blobs n'existe pas dans cet environnement : comme une panne
+  process.env.FORMSPREE_COMMANDES_ID = 'test';
+  let appels = 0;
+  const vraiFetch = globalThis.fetch;
+  globalThis.fetch = async () => { appels++; return new Response('{}', { status: 200 }); };
+  try {
+    const corps = JSON.stringify(base({ commande_id: 'PANNE01', quand: offert() }));
+    const r = await handler(new Request('http://x', { method: 'POST', body: corps }), { ip: 'p1' });
+    assert.equal(r.status, 503);
+    assert.equal(appels, 0);
+  } finally {
+    globalThis.fetch = vraiFetch;
+    delete process.env.FORMSPREE_COMMANDES_ID;
+    process.env.COMMANDE_REGISTRE_MEMOIRE = '1';
+    _definirRegistre(null);
+  }
+});
+
+test('coupure après envoi (résultat incertain) : le numéro reste réservé, aucun deuxième envoi', async () => {
+  process.env.FORMSPREE_COMMANDES_ID = 'test';
+  _definirRegistre(null);
+  let appels = 0;
+  const vraiFetch = globalThis.fetch;
+  const corps = JSON.stringify(base({ commande_id: 'COUPE01', quand: offert() }));
+  try {
+    // 1er essai : Formspree reçoit la requête puis la connexion coupe (réinitialisation)
+    globalThis.fetch = async () => { appels++; throw Object.assign(new TypeError('fetch failed'), { cause: { code: 'ECONNRESET' } }); };
+    const r1 = await handler(new Request('http://x', { method: 'POST', body: corps }), { ip: 'c1' });
+    assert.equal(r1.status, 504);
+    assert.equal((await r1.json()).incertain, true);
+    // 2e essai avec le même numéro : refusé sans rien envoyer
+    globalThis.fetch = async () => { appels++; return new Response('{}', { status: 200 }); };
+    const r2 = await handler(new Request('http://x', { method: 'POST', body: corps }), { ip: 'c2' });
+    assert.equal(r2.status, 504);
+    assert.equal(appels, 1);
+    // Erreur serveur de Formspree (500) : aussi incertaine
+    globalThis.fetch = async () => { appels++; return new Response('x', { status: 500 }); };
+    const r3 = await handler(new Request('http://x', { method: 'POST', body: JSON.stringify(base({ commande_id: 'COUPE02', quand: offert() })) }), { ip: 'c3' });
+    assert.equal((await r3.json()).incertain, true);
+    // Connexion refusée (rien n'est parti) : le numéro est libéré, un nouvel essai passe
+    globalThis.fetch = async () => { appels++; throw Object.assign(new TypeError('fetch failed'), { cause: { code: 'ECONNREFUSED' } }); };
+    const c4 = JSON.stringify(base({ commande_id: 'REFUS01', quand: offert() }));
+    assert.equal((await handler(new Request('http://x', { method: 'POST', body: c4 }), { ip: 'c4' })).status, 503);
+    globalThis.fetch = async () => { appels++; return new Response('{}', { status: 200 }); };
+    assert.equal((await handler(new Request('http://x', { method: 'POST', body: c4 }), { ip: 'c5' })).status, 200);
   } finally {
     globalThis.fetch = vraiFetch;
     delete process.env.FORMSPREE_COMMANDES_ID;
