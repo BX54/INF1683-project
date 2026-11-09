@@ -8,7 +8,7 @@ export const RESTAURANT = {
   nom: "L'Académie",
   adresse: '25, chemin de la Savane',
   ville: 'Gatineau (Québec)',
-  // Pour Google (données structurées). Code postal relevé dans un annuaire en ligne : à confirmer.
+  // Pour Google (données structurées). Code postal confirmé par le restaurant.
   codePostal: 'J8T 8A4',
   // Adresse du site une fois en ligne (ex. 'https://lacademiegatineau.ca') : sert à l'adresse canonique,
   // à l'image de partage et au sitemap. Laissez vide tant que le nom de domaine n'est pas choisi.
