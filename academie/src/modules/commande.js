@@ -100,14 +100,7 @@ export function initCommande({ lenis } = {}) {
       .join('');
   if (!actif) return;
 
-  // ---------- Barre « Ma commande » et message de confirmation ----------
-  const bar = document.createElement('button');
-  bar.type = 'button';
-  bar.className = 'cmd-bar';
-  bar.setAttribute('aria-haspopup', 'dialog');
-  bar.innerHTML =
-    '<span class="cmd-bar__count" data-count>0</span><span class="cmd-bar__label">Ma commande</span><span class="cmd-bar__total" data-total></span>';
-  document.body.appendChild(bar);
+  // ---------- Message de confirmation ----------
   const toast = document.createElement('p');
   toast.className = 'cmd-toast';
   toast.setAttribute('role', 'status');
@@ -118,9 +111,9 @@ export function initCommande({ lenis } = {}) {
     toast.classList.add('is-visible');
     clearTimeout(toastT);
     toastT = setTimeout(() => toast.classList.remove('is-visible'), 2200);
-    bar.classList.remove('is-bump');
-    void bar.offsetWidth;
-    bar.classList.add('is-bump');
+    head.classList.remove('is-bump');
+    void head.offsetWidth;
+    head.classList.add('is-bump');
   };
 
   // ---------- Bouton « Commander » dans l'en-tête (toujours visible) ----------
@@ -137,7 +130,7 @@ export function initCommande({ lenis } = {}) {
     if (nbArticles() > 0) {
       e.preventDefault();
       e.stopPropagation();
-      bar.click();
+      ouvrirPanier();
     }
   }, true);
 
@@ -211,7 +204,37 @@ export function initCommande({ lenis } = {}) {
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-add]');
     if (b) demanderFormat(b.dataset.add);
+    if (e.target.closest('[data-voir]')) ouvrirPanier();
+    const m = e.target.closest('[data-moins]');
+    if (m) {
+      // Retire le dernier article ajouté de ce plat
+      const l = [...lignesPanier()].reverse().find((x) => x.id === m.dataset.moins);
+      if (l) changerQte(l.key, -1);
+    }
   });
+
+  // ---------- Quantité affichée directement sur les plats de la carte ----------
+  const majPlats = (root = document) => {
+    root.querySelectorAll('[data-order]').forEach((el) => {
+      const id = el.dataset.order;
+      const nom = platsParId.get(id)?.nom ?? '';
+      const q = lignesPanier().filter((l) => l.id === id).reduce((n, l) => n + l.qte, 0);
+      const html = q
+        ? `<div class="dish__qty" role="group" aria-label="Quantité de « ${escapeHtml(nom)} » dans votre commande">
+            <button type="button" data-moins="${escapeHtml(id)}" aria-label="Retirer un « ${escapeHtml(nom)} »">−</button>
+            <span aria-live="polite">${q}</span>
+            <button type="button" data-add="${escapeHtml(id)}" aria-label="Ajouter un « ${escapeHtml(nom)} »">+</button>
+          </div><button type="button" class="dish__inorder" data-voir aria-haspopup="dialog">Voir ma commande</button>`
+        : `<button type="button" class="dish__add" data-add="${escapeHtml(id)}" aria-label="Ajouter « ${escapeHtml(nom)} » à ma commande" data-cursor>
+            <span aria-hidden="true">+</span> Commander</button>`;
+      if (el.dataset.q !== String(q)) {
+        el.dataset.q = String(q);
+        el.innerHTML = html;
+      }
+    });
+  };
+  const grille = document.querySelector('.menu__grid');
+  if (grille) new MutationObserver(() => majPlats(grille)).observe(grille, { childList: true });
 
   // ---------- Fenêtre du panier ----------
   const cart = document.createElement('dialog');
@@ -393,14 +416,11 @@ export function initCommande({ lenis } = {}) {
         ? `Minimum de ${argent(COMMANDE.minimumLivraison)} pour la livraison : il manque ${argent(t.manque)}. Vous pouvez aussi choisir la cueillette.`
         : '';
     $('[data-submit]').disabled = !!t.manque || horsZone || n === 0;
-    bar.querySelector('[data-count]').textContent = n;
     const hc = head.querySelector('[data-head-count]');
     hc.textContent = n;
     hc.hidden = n === 0;
     head.setAttribute('aria-label', n ? `Ma commande : ${n} article${n > 1 ? 's' : ''}` : 'Commander en ligne (livraison ou cueillette)');
-    bar.querySelector('[data-total]').textContent = argent(t.sousTotal);
-    bar.classList.toggle('is-visible', n > 0);
-    document.documentElement.classList.toggle('has-cart', n > 0);
+    majPlats();
     return t;
   }
 
@@ -410,13 +430,13 @@ export function initCommande({ lenis } = {}) {
   });
   surChangement(rendre);
 
-  bar.addEventListener('click', () => {
+  function ouvrirPanier() {
     done.hidden = true;
     rendreHeures();
     rendre();
     ouvrir(cart);
     $('[data-close]').focus();
-  });
+  }
 
   cp().addEventListener('input', majSecteur);
   cp().addEventListener('blur', () => {

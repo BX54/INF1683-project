@@ -4961,7 +4961,7 @@ html.has-modal { overflow: hidden; }
 @media (max-width: 1080px) {
   /* Sur mobile, la barre de commande prend la place du bouton « Réserver » fixe */
   html.has-cart .sticky-cta { visibility: hidden; }
-  .cmd-bar { left: 16px; right: 16px; bottom: calc(14px + env(safe-area-inset-bottom)); border-radius: 2px; justify-content: space-between; }
+
   .cmd-bar__label { flex: 1; text-align: left; }
 }
 
@@ -5104,3 +5104,33 @@ html.has-modal { overflow: hidden; }
   .header__order { padding: 0 12px; }
   .header__order-label { display: none; }
 }
+/* Carte : quantité commandée directement sur le plat */
+.dish__order { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+.dish__order .dish__add { margin-top: 0; }
+.dish__qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--or-clair);
+  border-radius: 999px;
+  background: rgba(201, 162, 75, 0.12);
+}
+.dish__qty button {
+  width: 36px;
+  height: 34px;
+  font-size: 17px;
+  line-height: 1;
+  color: var(--or-clair);
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.dish__qty button:hover,
+.dish__qty button:focus-visible { color: var(--ivoire); }
+.dish__qty span { min-width: 22px; text-align: center; font-family: var(--serif); font-size: 17px; color: var(--ivoire); }
+.dish__inorder { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--or); }
+.header__order.is-bump { animation: cmd-bump 0.5s var(--ease); }
+@media (min-width: 1081px) { .cmd-toast { bottom: 28px; } }
+@media (prefers-reduced-motion: reduce) { .header__order.is-bump { animation: none; } }
+.dish__inorder { padding: 0; background: none; border: 0; border-bottom: 1px solid var(--ligne-forte); cursor: pointer; }
+.dish__inorder:hover, .dish__inorder:focus-visible { color: var(--or-clair); border-color: var(--or-clair); }

@@ -40,8 +40,8 @@ export function initMenu() {
         ${p.tags?.length ? `<div class="dish__tags">${p.tags.map((t) => `<span>${escapeHtml(t)}</span>`).join('')}</div>` : ''}
         ${
           commandeActive() && formats(p.prix)
-            ? `<button type="button" class="dish__add" data-add="${escapeHtml(p.id)}" aria-label="Ajouter « ${escapeHtml(p.nom)} » à ma commande" data-cursor>
-                <span aria-hidden="true">+</span> Commander</button>`
+            ? `<div class="dish__order" data-order="${escapeHtml(p.id)}"><button type="button" class="dish__add" data-add="${escapeHtml(p.id)}" aria-label="Ajouter « ${escapeHtml(p.nom)} » à ma commande" data-cursor>
+                <span aria-hidden="true">+</span> Commander</button></div>`
             : ''
         }
       </div>
