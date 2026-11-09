@@ -123,6 +123,24 @@ export function initCommande({ lenis } = {}) {
     bar.classList.add('is-bump');
   };
 
+  // ---------- Bouton « Commander » dans l'en-tête (toujours visible) ----------
+  const head = document.createElement('a');
+  head.href = '#menu';
+  head.className = 'header__order';
+  head.setAttribute('data-cursor', '');
+  head.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>
+    <span class="header__order-label">Commander</span><span class="header__order-count" data-head-count hidden>0</span>`;
+  head.setAttribute('aria-label', 'Commander en ligne (livraison ou cueillette)');
+  document.querySelector('.header__actions')?.prepend(head);
+  // Panier non vide : ouvre la commande ; sinon : amène à la carte (lien #menu)
+  head.addEventListener('click', (e) => {
+    if (nbArticles() > 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      bar.click();
+    }
+  }, true);
+
   // ---------- Fenêtre « Ajouter » (format, sans gluten) ----------
   const add = document.createElement('dialog');
   add.className = 'cmd-modal cmd-modal--add';
@@ -376,6 +394,10 @@ export function initCommande({ lenis } = {}) {
         : '';
     $('[data-submit]').disabled = !!t.manque || horsZone || n === 0;
     bar.querySelector('[data-count]').textContent = n;
+    const hc = head.querySelector('[data-head-count]');
+    hc.textContent = n;
+    hc.hidden = n === 0;
+    head.setAttribute('aria-label', n ? `Ma commande : ${n} article${n > 1 ? 's' : ''}` : 'Commander en ligne (livraison ou cueillette)');
     bar.querySelector('[data-total]').textContent = argent(t.sousTotal);
     bar.classList.toggle('is-visible', n > 0);
     document.documentElement.classList.toggle('has-cart', n > 0);
