@@ -8,12 +8,16 @@
  * Si RESTAURANT.siteUrl est rempli : adresse canonique, Open Graph (url, image) et sitemap.xml.
  * Les modules JS continuent de fonctionner : ils réécrivent les mêmes contenus.
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { RESTAURANT as R, RESERVATION } from '../src/config.js';
 import { heroSources, HERO_MOBILE_MQ, HERO_SIZES } from '../src/modules/img.js';
 
 const root = resolve(import.meta.dirname, '..');
+
+/** Image de partage (Facebook, WhatsApp, Google) : public/images/partage.jpg si présente, sinon la 1re photo du hero. */
+const shareImage = (accueil) =>
+  existsSync(resolve(root, 'public/images/partage.jpg')) ? '/images/partage.jpg' : accueil.hero.diapos[0].image;
 
 /** Préchargement de la 1re photo du hero : version verticale légère sur mobile, version adaptée sur ordinateur. */
 function heroPreload(src) {
@@ -92,7 +96,7 @@ function jsonLd({ menu, accueil, siteUrl, libro }) {
   };
   if (siteUrl) {
     data.url = siteUrl;
-    data.image = `${siteUrl}${accueil.hero.diapos[0].image}`;
+    data.image = `${siteUrl}${shareImage(accueil)}`;
   }
   const commandes = Object.values(R.livraison || {}).filter((u) => /^https:\/\//.test(u || ''));
   if (commandes.length) {
@@ -191,7 +195,9 @@ export default function seo() {
           head.push(
             `<link rel="canonical" href="${esc(siteUrl)}/" />`,
             `<meta property="og:url" content="${esc(siteUrl)}/" />`,
-            `<meta property="og:image" content="${esc(siteUrl + accueil.hero.diapos[0].image)}" />`,
+            `<meta property="og:image" content="${esc(siteUrl + shareImage(accueil))}" />`,
+            `<meta property="og:image:width" content="1200" />`,
+            `<meta property="og:image:height" content="630" />`,
             `<meta property="og:locale" content="fr_CA" />`,
             `<meta name="twitter:card" content="summary_large_image" />`
           );

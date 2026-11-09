@@ -24,22 +24,19 @@
           "id": "focaccia",
           "nom": "Focaccia",
           "description": "Huile d'olive, fines herbes italiennes, ail rôti, parmesan, sauce marinara",
-          "prix": "11",
-          "image": "/images/plats/focaccia.webp"
+          "prix": "11"
         },
         {
           "id": "potage-du-chef",
           "nom": "Potage du chef",
           "description": "Selon l'inspiration du moment",
-          "prix": "8",
-          "image": "/images/plats/potage-du-chef.webp"
+          "prix": "8"
         },
         {
           "id": "pain-a-l-ail",
           "nom": "Pain à l'ail",
           "description": "",
-          "prix": "5 · gratiné 8",
-          "image": "/images/plats/pain-a-l-ail.webp"
+          "prix": "5 · gratiné 8"
         },
         {
           "id": "escargots-a-l-ail",
@@ -59,8 +56,7 @@
           "id": "coquille-saint-jacques",
           "nom": "Coquille Saint-Jacques",
           "description": "Fruits de mer assortis, champignons, purée de pommes de terre, béchamel, gratinée",
-          "prix": "19",
-          "image": "/images/plats/coquille-saint-jacques.webp"
+          "prix": "19"
         },
         {
           "id": "calmars-frits",
@@ -73,29 +69,25 @@
           "id": "zucchinis-frits",
           "nom": "Zucchinis frits",
           "description": "",
-          "prix": "16",
-          "image": "/images/plats/zucchinis-frits.webp"
+          "prix": "16"
         },
         {
           "id": "feuillete-de-champignons",
           "nom": "Feuilleté de champignons",
           "description": "Pâte feuilletée, champignons, crème, échalote",
-          "prix": "13",
-          "image": "/images/plats/feuillete-de-champignons.webp"
+          "prix": "13"
         },
         {
           "id": "bruschetta-campagnola",
           "nom": "Bruschetta Campagnola",
           "description": "Tomate, oignon rouge, basilic, câpres, olives noires, échalote, origan, zeste de citron, réduction balsamique et feta émiettée",
-          "prix": "15",
-          "image": "/images/plats/bruschetta-campagnola.webp"
+          "prix": "15"
         },
         {
           "id": "carpaccio-de-boeuf",
           "nom": "Carpaccio de bœuf",
           "description": "Roquette, câpres frites, oignon rouge, huile d'olive, copeaux de parmesan, moutarde de Dijon, réduction balsamique",
-          "prix": "20",
-          "image": "/images/plats/carpaccio-de-boeuf.webp"
+          "prix": "20"
         }
       ]
     },
@@ -115,15 +107,13 @@
           "id": "salade-cesar",
           "nom": "Salade César",
           "description": "Parmesan, bacon, croûtons aux fines herbes italiennes, vinaigrette César crémeuse",
-          "prix": "11 · repas 16",
-          "image": "/images/plats/salade-cesar.webp"
+          "prix": "11 · repas 16"
         },
         {
           "id": "salade-de-roquette",
           "nom": "Salade de roquette",
           "description": "Tomate, oignon rouge, copeaux de parmesan, vinaigrette maison (ou simplement huile d'olive), réduction balsamique",
-          "prix": "14 · repas 20",
-          "image": "/images/plats/salade-de-roquette.webp"
+          "prix": "14 · repas 20"
         },
         {
           "id": "salade-de-betteraves",
@@ -180,8 +170,7 @@
           "id": "tartare-de-boeuf",
           "nom": "Tartare de bœuf",
           "description": "Bœuf frais, câpres, cornichons, moutarde de Dijon, échalote, huile d'olive, persil, mayonnaise, estragon et copeaux de parmesan",
-          "prix": "25 · repas 34",
-          "image": "/images/plats/tartare-de-boeuf.webp"
+          "prix": "25 · repas 34"
         }
       ]
     },
@@ -196,7 +185,6 @@
           "nom": "Fettucini primavera",
           "description": "Légumes de saison, huile d'olive, ail, fines herbes italiennes",
           "prix": "20",
-          "image": "/images/plats/fettucini-primavera.webp",
           "tags": [
             "Végétarien"
           ]
@@ -225,15 +213,13 @@
           "id": "tortellini-emilia",
           "nom": "Tortellini Emilia",
           "description": "Farcis à la viande, sauce tomate, crème, ail, échalote et parmesan",
-          "prix": "24",
-          "image": "/images/plats/tortellini-emilia.webp"
+          "prix": "24"
         },
         {
           "id": "ravioli",
           "nom": "Ravioli",
           "description": "Farcis aux fromages, sauce rosée, basilic et échalote",
           "prix": "24",
-          "image": "/images/plats/ravioli.webp",
           "tags": [
             "Végétarien"
           ]
@@ -278,15 +264,13 @@
           "id": "penne-di-trieste",
           "nom": "Penne di Trieste",
           "description": "Prosciutto, champignons, sauce rosée, échalote, vin blanc",
-          "prix": "26",
-          "image": "/images/plats/penne-di-trieste.webp"
+          "prix": "26"
         },
         {
           "id": "linguini-giorgio",
           "nom": "Linguini Giorgio",
           "description": "Champignons, tomates séchées, épinards, ail, poireau, sauce crémeuse aux fines herbes, roquette, fromage de chèvre",
           "prix": "26",
-          "image": "/images/plats/linguini-giorgio.webp",
           "tags": [
             "Végétarien"
           ]
@@ -309,15 +293,13 @@
           "id": "cannelloni",
           "nom": "Cannelloni",
           "description": "Viande, parmesan, fines herbes, gratinés",
-          "prix": "26",
-          "image": "/images/plats/cannelloni.webp"
+          "prix": "26"
         },
         {
           "id": "fettucini-nastaba",
           "nom": "Fettucini Nastaba",
           "description": "Saumon fumé, crème, vin blanc, poivre concassé, échalote et roquette",
-          "prix": "30",
-          "image": "/images/plats/fettucini-nastaba.webp"
+          "prix": "30"
         },
         {
           "id": "linguini-con-gamberi",
@@ -330,8 +312,7 @@
           "id": "fettuccini-con-gamberi-e-giardiniera",
           "nom": "Fettuccini con Gamberi e Giardiniera",
           "description": "Crevettes, poivron, tomates séchées, champignons, épinards, huile d'olive, ail, vin blanc et fines herbes",
-          "prix": "30",
-          "image": "/images/plats/fettuccini-con-gamberi-e-giardiniera.webp"
+          "prix": "30"
         },
         {
           "id": "fettuccini-di-mare",
@@ -363,7 +344,6 @@
           "nom": "Moules marinière",
           "description": "Ail, citron, échalote, oignon, bouillon de légumes et vin blanc",
           "prix": "28",
-          "image": "/images/plats/moules-mariniere.webp",
           "tags": [
             "Signature"
           ]
@@ -379,22 +359,19 @@
           "id": "moules-provencale",
           "nom": "Moules provençale",
           "description": "Tomate, oignon, ail, bouillon de légumes et vin blanc",
-          "prix": "28",
-          "image": "/images/plats/moules-provencale.webp"
+          "prix": "28"
         },
         {
           "id": "moules-madagascar",
           "nom": "Moules Madagascar",
           "description": "Crème, ail, demi-glace, poivre vert de Madagascar, cognac",
-          "prix": "28",
-          "image": "/images/plats/moules-madagascar.webp"
+          "prix": "28"
         },
         {
           "id": "moules-au-roquefort",
           "nom": "Moules au roquefort",
           "description": "Crème, ail, bouillon de légumes et roquefort",
-          "prix": "28",
-          "image": "/images/plats/moules-au-roquefort.webp"
+          "prix": "28"
         },
         {
           "id": "moules-dijonnaise",
@@ -431,22 +408,19 @@
           "id": "poutine-au-canard-effiloche",
           "nom": "Poutine au canard effiloché",
           "description": "Sauce au porto, oignons frits",
-          "prix": "28",
-          "image": "/images/plats/poutine-au-canard-effiloche.webp"
+          "prix": "28"
         },
         {
           "id": "poutine-saucisses-italiennes-et-pancetta",
           "nom": "Poutine saucisses italiennes et pancetta",
           "description": "Échalote et sauce marsala",
-          "prix": "25",
-          "image": "/images/plats/poutine-saucisses-italiennes-et-pancetta.webp"
+          "prix": "25"
         },
         {
           "id": "poutine-au-boeuf-braise",
           "nom": "Poutine au bœuf braisé",
           "description": "Sauce demi-glace et échalote",
-          "prix": "26",
-          "image": "/images/plats/poutine-au-boeuf-braise.webp"
+          "prix": "26"
         }
       ]
     },
@@ -459,15 +433,13 @@
           "id": "burger-au-poulet",
           "nom": "Burger au poulet",
           "description": "Pain brioché, poitrine de poulet grillée, tomate, laitue, oignons frits, cheddar, vinaigrette maison",
-          "prix": "19",
-          "image": "/images/plats/burger-au-poulet.webp"
+          "prix": "19"
         },
         {
           "id": "burger-au-boeuf",
           "nom": "Burger au bœuf",
           "description": "Pain brioché, bœuf haché maison, tomate, laitue, oignons frits, cheddar, vinaigrette maison",
-          "prix": "22",
-          "image": "/images/plats/burger-au-boeuf.webp"
+          "prix": "22"
         }
       ]
     },
@@ -481,36 +453,31 @@
           "id": "scaloppini-piccata-limone",
           "nom": "Scaloppini piccata limone",
           "description": "Citron, bouillon de légumes, vin blanc, persillade",
-          "prix": "33",
-          "image": "/images/plats/scaloppini-piccata-limone.webp"
+          "prix": "33"
         },
         {
           "id": "scaloppini-marsala",
           "nom": "Scaloppini Marsala",
           "description": "Champignons, demi-glace et vin Marsala",
-          "prix": "33",
-          "image": "/images/plats/scaloppini-marsala.webp"
+          "prix": "33"
         },
         {
           "id": "escalope-parmigiana",
           "nom": "Escalope Parmigiana",
           "description": "Légèrement panée, sauce tomate, basilic et mozzarella",
-          "prix": "34",
-          "image": "/images/plats/escalope-parmigiana.webp"
+          "prix": "34"
         },
         {
           "id": "scaloppini-aux-champignons-sauvages",
           "nom": "Scaloppini aux champignons sauvages",
           "description": "Crème, champignons sauvages, demi-glace, brandy, tomates séchées et fromage de chèvre",
-          "prix": "35",
-          "image": "/images/plats/scaloppini-aux-champignons-sauvages.webp"
+          "prix": "35"
         },
         {
           "id": "scaloppini-duo-pepe",
           "nom": "Scaloppini duo Pepe",
           "description": "Crème, poivres, demi-glace et cognac",
-          "prix": "35",
-          "image": "/images/plats/scaloppini-duo-pepe.webp"
+          "prix": "35"
         },
         {
           "id": "scaloppini-san-daniele",
@@ -523,8 +490,7 @@
           "id": "scaloppini-dijonnaise",
           "nom": "Scaloppini dijonnaise",
           "description": "Crème, ail, moutarde de Dijon, champignons",
-          "prix": "33",
-          "image": "/images/plats/scaloppini-dijonnaise.webp"
+          "prix": "33"
         },
         {
           "id": "poitrine-de-poulet-cajun",
@@ -540,22 +506,19 @@
           "id": "poitrine-de-poulet-aux-champignons-sauvages",
           "nom": "Poitrine de poulet aux champignons sauvages",
           "description": "Crème, champignons sauvages, demi-glace, brandy et tomates séchées",
-          "prix": "32",
-          "image": "/images/plats/poitrine-de-poulet-aux-champignons-sauvages.webp"
+          "prix": "32"
         },
         {
           "id": "poitrine-de-poulet-a-la-campania",
           "nom": "Poitrine de poulet à la Campania",
           "description": "Salsa aux tomates et fines herbes, oignons frits",
-          "prix": "30",
-          "image": "/images/plats/poitrine-de-poulet-a-la-campania.webp"
+          "prix": "30"
         },
         {
           "id": "poulet-parmigiana",
           "nom": "Poulet Parmigiana",
           "description": "Pané, sauce tomate et basilic, gratiné",
-          "prix": "31",
-          "image": "/images/plats/poulet-parmigiana.webp"
+          "prix": "31"
         }
       ]
     },
@@ -575,8 +538,7 @@
           "id": "jarret-d-agneau",
           "nom": "Jarret d'agneau",
           "description": "Sauce au porto, pommes de terre et légumes de saison",
-          "prix": "40",
-          "image": "/images/plats/jarret-d-agneau.webp"
+          "prix": "40"
         },
         {
           "id": "filet-mignon",
@@ -596,15 +558,13 @@
           "id": "grosses-crevettes-a-la-florentine",
           "nom": "Grosses crevettes à la florentine",
           "description": "Crème, ail et épinards, riz et légumes du marché",
-          "prix": "43",
-          "image": "/images/plats/grosses-crevettes-a-la-florentine.webp"
+          "prix": "43"
         },
         {
           "id": "mosaique",
           "nom": "Mosaïque",
           "description": "Filet mignon au porto et crevettes papillon au beurre à l'ail, riz et légumes du marché",
           "prix": "59",
-          "image": "/images/plats/mosaique.webp",
           "tags": [
             "Signature"
           ]
@@ -621,7 +581,6 @@
           "nom": "Pizza Margherita",
           "description": "Sauce tomate maison, tomates fraîches, mozzarella et basilic frais",
           "prix": "20",
-          "image": "/images/plats/pizza-margherita.webp",
           "tags": [
             "Végétarien"
           ]
@@ -637,29 +596,25 @@
           "id": "pizza-frutti-di-mare",
           "nom": "Pizza frutti di mare",
           "description": "Mozzarella, sauce crémeuse maison, crevettes, pétoncles, champignons, ail",
-          "prix": "28",
-          "image": "/images/plats/pizza-frutti-di-mare.webp"
+          "prix": "28"
         },
         {
           "id": "pizza-traditionnelle",
           "nom": "Pizza traditionnelle",
           "description": "Mozzarella, sauce tomate maison, pepperoni, champignons, poivron",
-          "prix": "22",
-          "image": "/images/plats/pizza-traditionnelle.webp"
+          "prix": "22"
         },
         {
           "id": "pizza-con-pollo",
           "nom": "Pizza con pollo",
           "description": "Sauce crémeuse maison, poulet grillé, poivron, oignon rouge, épinards",
-          "prix": "24",
-          "image": "/images/plats/pizza-con-pollo.webp"
+          "prix": "24"
         },
         {
           "id": "pizza-trois-viandes",
           "nom": "Pizza trois viandes",
           "description": "Sauce à la viande, champignons, pepperoni, saucisse, bacon et mozzarella",
-          "prix": "28",
-          "image": "/images/plats/pizza-trois-viandes.webp"
+          "prix": "28"
         }
       ]
     },

@@ -33,7 +33,7 @@ export function initMenu() {
         <div class="dish__top">
           <h4 class="dish__name">${escapeHtml(p.nom)}</h4>
           <span class="dish__leader" aria-hidden="true"></span>
-          <span class="dish__price">${escapeHtml(formatPrice(p.prix))}</span>
+          <span class="dish__price${/·/.test(p.prix) || String(p.prix).length > 8 ? ' dish__price--long' : ''}">${escapeHtml(formatPrice(p.prix))}</span>
         </div>
         ${p.description ? `<p class="dish__desc">${escapeHtml(p.description)}</p>` : ''}
         ${p.tags?.length ? `<div class="dish__tags">${p.tags.map((t) => `<span>${escapeHtml(t)}</span>`).join('')}</div>` : ''}

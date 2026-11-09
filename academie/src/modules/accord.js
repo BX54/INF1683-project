@@ -276,8 +276,12 @@ export function initAccord() {
         if (!plat) return '';
         return `
         <article class="pair">
-          <div class="pair__media">
-            <img src="${plat.image}"${platSrcset(plat.image, '(max-width: 720px) 90vw, 360px')} alt="${escapeHtml(plat.nom)}" width="1200" height="1200" loading="lazy" decoding="async" />
+          <div class="pair__media${plat.image ? '' : ' pair__media--texte'}">
+            ${
+              plat.image
+                ? `<img src="${plat.image}"${platSrcset(plat.image, '(max-width: 720px) 90vw, 360px')} alt="${escapeHtml(plat.nom)}" width="1200" height="1200" loading="lazy" decoding="async" />`
+                : `<p class="pair__media-name" aria-hidden="true">${escapeHtml(plat.nom)}</p>`
+            }
             <span class="pair__index">0${i + 1}</span>
             <span class="pair__cat">${escapeHtml(plat.categorie)}</span>
           </div>

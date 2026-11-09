@@ -12,7 +12,7 @@ export const RESTAURANT = {
   codePostal: 'J8T 8A4',
   // Adresse du site une fois en ligne (ex. 'https://lacademiegatineau.ca') : sert à l'adresse canonique,
   // à l'image de partage et au sitemap. Laissez vide tant que le nom de domaine n'est pas choisi.
-  siteUrl: '',
+  siteUrl: 'https://restaurantlacademiegatineau.com',
   // Affiché tel quel :
   telephone: '819 600-1300',
   // Utilisé pour le lien « appeler » (chiffres seulement, avec +1) :
@@ -45,15 +45,15 @@ export const RESTAURANT = {
    * La section « Commander » n'apparaît que si au moins un lien est rempli.
    */
   livraison: {
-    uberEats: 'https://www.ubereats.com/ca-fr/store/restaurant-lacademie-gatineau/fdmgAxQxQduHD7e6fh00pg',
-    doorDash: 'https://www.doordash.com/fr-CA/store/restaurant-l%27acad%C3%A9mie-gatineau-gatineau-1243319/',
+    uberEats: '',
+    doorDash: '',
     skipTheDishes: '',
   },
 
   // Loi 25 : responsable de la protection des renseignements personnels.
   // Par défaut, c'est la personne ayant la plus haute autorité dans l'entreprise (le propriétaire).
   confidentialite: {
-    responsable: 'Le propriétaire de L\'Académie',
+    responsable: 'Kossi, chef propriétaire',
     titre: 'Responsable de la protection des renseignements personnels',
     courriel: 'lacademiegatineau@gmail.com',
     // Durée de conservation des demandes de réservation (à confirmer par le restaurant).

@@ -97,7 +97,7 @@ Chaque catégorie contient une liste de plats :
 - `id` : identifiant unique, sans espace ni accent (il sert aussi aux accords).
 - `prix` : le nombre seulement, le « $ » est ajouté automatiquement.
 - `tags` : facultatif (« Végétarien », « Épicé », « Signature »…).
-- `image` : facultatif. Sans image, l'article s'affiche en carte texte (utile pour les à-côtés, extras et menu enfants).
+- `image` : facultatif. Sans image, l'article s'affiche en carte texte élégante. Pour ajouter la photo d'un plat qui n'en a pas : déposez `public/images/plats/<id>.webp`, puis ajoutez `"image": "/images/plats/<id>.webp"` au plat.
 - `prix` peut contenir plusieurs montants (`"8 · repas 14"`) : le « $ » est ajouté après chaque nombre. « Prix du marché » s'affiche tel quel.
 - `note` (catégorie, facultatif) : texte encadré sous le titre, par exemple les conditions des spéciaux.
 - Pour ajouter une catégorie, copiez un bloc `{ "id", "nom", "accroche", "plats" }`.

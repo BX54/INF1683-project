@@ -4856,3 +4856,29 @@ html.has-modal { overflow: hidden; }
   font-size: 17px;
   color: var(--ivoire-2);
 }
+/* Accords : plat sans photo, nom du plat en grand sur fond charbon et or */
+.pair__media--texte {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(201, 162, 75, 0.18), transparent 62%),
+    linear-gradient(160deg, var(--charbon-2), var(--noir));
+  border-bottom: 1px solid var(--ligne);
+}
+.pair__media-name {
+  margin: 0;
+  max-width: 14ch;
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.15;
+  color: var(--or-clair);
+}
+/* Carte : les cartes texte gardent leur hauteur naturelle à côté des cartes photo,
+   et un prix long (« 13 $ · gratinés 16 $ ») passe sous le nom au lieu de déborder, sur tous les écrans. */
+.menu__grid { align-items: start; }
+.dish__top:has(.dish__price--long) { flex-wrap: wrap; row-gap: 4px; }
+.dish__top:has(.dish__price--long) .dish__name { flex: 1 1 8em; min-width: 0; }
+.dish__price--long { max-width: 100%; margin-left: auto; }
