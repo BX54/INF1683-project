@@ -89,7 +89,7 @@ export function initHeroSlides() {
   const progress = () => {
     barTween?.kill();
     clearTimeout(timer);
-    if (reduced || slides.length < 2) return;
+    if (reduced || slides.length < 2 || pauseUtilisateur) return;
     barTween = gsap.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration, ease: 'none' });
     clearTimeout(preTimer);
     preTimer = setTimeout(() => whenLoaded(loadNext), Math.max(0, duration - 2) * 1000);
@@ -97,13 +97,14 @@ export function initHeroSlides() {
   };
 
   let started = false;
+  let pauseUtilisateur = false;
   const pause = () => {
     clearTimeout(timer);
     barTween?.pause();
     kenBurns?.pause();
   };
   const resume = () => {
-    if (!started) return;
+    if (!started || pauseUtilisateur) return;
     kenBurns?.resume();
     progress();
   };
@@ -111,6 +112,25 @@ export function initHeroSlides() {
   const io = new IntersectionObserver(([e]) => (e.isIntersecting ? resume() : pause()), { threshold: 0.2 });
   io.observe(media);
   document.addEventListener('visibilitychange', () => (document.hidden ? pause() : resume()));
+
+  // Bouton Pause / Lecture (WCAG 2.2.2), seulement si le diaporama défile tout seul
+  const btn = document.querySelector('[data-hero-pause]');
+  if (btn && !reduced && slides.length > 1) {
+    btn.hidden = false;
+    const maj = () => {
+      btn.setAttribute('aria-pressed', String(pauseUtilisateur));
+      btn.setAttribute('aria-label', pauseUtilisateur ? 'Relancer le diaporama' : 'Mettre le diaporama en pause');
+      btn.querySelector('.hero__pause-txt').textContent = pauseUtilisateur ? 'Lecture' : 'Pause';
+      btn.classList.toggle('is-paused', pauseUtilisateur);
+    };
+    btn.addEventListener('click', () => {
+      pauseUtilisateur = !pauseUtilisateur;
+      if (pauseUtilisateur) pause();
+      else resume();
+      maj();
+    });
+    maj();
+  }
 
   heroApi = {
     start() {

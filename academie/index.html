@@ -140,7 +140,11 @@
           <i class="hero__count-bar"><b></b></i>
         </div>
 
-        <div class="hero__dish" aria-live="polite">
+        <button class="hero__pause" type="button" aria-pressed="false" data-hero-pause hidden>
+          <span class="hero__pause-ico" aria-hidden="true"></span><span class="hero__pause-txt">Pause</span>
+        </button>
+
+        <div class="hero__dish">
           <p class="hero__dish-label">Plat signature</p>
           <p class="hero__dish-name"></p>
           <i class="hero__dish-line" aria-hidden="true"></i>
@@ -428,7 +432,12 @@
             <a class="quote__phone" data-phone-link data-cursor href="#"></a>
           </div>
 
-          <form class="qform" novalidate>
+          <p class="nojs-note" data-nojs>
+            Pour demander une soumission, appelez-nous au <a data-phone-link href="#"></a>
+            ou écrivez-nous à <a data-mail-link href="#"></a>.
+          </p>
+
+          <form class="qform" method="post" novalidate hidden>
             <div class="qform__group" role="radiogroup" aria-labelledby="q-type-label">
               <p class="rform__label" id="q-type-label">Je suis intéressé·e par</p>
               <div class="qform__types">
@@ -571,7 +580,11 @@
           </p>
         </div>
 
-        <form class="rform" novalidate>
+        <p class="nojs-note" data-nojs data-nojs-reserve>
+          Pour réserver, appelez-nous au <a data-phone-link href="#"></a>.
+        </p>
+
+        <form class="rform" method="post" novalidate hidden>
           <div class="rform__row rform__row--2">
             <div class="field">
               <input class="field__input" id="r-nom" name="nom" type="text" autocomplete="name" placeholder=" " required />

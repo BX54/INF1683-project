@@ -28,20 +28,31 @@
       </p>
 
       <h2>Renseignements recueillis</h2>
-      <p>Lorsque vous demandez une réservation, nous recueillons :</p>
+      <p>Nous recueillons seulement ce qui est nécessaire à votre demande :</p>
       <ul>
-        <li>votre nom, votre numéro de téléphone et votre courriel ;</li>
-        <li>la date, l'heure et le nombre de personnes ;</li>
-        <li>la boisson que vous prévoyez apporter (facultatif) et vos demandes spéciales (facultatif).</li>
+        <li>
+          <strong>Réservation</strong> (formulaire du site, s'il est utilisé) : nom, téléphone, courriel, date, heure,
+          nombre de personnes, boisson prévue et demandes spéciales (facultatives).
+        </li>
+        <li>
+          <strong>Demande de soumission</strong> (salle ou traiteur) : nom, téléphone, courriel, type de service,
+          occasion, date, nombre d'invités, salle ou mode traiteur souhaité et description de votre projet.
+        </li>
+        <li data-if-commande hidden>
+          <strong>Commande en ligne</strong> : nom, téléphone, courriel (facultatif), plats choisis, mode (livraison ou
+          cueillette), adresse et code postal de livraison, heure souhaitée, mode de paiement à la réception et
+          instructions de livraison (facultatives). N'indiquez jamais de code d'accès ou de mot de passe dans ces instructions.
+        </li>
       </ul>
       <p>
-        Nous ne vous demandons aucun renseignement sur votre santé par ce formulaire. Pour une allergie ou une
-        restriction alimentaire, informez votre serveur sur place.
+        Nous ne vous demandons aucun renseignement sur votre santé. Pour une allergie ou une restriction alimentaire,
+        dites-le-nous de vive voix (sur place ou lorsque nous vous rappelons).
       </p>
 
       <h2>Pourquoi nous les utilisons</h2>
       <p>
-        Uniquement pour traiter votre demande, confirmer ou modifier votre réservation et vous joindre à ce sujet.
+        Uniquement pour traiter votre demande (réservation, soumission ou commande), la confirmer, la préparer ou la
+        livrer, et vous joindre à ce sujet.
         Nous ne les vendons pas, ne les utilisons pas pour de la publicité et ne créons pas de profil à votre sujet.
       </p>
 
@@ -61,8 +72,9 @@
         </li>
         <li data-if-commande hidden>
           <strong>Commande en ligne</strong> : nom, téléphone, adresse de livraison (si livraison), courriel facultatif et
-          contenu de la commande servent uniquement à préparer, livrer et confirmer votre commande. Ils nous sont transmis
-          par le même service d'envoi de formulaires que les réservations. Le paiement se fait à la réception :
+          contenu de la commande servent uniquement à préparer, livrer et confirmer votre commande. Ils sont vérifiés
+          par le serveur de notre hébergeur, puis transmis par le service d'envoi de formulaires (Formspree) à notre
+          messagerie. Le paiement se fait à la réception :
           aucune donnée de paiement n'est demandée sur le site. Le panier n'est pas enregistré dans votre navigateur.
         </li>
         <li data-if-order hidden>
@@ -80,9 +92,10 @@
         d'audience ni de publicité, et n'intègre aucun contenu de tiers.
       </p>
       <p data-if-libro hidden>
-        Seule exception : le module de réservation <strong>Libro</strong>. Il n'est chargé que si vous cliquez sur
-        « Réserver », et Libro peut alors utiliser ses propres témoins, selon sa politique de confidentialité.
-        Tant que vous n'ouvrez pas la réservation, rien de Libro n'est chargé.
+        Seule exception : le module de réservation <strong>Libro</strong>. Votre navigateur ne se connecte à Libro
+        qu'au moment où vous cliquez sur un bouton « Réserver » : le module s'ouvre alors dans une fenêtre et Libro
+        peut utiliser ses propres témoins, selon sa politique de confidentialité. Tant que vous ne cliquez pas,
+        aucune connexion à Libro n'est établie.
       </p>
       <p>
         Le lien « Ouvrir dans Google Maps » vous amène sur le site de Google, qui applique alors sa propre
@@ -91,13 +104,14 @@
 
       <h2>Conservation et destruction</h2>
       <p>
-        Les demandes de réservation sont conservées au plus <span data-p="conservation"></span>, puis supprimées de
-        façon sécuritaire.
+        Les demandes de réservation, de soumission et les commandes reçues par courriel sont conservées au plus
+        <span data-p="conservation"></span>, puis supprimées de façon sécuritaire (messagerie et tableau de bord du
+        service d'envoi). Les réservations faites sur Libro sont conservées selon la politique de Libro.
       </p>
 
       <h2>Sécurité</h2>
       <p>
-        Le site est servi en HTTPS et l'accès aux demandes de réservation est réservé au personnel qui en a besoin.
+        Le site est servi en HTTPS et l'accès aux demandes et aux commandes est réservé au personnel qui en a besoin.
         En cas d'incident de confidentialité présentant un risque de préjudice sérieux, nous en aviserons la
         Commission d'accès à l'information et les personnes concernées.
       </p>

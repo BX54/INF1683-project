@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "images": "node scripts/generate-placeholders.mjs && node scripts/optimize-images.mjs",
-    "apercu": "vite build --config vite.apercu.config.js"
+    "apercu": "vite build --config vite.apercu.config.js",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@fontsource/manrope": "^5.3.0",
@@ -23,5 +24,8 @@
     "vite-plugin-singlefile": "^2.3.3"
   },
   "private": true,
-  "type": "module"
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  }
 }

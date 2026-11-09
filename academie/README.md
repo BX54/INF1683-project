@@ -159,6 +159,20 @@ Réglages dans `src/config.js` → `COMMANDE` :
 - `heures` et `delaiMinutes` : le client choisit « Dès que possible » ou « Choisir l'heure » (de 11 h 30 à 21 h, par tranches de 15 min) ; `paiements` : choix affichés (paiement à la réception) ;
 - `taxes` (TPS, TVQ), `sansGluten` (supplément par catégorie) et `rabais` (ex. spécial pâtes du dimanche au mercredi).
 
+**Sécurité de la commande.** Le navigateur n'envoie que les choix du client (plats, formats, quantités, adresse, heure).
+La fonction serveur `netlify/functions/commande.mjs` (adresse `/api/commande`) vérifie tout et **recalcule** prix, rabais,
+frais, taxes et total à partir de `menu.json` et `config.js`, refuse les plats inconnus, hors zone, créneaux passés et envois
+en double, puis transmet la commande par courriel.
+
+**À faire une fois sur Netlify (obligatoire pour recevoir les commandes)** : créer un formulaire Formspree réservé aux commandes,
+puis dans Netlify › *Site configuration* › *Environment variables*, ajouter `FORMSPREE_COMMANDES_ID` = l'identifiant de ce
+formulaire. Sans cette variable, le site refuse les commandes (message d'erreur avec le téléphone) : jamais de faux succès.
+Pour désactiver la commande en ligne : `COMMANDE.actif: false`.
+
+**Tester en local** : créer un fichier `.env.local` (jamais publié) contenant `COMMANDE_DEMO=1` (rien n'est envoyé, la commande
+s'affiche dans le terminal) ou `FORMSPREE_COMMANDES_ID=…` (test de réception réel), puis `npm run dev`.
+`npm test` vérifie les calculs et la fonction serveur.
+
 Les formats viennent du prix dans `menu.json` : `"13 · gratinés 16"` propose « Régulier 13 $ » ou « Gratinés 16 $ ».
 Un plat « Prix du marché » ne peut pas être commandé en ligne.
 Chaque commande arrive **par courriel** (Formspree), avec un sujet qui commence par **« COMMANDE »** ; le restaurant rappelle le client

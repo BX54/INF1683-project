@@ -5,4 +5,9 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "22.12"
+
+# Fonction serveur de la commande en ligne (netlify/functions/commande.mjs → /api/commande)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

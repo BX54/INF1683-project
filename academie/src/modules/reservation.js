@@ -227,6 +227,7 @@ export function initReservation({ lenis }) {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (submit.disabled) return; // envoi déjà en cours
     // Champ piège rempli : c'est un robot. On simule un succès sans rien envoyer.
     if (form.elements._gotcha?.value) {
       form.reset();
@@ -258,7 +259,7 @@ export function initReservation({ lenis }) {
       personnes: state.personnes,
       boisson: boisson?.nom ?? 'Non précisée',
       demandes: form.elements.demandes.value.trim() || '—',
-      _subject: `Réservation — ${form.elements.nom.value.trim()} — ${dateLongue} ${state.heure} (${state.personnes} pers.)`,
+      _subject: `Réservation — ${dateLongue} ${state.heure} (${state.personnes} pers.)`,
     };
 
     submit.classList.add('is-loading');
@@ -365,4 +366,8 @@ function showConfirmation(data, boissonId, lenis) {
   closeBtn.addEventListener('click', close);
   modal.addEventListener('click', onBackdrop);
   document.addEventListener('keydown', onKey);
+
+  // Formulaire prêt : on l'affiche (il reste masqué, avec le téléphone, si le script échoue)
+  form.hidden = false;
+  document.querySelector('[data-nojs-reserve]')?.setAttribute('hidden', '');
 }

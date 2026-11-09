@@ -28,6 +28,9 @@ export function initSmoothScroll() {
     e.preventDefault();
     scrollToEl(target);
     history.replaceState(null, '', id === '#accueil' ? location.pathname : id);
+    // Le focus clavier suit la destination (lien d'évitement, menu, ancres)
+    if (!target.matches('a, button, input, select, textarea, [tabindex]')) target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
   });
 
   return lenisInstance;

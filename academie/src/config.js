@@ -126,8 +126,13 @@ export const COMMANDE = {
   // false = module désactivé (aucun bouton « Commander », section masquée)
   actif: true,
 
-  // Formulaire Formspree dédié aux commandes (recommandé). Vide = même formulaire que les réservations.
-  formspreeId: '',
+  /*
+   * Les commandes passent par la fonction serveur du site (/api/commande), qui vérifie plats, zone et
+   * créneau et RECALCULE le total avant de les transmettre par courriel.
+   * L'identifiant du formulaire Formspree des commandes n'est PAS ici : il est secret, dans la variable
+   * d'environnement FORMSPREE_COMMANDES_ID de Netlify (Site configuration › Environment variables).
+   */
+  endpoint: '/api/commande',
 
   modes: ['livraison', 'cueillette'],
 
@@ -155,6 +160,10 @@ export const COMMANDE = {
   // Délai minimum de préparation (minutes)
   delaiMinutes: 45,
 
+  // Jours sans commande : dates précises (fériés, vacances) au format 'AAAA-MM-JJ', et jours de semaine (0 = dimanche)
+  fermetures: [], // ex. ['2026-12-25', '2027-01-01']
+  joursFermes: [],
+
   // Taxes du Québec appliquées au total estimé
   taxes: { TPS: 0.05, TVQ: 0.09975 },
 
@@ -163,6 +172,6 @@ export const COMMANDE = {
 
   // Rabais automatiques. jours : 0 = dimanche … 6 = samedi (jour de la livraison / cueillette).
   rabais: [
-    { libelle: 'Spécial pâtes (dimanche au mercredi)', categories: ['pates'], jours: [0, 1, 2, 3], montant: 3 },
+    { libelle: 'Spécial pâtes classiques (dimanche au mercredi)', categories: ['pates'], jours: [0, 1, 2, 3], montant: 3 },
   ],
 };

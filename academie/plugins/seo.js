@@ -51,6 +51,22 @@ function fill(html, attr, render) {
   });
 }
 
+/** Politique de confidentialité remplie au build : complète même sans JavaScript. */
+function politique(html, libro) {
+  const p = R.confidentialite ?? {};
+  const v = { ...p, adresse: `${R.adresse}, ${R.ville}` };
+  html = fill(html, 'data-p', (key) => (key in v ? esc(v[key]) : null));
+  html = fill(html, 'data-p-mail', () => ({ content: esc(p.courriel), set: { href: `mailto:${p.courriel}` } }));
+  html = fill(html, 'data-p-tel', () => ({ content: esc(R.telephone), set: { href: `tel:${R.telephoneLien}` } }));
+  const montrer = (attr, oui) => (oui ? html.replaceAll(`${attr} hidden`, attr) : html);
+  if (R.siteUrl) html = html.replace('</head>', `  <link rel="canonical" href="${esc(R.siteUrl)}/politique-confidentialite.html" />\n  </head>`);
+  if (process.env.CONTEXT && process.env.CONTEXT !== 'production') html = html.replace('</head>', '  <meta name="robots" content="noindex, nofollow" />\n  </head>');
+  html = montrer('data-if-libro', !!libro);
+  html = montrer('data-if-commande', !!COMMANDE?.actif);
+  html = montrer('data-if-order', Object.values(R.livraison || {}).some((u) => /^https:\/\//.test(u || '')));
+  return html;
+}
+
 function jsonLd({ menu, accueil, siteUrl, libro }) {
   const tel = R.telephoneLien.replace(/^\+1(\d{3})(\d{3})(\d{4})$/, '+1-$1-$2-$3');
   const data = {
@@ -78,6 +94,7 @@ function jsonLd({ menu, accueil, siteUrl, libro }) {
       opens: h.ouverture,
       closes: h.fermeture,
     })),
+    ...(siteUrl ? { menu: `${siteUrl}/#menu` } : {}),
     hasMenu: {
       '@type': 'Menu',
       name: 'La carte',
@@ -143,13 +160,23 @@ function menuTexte(menu) {
 export default function seo() {
   const siteUrl = (R.siteUrl || '').replace(/\/$/, '');
   const libro = /^https:\/\//.test(RESERVATION.libroUrl || '') ? RESERVATION.libroUrl : '';
+  // Netlify indique le contexte du build : 'production', 'deploy-preview' ou 'branch-deploy'
+  const production = !process.env.CONTEXT || process.env.CONTEXT === 'production';
 
   return {
     name: 'academie-seo',
     transformIndexHtml: {
       order: 'pre',
       handler(html, ctx) {
+        if (/politique-confidentialite\.html$/.test(ctx.filename)) return politique(html, libro);
         if (!/index\.html$/.test(ctx.filename)) return html;
+
+        // Réservation : lien Libro direct dès le premier affichage (utile même si le JavaScript ne s'exécute pas)
+        if (libro) {
+          html = html.replace('<div class="libro" hidden>', '<div class="libro">');
+          html = html.replace(/(<a class="[^"]*libro__btn[^"]*" )href="#reservation"/, `$1href="${esc(libro)}"`);
+          html = html.replace('<p class="nojs-note" data-nojs data-nojs-reserve>', '<p class="nojs-note" data-nojs data-nojs-reserve hidden>');
+        }
         const menu = json('src/data/menu.json');
         const accueil = json('src/data/accueil.json');
         const services = json('src/data/services.json');
@@ -203,17 +230,20 @@ export default function seo() {
             `<meta name="twitter:card" content="summary_large_image" />`
           );
         }
+        if (!production) head.push('<meta name="robots" content="noindex, nofollow" />');
         return html.replace('</head>', `    ${head.join('\n    ')}\n  </head>`);
       },
     },
     generateBundle() {
+      // Préproduction Netlify (aperçus, branches) : jamais indexée par les moteurs de recherche
+      if (!production) {
+        this.emitFile({ type: 'asset', fileName: 'robots.txt', source: 'User-agent: *\nDisallow: /\n' });
+        return;
+      }
       const lines = ['User-agent: *', 'Allow: /'];
       if (siteUrl) {
         lines.push('', `Sitemap: ${siteUrl}/sitemap.xml`);
-        const today = new Date().toISOString().slice(0, 10);
-        const urls = ['/', '/politique-confidentialite.html']
-          .map((p) => `  <url><loc>${siteUrl}${p}</loc><lastmod>${today}</lastmod></url>`)
-          .join('\n');
+        const urls = ['/', '/politique-confidentialite.html'].map((p) => `  <url><loc>${siteUrl}${p}</loc></url>`).join('\n');
         this.emitFile({
           type: 'asset',
           fileName: 'sitemap.xml',

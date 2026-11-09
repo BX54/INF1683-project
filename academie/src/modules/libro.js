@@ -7,7 +7,7 @@
  * - Les liens gardent l'adresse Libro : Ctrl/Cmd + clic ou clic du milieu ouvre un onglet,
  *   et le lien « nouvel onglet » de la fenêtre sert de solution de secours.
  */
-import { RESERVATION } from '../config.js';
+import { RESERVATION, RESTAURANT } from '../config.js';
 
 /** Lien Libro valide (https uniquement), sinon null. */
 export function libroUrl() {
@@ -15,7 +15,8 @@ export function libroUrl() {
   if (!raw) return null;
   try {
     const url = new URL(raw);
-    return url.protocol === 'https:' ? url.href : null;
+    // Seulement le site officiel de Libro
+    return url.protocol === 'https:' && /(^|\.)libroreserve\.com$/.test(url.hostname) ? url.href : null;
   } catch {
     console.warn('[Libro] Lien invalide dans src/config.js : le formulaire du site reste actif.');
     return null;
@@ -49,6 +50,8 @@ function buildDialog(url) {
     </div>
     <p class="libro-modal__note">
       Réservation gérée par Libro (OpenTable), qui peut utiliser des témoins.
+      Problème d'affichage ? <a href="${url}" target="_blank" rel="noopener">Ouvrir dans un nouvel onglet</a>
+      ou appelez-nous au <a href="tel:${RESTAURANT.telephoneLien}">${RESTAURANT.telephone}</a>.
       <a href="/politique-confidentialite.html" target="_blank" rel="noopener">Confidentialité</a>
     </p>`;
   document.body.appendChild(d);
@@ -91,23 +94,6 @@ function prepare() {
   return dialog;
 }
 
-/**
- * Ouvre seulement la connexion réseau vers Libro (DNS + chiffrement) quand le visiteur
- * survole ou cible un bouton « Réserver ». Aucune page Libro n'est chargée, aucun témoin.
- */
-let warmed = false;
-function warm() {
-  if (warmed) return;
-  warmed = true;
-  const origin = new URL(libroUrl()).origin;
-  for (const rel of ['dns-prefetch', 'preconnect']) {
-    const l = document.createElement('link');
-    l.rel = rel;
-    l.href = origin;
-    document.head.appendChild(l);
-  }
-}
-
 export function openLibro() {
   const d = prepare();
   if (!d) return;
@@ -130,19 +116,7 @@ export function initLibro({ lenis } = {}) {
     a.rel = 'noopener';
     a.setAttribute('aria-haspopup', 'dialog');
   });
-  // Les boutons qui ouvrent la réservation
-  const trigger = (el) => el?.closest?.('a[aria-haspopup="dialog"], [data-reserve-drink]');
-  // Survol / clavier : on ouvre la connexion à l'avance (gagne souvent 0,5 à 1 s)
-  document.addEventListener('pointerover', (e) => trigger(e.target) && warm(), { passive: true });
-  document.addEventListener('focusin', (e) => trigger(e.target) && warm());
-  // Appui (souris ou doigt) : Libro commence à charger avant même la fin du clic
-  document.addEventListener('pointerdown', (e) => {
-    if (e.button === 0 && trigger(e.target)) {
-      warm();
-      prepare();
-    }
-  }, { passive: true });
-
+  // Libro n'est contacté qu'au clic sur « Réserver » (aucune connexion au survol ni au chargement de la page)
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[aria-haspopup="dialog"]');
     if (!a || a.href !== url) return;

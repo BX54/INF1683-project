@@ -164,6 +164,7 @@ export function initServices() {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (submit.disabled) return; // envoi déjà en cours
     if (form.elements._gotcha?.value) {
       form.reset();
       return;
@@ -190,7 +191,7 @@ export function initServices() {
       salle: blocSalle.hidden ? '—' : form.elements.salle.value,
       traiteur: blocTraiteur.hidden ? '—' : form.elements.mode.value,
       message: form.elements.message.value.trim() || '—',
-      _subject: `SOUMISSION ${type} — ${occasion.value} — ${form.elements.nom.value.trim()} — ${dateLisible} (${form.elements.invites.value} pers.)`,
+      _subject: `SOUMISSION ${type} — ${occasion.value} — ${dateLisible} (${form.elements.invites.value} pers.)`,
     };
 
     submit.classList.add('is-loading');
@@ -235,6 +236,10 @@ export function initServices() {
     form.elements.nom.focus();
   });
 
+  // Formulaire prêt : on l'affiche (il reste masqué, avec le téléphone et le courriel, si le script échoue)
+  form.hidden = false;
+  root.querySelector('.quote [data-nojs]')?.setAttribute('hidden', '');
+
   // ---------- Animations d'entrée ----------
   if (reduced) return;
   root.querySelectorAll('.svc').forEach((card, i) => {
@@ -260,4 +265,5 @@ export function initServices() {
     ease: 'expo.out',
     scrollTrigger: { trigger: root.querySelector('.quote'), start: 'top 85%', once: true },
   });
+
 }
