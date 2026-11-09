@@ -10,7 +10,7 @@
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { RESTAURANT as R, RESERVATION } from '../src/config.js';
+import { RESTAURANT as R, RESERVATION, COMMANDE } from '../src/config.js';
 import { heroSources, HERO_MOBILE_MQ, HERO_SIZES } from '../src/modules/img.js';
 
 const root = resolve(import.meta.dirname, '..');
@@ -99,6 +99,7 @@ function jsonLd({ menu, accueil, siteUrl, libro }) {
     data.image = `${siteUrl}${shareImage(accueil)}`;
   }
   const commandes = Object.values(R.livraison || {}).filter((u) => /^https:\/\//.test(u || ''));
+  if (COMMANDE?.actif && siteUrl) commandes.unshift(`${siteUrl}/#commander`);
   if (commandes.length) {
     data.potentialAction = [].concat(data.potentialAction || [], {
       '@type': 'OrderAction',

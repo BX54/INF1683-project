@@ -3,6 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { menu, escapeHtml } from './data.js';
 import { reduced, finePointer, formatPrice } from './motion.js';
 import { platSrcset } from './img.js';
+import { commandeActive, formats } from './panier.js';
 import { scrollToEl } from './smooth.js';
 
 export function initMenu() {
@@ -37,6 +38,12 @@ export function initMenu() {
         </div>
         ${p.description ? `<p class="dish__desc">${escapeHtml(p.description)}</p>` : ''}
         ${p.tags?.length ? `<div class="dish__tags">${p.tags.map((t) => `<span>${escapeHtml(t)}</span>`).join('')}</div>` : ''}
+        ${
+          commandeActive() && formats(p.prix)
+            ? `<button type="button" class="dish__add" data-add="${escapeHtml(p.id)}" aria-label="Ajouter « ${escapeHtml(p.nom)} » à ma commande" data-cursor>
+                <span aria-hidden="true">+</span> Commander</button>`
+            : ''
+        }
       </div>
     </article>`;
 

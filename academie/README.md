@@ -151,6 +151,20 @@ Dès qu'un lien est rempli, une section « L'Académie chez vous » apparaît so
 plateforme (nouvel onglet), un lien dans le menu mobile, une mention dans la politique de confidentialité et
 une action « Commander » dans les données structurées Google. Simples liens : aucun script tiers.
 
+### Commande en ligne (livraison et cueillette)
+
+Réglages dans `src/config.js` → `COMMANDE` :
+- `actif` : `true` affiche un bouton « Commander » sur chaque plat de la carte, la section « L'Académie chez vous » et la barre « Ma commande » ;
+- `secteurs` : secteurs de Gatineau et frais de livraison ; `minimumLivraison` : minimum avant frais ;
+- `heures` et `delaiMinutes` : créneaux proposés (toutes les 15 min) ; `paiements` : choix affichés (paiement à la réception) ;
+- `taxes` (TPS, TVQ), `sansGluten` (supplément par catégorie) et `rabais` (ex. spécial pâtes du dimanche au mercredi).
+
+Les formats viennent du prix dans `menu.json` : `"13 · gratinés 16"` propose « Régulier 13 $ » ou « Gratinés 16 $ ».
+Un plat « Prix du marché » ne peut pas être commandé en ligne.
+Chaque commande arrive **par courriel** (Formspree), avec un sujet qui commence par **« COMMANDE »** ; le restaurant rappelle le client
+pour confirmer. Pour un formulaire séparé, mettez son identifiant dans `COMMANDE.formspreeId`.
+Le panier n'est jamais enregistré dans le navigateur (Loi 25) : il se vide si la page est rechargée.
+
 ### Réservations avec Libro
 
 Dans `src/config.js`, `RESERVATION.libroUrl` contient l'adresse du module de réservation Libro

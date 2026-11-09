@@ -116,3 +116,48 @@ export const RESERVATION = {
   // Délai de confirmation annoncé aux clients (sous le bouton et dans le message de remerciement).
   delaiConfirmation: 'en moins de 24 h',
 };
+
+/* =====================================================================
+   COMMANDE EN LIGNE — livraison par les livreurs du restaurant ou cueillette,
+   paiement à la réception (comptant ou carte). Les commandes arrivent par courriel
+   (Formspree, comme les soumissions) ; le restaurant rappelle le client pour confirmer.
+   ===================================================================== */
+export const COMMANDE = {
+  // false = module désactivé (aucun bouton « Commander », section masquée)
+  actif: true,
+
+  // Formulaire Formspree dédié aux commandes (recommandé). Vide = même formulaire que les réservations.
+  formspreeId: '',
+
+  modes: ['livraison', 'cueillette'],
+
+  // Livraison dans Gatineau, frais selon le secteur. ⚠ Montants À CONFIRMER par le restaurant.
+  secteurs: [
+    { nom: 'Gatineau', frais: 5 },
+    { nom: 'Hull', frais: 7 },
+    { nom: 'Masson-Angers', frais: 8 },
+    { nom: 'Aylmer', frais: 10 },
+    { nom: 'Buckingham', frais: 10 },
+  ],
+
+  // Minimum de commande pour la livraison (avant frais et taxes)
+  minimumLivraison: 25,
+
+  paiements: ['Comptant', 'Carte (débit ou crédit)'],
+
+  // 1re et dernière heure de livraison / cueillette (la cuisine ferme à 21 h)
+  heures: { debut: '11:45', fin: '20:45' },
+  // Délai minimum de préparation (minutes)
+  delaiMinutes: 45,
+
+  // Taxes du Québec appliquées au total estimé
+  taxes: { TPS: 0.05, TVQ: 0.09975 },
+
+  // Option « sans gluten » proposée pour ces catégories de menu.json
+  sansGluten: { categories: ['pates', 'specialites'], supplement: 3 },
+
+  // Rabais automatiques. jours : 0 = dimanche … 6 = samedi (jour de la livraison / cueillette).
+  rabais: [
+    { libelle: 'Spécial pâtes (dimanche au mercredi)', categories: ['pates'], jours: [0, 1, 2, 3], montant: 3 },
+  ],
+};

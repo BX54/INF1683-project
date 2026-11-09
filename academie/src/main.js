@@ -46,7 +46,7 @@ initTeam();
 // Réservations : Libro si un lien est configuré, sinon le formulaire du site
 if (!initLibro({ lenis })) initReservation({ lenis });
 initServices();
-initCommande();
+initCommande({ lenis });
 
 // Interactions globales
 initHeader({ lenis });
