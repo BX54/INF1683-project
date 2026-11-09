@@ -4836,3 +4836,23 @@ html.has-modal { overflow: hidden; }
 #equipe[hidden],
 .link-arrow[hidden],
 .mobile-menu__list li[hidden] { display: none !important; }
+/* Équipe : photo de groupe en grand */
+.team__photo {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.team__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border: 1px solid var(--ligne);
+}
+.team__photo figcaption {
+  margin-top: 14px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ivoire-2);
+}

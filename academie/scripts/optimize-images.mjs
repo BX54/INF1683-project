@@ -15,7 +15,7 @@ import sharp from 'sharp';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const img = (...p) => path.join(root, 'public', 'images', ...p);
-const VARIANT = /-(600|1200|m)\.webp$/;
+const VARIANT = /-(600|900|1200|m)\.webp$/;
 
 const mtime = (p) => stat(p).then((s) => s.mtimeMs, () => 0);
 let made = 0;
@@ -44,6 +44,12 @@ for (const f of (await list(img('ambiance'))).filter((f) => /^hero-/.test(f))) {
   await variant(src, src.replace(/\.webp$/, '-1200.webp'), (s) => s.resize(1200, 750, { fit: 'cover' }));
   // Mobile : la photo est affichée en hauteur, centrée sur le plat
   await variant(src, src.replace(/\.webp$/, '-m.webp'), (s) => s.resize(800, 1066, { fit: 'cover', position: 'centre' }), 64);
+}
+
+// Photo de groupe de l'équipe : version 900 px pour mobile
+for (const f of (await list(img('equipe'))).filter((f) => /^groupe/.test(f))) {
+  const src = img('equipe', f);
+  await variant(src, src.replace(/\.webp$/, '-900.webp'), (s) => s.resize(900));
 }
 
 console.log(made ? `[images] ${made} version(s) allégée(s) créée(s).` : '[images] Versions allégées à jour.');

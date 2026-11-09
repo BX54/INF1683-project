@@ -1,14 +1,9 @@
 {
-  "_aide": "Remplacez les noms, rôles et citations. Les photos vont dans /public/images/equipe (format portrait 4:5 conseillé, ex. 800 × 1000 px). « afficher » : false masque la section Équipe (et ses liens) en attendant les photos.",
-  "afficher": false,
-  "membres": [
-    {
-      "id": "chef",
-      "nom": "Kossi",
-      "role": "Chef propriétaire",
-      "citation": "",
-      "image": "/images/equipe/chef.webp",
-      "vedette": true
-    }
-  ]
+  "_aide": "Section Équipe. « photoEquipe » : photo de groupe affichée en grand (laisser vide pour ne pas l'afficher). « membres » : portraits individuels facultatifs (nom, rôle, citation, image 800 × 1000 px dans /public/images/equipe). « afficher » : false masque la section et ses liens.",
+  "afficher": true,
+  "photoEquipe": {
+    "image": "/images/equipe/groupe.webp",
+    "legende": "L'équipe de L'Académie, autour de Kossi, chef propriétaire"
+  },
+  "membres": []
 }

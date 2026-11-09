@@ -13,10 +13,21 @@ export function initTeam() {
     return;
   }
 
+  // Photo de groupe (equipe.json → photoEquipe), affichée en grand au-dessus des éventuels portraits
+  const groupe = equipe.photoEquipe?.image
+    ? `<figure class="team__photo">
+        <img src="${equipe.photoEquipe.image}" srcset="${equipe.photoEquipe.image.replace(/\.webp$/, '-900.webp')} 900w, ${
+          equipe.photoEquipe.image
+        } 1600w" sizes="(max-width: 900px) 100vw, 90vw" alt="${escapeHtml(equipe.photoEquipe.legende || "L'équipe")}"
+          width="1600" height="1066" loading="lazy" decoding="async" />
+        ${equipe.photoEquipe.legende ? `<figcaption>${escapeHtml(equipe.photoEquipe.legende)}</figcaption>` : ''}
+      </figure>`
+    : '';
+
   // Le membre « vedette » (le chef) passe en premier
   const membres = [...equipe.membres].sort((a, b) => (b.vedette ? 1 : 0) - (a.vedette ? 1 : 0));
 
-  grid.innerHTML = membres
+  grid.innerHTML = groupe + membres
     .map(
       (m) => `
       <article class="member${m.vedette ? ' member--vedette' : ''}" tabindex="0">
@@ -33,6 +44,15 @@ export function initTeam() {
     .join('');
 
   if (reduced) return;
+
+  const photo = grid.querySelector('.team__photo');
+  if (photo) {
+    gsap.fromTo(
+      photo,
+      { clipPath: 'inset(0% 0% 100% 0%)' },
+      { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.6, ease: 'expo.inOut', scrollTrigger: { trigger: photo, start: 'top 85%', once: true } }
+    );
+  }
 
   const members = grid.querySelectorAll('.member');
   members.forEach((m, i) => {
