@@ -5086,7 +5086,7 @@ html.has-modal { overflow: hidden; }
 }
 .header__order:hover,
 .header__order:focus-visible { color: var(--or-clair); border-color: var(--or-clair); }
-.header__order svg { flex: 0 0 20px; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+.header__order svg { flex: 0 0 24px; width: 24px; height: 24px; }
 .header__order-count {
   display: grid;
   place-items: center;
@@ -5134,3 +5134,43 @@ html.has-modal { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .header__order.is-bump { animation: none; } }
 .dish__inorder { padding: 0; background: none; border: 0; border-bottom: 1px solid var(--ligne-forte); cursor: pointer; }
 .dish__inorder:hover, .dish__inorder:focus-visible { color: var(--or-clair); border-color: var(--or-clair); }
+/* Chariot qui se remplit */
+.cart-ico { overflow: visible; }
+.cart-ico__line { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.cart-ico__fill {
+  fill: var(--or-clair);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scaleY(var(--fill, 0));
+  transition: transform 0.6s var(--ease);
+}
+.cart-fab {
+  position: fixed;
+  z-index: 795;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  color: var(--ivoire);
+  background: rgba(22, 20, 18, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--or-clair);
+  border-radius: 50%;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  transform: translateY(-160%);
+  transition: transform 0.6s var(--ease), color 0.3s;
+}
+.cart-fab svg { width: 28px; height: 28px; }
+.cart-fab .header__order-count { position: absolute; top: -4px; right: -4px; }
+.cart-fab:hover,
+.cart-fab:focus-visible { color: var(--or-clair); }
+body:has(.header.is-hidden) .cart-fab.has-items { transform: none; }
+.cart-fab.is-bump { animation: cmd-bump 0.5s var(--ease); }
+.has-cursor .cart-fab { cursor: pointer; }
+@media (prefers-reduced-motion: reduce) {
+  .cart-ico__fill { transition: none; }
+  .cart-fab.is-bump { animation: none; }
+}

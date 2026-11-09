@@ -111,20 +111,42 @@ export function initCommande({ lenis } = {}) {
     toast.classList.add('is-visible');
     clearTimeout(toastT);
     toastT = setTimeout(() => toast.classList.remove('is-visible'), 2200);
-    head.classList.remove('is-bump');
-    void head.offsetWidth;
-    head.classList.add('is-bump');
+    [head, fab].forEach((el) => {
+      el.classList.remove('is-bump');
+      void el.offsetWidth;
+      el.classList.add('is-bump');
+    });
   };
+
+  /*
+   * Chariot qui se remplit : le panier doré monte d'un cran à chaque article (plein à 4 articles).
+   * Dans l'en-tête, et en coin d'écran (en haut à droite) quand l'en-tête se cache au défilement.
+   */
+  const chariot = (uid) => `<svg class="cart-ico" viewBox="0 0 24 24" aria-hidden="true">
+      <defs><clipPath id="cart-clip-${uid}"><path d="M6.4 7h13.4l-1.5 7.4a1 1 0 0 1-1 .8H8.2a1 1 0 0 1-1-.8Z" /></clipPath></defs>
+      <rect class="cart-ico__fill" x="5" y="6.5" width="16" height="9" clip-path="url(#cart-clip-${uid})" />
+      <path class="cart-ico__line" d="M2.5 3.5h2.3l2.4 11a1 1 0 0 0 1 .8h9.1a1 1 0 0 0 1-.8L19.8 7H6.4" />
+      <circle class="cart-ico__line" cx="9.5" cy="19.5" r="1.4" /><circle class="cart-ico__line" cx="16.5" cy="19.5" r="1.4" />
+    </svg>`;
 
   // ---------- Bouton « Commander » dans l'en-tête (toujours visible) ----------
   const head = document.createElement('a');
   head.href = '#menu';
   head.className = 'header__order';
   head.setAttribute('data-cursor', '');
-  head.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>
+  head.innerHTML = `${chariot('h')}
     <span class="header__order-label">Commander</span><span class="header__order-count" data-head-count hidden>0</span>`;
   head.setAttribute('aria-label', 'Commander en ligne (livraison ou cueillette)');
   document.querySelector('.header__actions')?.prepend(head);
+
+  // Chariot de coin : visible quand l'en-tête est caché et que le panier contient quelque chose
+  const fab = document.createElement('button');
+  fab.type = 'button';
+  fab.className = 'cart-fab';
+  fab.setAttribute('aria-haspopup', 'dialog');
+  fab.innerHTML = `${chariot('f')}<span class="header__order-count" data-fab-count hidden>0</span>`;
+  document.body.appendChild(fab);
+  fab.addEventListener('click', () => ouvrirPanier());
   // Panier non vide : ouvre la commande ; sinon : amène à la carte (lien #menu)
   head.addEventListener('click', (e) => {
     if (nbArticles() > 0) {
@@ -416,9 +438,15 @@ export function initCommande({ lenis } = {}) {
         ? `Minimum de ${argent(COMMANDE.minimumLivraison)} pour la livraison : il manque ${argent(t.manque)}. Vous pouvez aussi choisir la cueillette.`
         : '';
     $('[data-submit]').disabled = !!t.manque || horsZone || n === 0;
-    const hc = head.querySelector('[data-head-count]');
-    hc.textContent = n;
-    hc.hidden = n === 0;
+    for (const el of [head.querySelector('[data-head-count]'), fab.querySelector('[data-fab-count]')]) {
+      el.textContent = n;
+      el.hidden = n === 0;
+    }
+    const remplissage = String(Math.min(n, 4) / 4);
+    head.style.setProperty('--fill', remplissage);
+    fab.style.setProperty('--fill', remplissage);
+    fab.classList.toggle('has-items', n > 0);
+    fab.setAttribute('aria-label', `Ma commande : ${n} article${n > 1 ? 's' : ''}`);
     head.setAttribute('aria-label', n ? `Ma commande : ${n} article${n > 1 ? 's' : ''}` : 'Commander en ligne (livraison ou cueillette)');
     majPlats();
     return t;
