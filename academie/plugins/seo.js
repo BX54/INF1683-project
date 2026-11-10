@@ -4,7 +4,7 @@
  *  - données structurées schema.org « Restaurant » (adresse, téléphone, heures, menu complet, réservation) ;
  *  - coordonnées, heures, liens (téléphone, courriel, itinéraire) ;
  *  - textes de l'histoire, du chef et des services ;
- *  - la carte complète en texte (bloc « Voir toute la carte en texte »).
+ *  - le menu complet en texte (bloc « Voir tout le menu en texte »).
  * Si RESTAURANT.siteUrl est rempli : adresse canonique, Open Graph (url, image) et sitemap.xml.
  * Les modules JS continuent de fonctionner : ils réécrivent les mêmes contenus.
  */
@@ -97,7 +97,7 @@ function jsonLd({ menu, accueil, siteUrl, libro }) {
     ...(siteUrl ? { menu: `${siteUrl}/#menu` } : {}),
     hasMenu: {
       '@type': 'Menu',
-      name: 'La carte',
+      name: 'Le menu',
       inLanguage: 'fr-CA',
       hasMenuSection: menu.categories.map((c) => ({
         '@type': 'MenuSection',

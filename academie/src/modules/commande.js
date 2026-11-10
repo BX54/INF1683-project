@@ -287,7 +287,7 @@ export function initCommande({ lenis } = {}) {
     <div class="cmd-body">
       <div class="cmd-empty" data-empty>
         <p>Votre commande est vide.</p>
-        <a href="#menu" class="link-arrow" data-close>Voir la carte ${ARROW}</a>
+        <a href="#menu" class="link-arrow" data-close>Voir le menu ${ARROW}</a>
       </div>
       <form class="cmd-form" novalidate data-form>
         <ul class="cmd-lines" data-lines></ul>
