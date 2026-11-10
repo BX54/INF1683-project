@@ -1,6 +1,6 @@
-# Code QR des tables
+# Code QR des tables (menu)
 
-Le code QR mène à **https://restaurantlacademiegatineau.com/#menu** (la carte du site).
+Le code QR mène à **https://restaurantlacademiegatineau.com/#menu** (le menu du site).
 Il ne change jamais : si le menu est modifié sur le site, les QR déjà imprimés restent bons.
 
 | Fichier | Usage |

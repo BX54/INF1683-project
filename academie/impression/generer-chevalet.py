@@ -27,7 +27,7 @@ def panneau(c, ox, oy, W, H):
     cx = ox + W / 2; y = oy + H - 24 * mm
     spaced(c, "L'ACADÉMIE", cx, y, 'PF', 22, 4.2, IVOIRE)
     spaced(c, 'RESTAURANT · APPORTEZ VOTRE VIN', cx, y - 6.5 * mm, 'MRSB', 6.2, 1.6, OR)
-    c.setFont('PFI', 19); c.setFillColor(ORC); c.drawCentredString(cx, y - 19 * mm, 'Notre carte')
+    c.setFont('PFI', 19); c.setFillColor(ORC); c.drawCentredString(cx, y - 19 * mm, 'Notre menu')
     # QR sur fond ivoire
     s = 52 * mm; qx = cx - s / 2; qy = y - 26 * mm - s
     c.setFillColor(IVOIRE); c.roundRect(qx - 4 * mm, qy - 4 * mm, s + 8 * mm, s + 8 * mm, 2.5 * mm, fill=1, stroke=0)
@@ -36,7 +36,7 @@ def panneau(c, ox, oy, W, H):
         for col, v in enumerate(row):
             if v: c.rect(qx + col * cell, qy + s - (r + 1) * cell, cell + 0.05, cell + 0.05, fill=1, stroke=0)
     ty = qy - 13 * mm
-    spaced(c, 'SCANNEZ POUR VOIR LA CARTE', cx, ty, 'MRSB', 7.6, 1.8, IVOIRE)
+    spaced(c, 'SCANNEZ POUR VOIR LE MENU', cx, ty, 'MRSB', 7.6, 1.8, IVOIRE)
     c.setFont('MR', 7.2); c.setFillColor(HexColor('#b9b2a6'))
     c.drawCentredString(cx, ty - 6 * mm, 'Ouvrez l’appareil photo de votre téléphone')
     c.drawCentredString(cx, ty - 10 * mm, 'et visez le code.')
@@ -45,7 +45,7 @@ def panneau(c, ox, oy, W, H):
 
 # 1) Carte simple 10 × 15 cm (pour présentoir / porte-menu)
 W, H = 100 * mm, 150 * mm
-c = canvas.Canvas(f'{D}/chevalet-qr-10x15.pdf', pagesize=(W, H)); c.setTitle("L'Académie — QR de la carte")
+c = canvas.Canvas(f'{D}/chevalet-qr-10x15.pdf', pagesize=(W, H)); c.setTitle("L'Académie — QR du menu")
 panneau(c, 0, 0, W, H); c.showPage(); c.save()
 # 2) Chevalet à plier (deux faces) sur une feuille Lettre : couper, plier au trait
 from reportlab.lib.pagesizes import letter
