@@ -245,7 +245,7 @@ export function initServices() {
   root.querySelectorAll('.svc').forEach((card, i) => {
     const tl = gsap.timeline({ scrollTrigger: { trigger: card, start: 'top 80%', once: true }, delay: i * 0.12 });
     tl.fromTo(card.querySelector('.svc__media'), { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'expo.inOut' })
-      .from(card.querySelector('.svc__media img'), { scale: 1.3, duration: 1.8, ease: 'expo.out' }, 0.2)
+      .from(card.querySelector('.svc__media img'), { scale: 1.3, duration: 1.8, ease: 'expo.out', clearProps: 'transform' }, 0.2)
       .add(() => countUp(card.querySelector('.svc__num')), 0.5)
       .from(card.querySelectorAll('.svc__body > *'), { y: 24, opacity: 0, duration: 1, stagger: 0.06, ease: 'expo.out' }, 0.6);
   });

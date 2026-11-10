@@ -5261,3 +5261,28 @@ html.has-modal { overflow: hidden; }
   .sig { flex: 0 0 64%; }
   .sig__media { aspect-ratio: 16 / 10; }
 }
+
+/* Photos dans un cadre à proportions fixes : l'image remplit le cadre sans jamais l'agrandir
+   (certains navigateurs mobiles, dont Safari sur iPhone, ignorent « height: 100% » dans un cadre « aspect-ratio »). */
+.svc__media,
+.sig__media,
+.pair__media,
+.dish__media { position: relative; }
+.svc__media img,
+.sig__media img,
+.pair__media img,
+.dish__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+.svc__media::after { z-index: 1; }
+
+/* « Vos grands moments, à notre table » sur téléphone : photos plus basses */
+@media (max-width: 720px) {
+  .svc__media { aspect-ratio: 16 / 10; max-height: 34svh; }
+  .svc__num { font-size: 52px; }
+}
