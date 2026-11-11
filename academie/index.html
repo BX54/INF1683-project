@@ -483,6 +483,16 @@
               </div>
             </div>
 
+            <div class="field field--chips">
+              <p class="rform__label" id="q-heure-label">Heure souhaitée</p>
+              <div class="cmd-time" role="group" aria-labelledby="q-heure-label">
+                <button type="button" class="cmd-time__btn" data-qstep="-1" aria-label="30 minutes plus tôt">‹</button>
+                <output class="cmd-time__val" data-qheure aria-live="polite">18 h</output>
+                <button type="button" class="cmd-time__btn" data-qstep="1" aria-label="30 minutes plus tard">›</button>
+              </div>
+              <input type="hidden" name="heure" value="18:00" />
+            </div>
+
             <div class="rform__row rform__row--2">
               <div class="field field--select" data-for="salle">
                 <select class="field__input" id="q-salle" name="salle"></select>
@@ -496,7 +506,7 @@
 
             <div class="field field--area">
               <textarea class="field__input" id="q-message" name="message" rows="4" placeholder=" "></textarea>
-              <label class="field__label" for="q-message">Votre projet (heure, budget, style de menu, ville de livraison…)</label>
+              <label class="field__label" for="q-message">Votre projet (budget, style de menu, ville de livraison…)</label>
             </div>
 
             <div class="hp" aria-hidden="true">

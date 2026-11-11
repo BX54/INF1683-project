@@ -107,6 +107,27 @@ export function initServices() {
   const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   form.elements.date.min = iso(tomorrow);
 
+  // Heure souhaitée : de 10 h à 23 h, par tranches de 30 minutes (sélecteur ‹ 18 h ›)
+  const HEURES = [];
+  for (let t = 10 * 60; t <= 23 * 60; t += 30) HEURES.push(`${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`);
+  const heureLisible = (h) => h.replace(':', ' h ').replace(' h 00', ' h');
+  const heureInput = form.elements.heure;
+  const heureVal = form.querySelector('[data-qheure]');
+  const majHeure = (h) => {
+    heureInput.value = h;
+    heureVal.textContent = heureLisible(h);
+    const i = HEURES.indexOf(h);
+    form.querySelector('[data-qstep="-1"]').disabled = i <= 0;
+    form.querySelector('[data-qstep="1"]').disabled = i >= HEURES.length - 1;
+  };
+  form.querySelectorAll('[data-qstep]').forEach((b) =>
+    b.addEventListener('click', () => {
+      const i = HEURES.indexOf(heureInput.value) + Number(b.dataset.qstep);
+      majHeure(HEURES[Math.min(HEURES.length - 1, Math.max(0, i))]);
+    })
+  );
+  majHeure('18:00');
+
   let type = 'Salle de réception';
   const setType = (v) => {
     type = v;
@@ -187,11 +208,12 @@ export function initServices() {
       occasion: occasion.value,
       date: form.elements.date.value,
       date_lisible: dateLisible,
+      heure: heureLisible(heureInput.value),
       invites: Number(form.elements.invites.value),
       salle: blocSalle.hidden ? '—' : form.elements.salle.value,
       traiteur: blocTraiteur.hidden ? '—' : form.elements.mode.value,
       message: form.elements.message.value.trim() || '—',
-      _subject: `SOUMISSION ${type} — ${occasion.value} — ${dateLisible} (${form.elements.invites.value} pers.)`,
+      _subject: `SOUMISSION ${type} — ${occasion.value} — ${dateLisible} à ${heureLisible(heureInput.value)} (${form.elements.invites.value} pers.)`,
     };
 
     submit.classList.add('is-loading');
@@ -204,6 +226,7 @@ export function initServices() {
       showDone(data);
       form.reset();
       [occasion, form.elements.salle, form.elements.mode].forEach((sel, i) => pickers[i](sel.options[0]?.value ?? ''));
+      majHeure('18:00');
       setType('Salle de réception');
     } catch (err) {
       console.error(err);
@@ -219,7 +242,7 @@ export function initServices() {
     done.querySelector('.quote__done-title').textContent = `Merci, ${data.nom.split(' ')[0]} !`;
     done.querySelector('.quote__done-text').textContent =
       `Votre demande (${data.type_demande.replace('Soumission — ', '').toLowerCase()}, ${data.occasion.toLowerCase()}, ` +
-      `${data.invites} invités, ${data.date_lisible}) est bien reçue. Nous vous répondrons ${services.delaiReponse ?? 'sous peu'} ` +
+      `${data.invites} invités, ${data.date_lisible} à ${data.heure}) est bien reçue. Nous vous répondrons ${services.delaiReponse ?? 'sous peu'} ` +
       'par courriel ou par téléphone.';
     form.hidden = true;
     done.hidden = false;
